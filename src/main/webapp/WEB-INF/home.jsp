@@ -4,6 +4,7 @@
     <title>Quiz Website</title>
 </head>
 <body>
+<p style="position:absolute; right:1%"><i>You are logged in as ${username}</i></p>
     <h1>Quiz Website</h1>
     <div class="announcements">
         <h2>Announcements</h2>
