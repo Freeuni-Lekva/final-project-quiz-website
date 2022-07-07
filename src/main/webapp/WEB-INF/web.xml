@@ -5,7 +5,7 @@
          version="4.0">
     <servlet>
         <servlet-name>HelloServlet</servlet-name>
-        <servlet-class>com.project.website.HelloServlet</servlet-class>
+        <servlet-class>com.project.website.servlets.HelloServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HelloServlet</servlet-name>

@@ -1,4 +1,4 @@
-package com.project.website;
+package com.project.website.servlets;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
