@@ -5,7 +5,9 @@ CREATE TABLE IF NOT EXISTS users (
     email VARCHAR(256),
     is_admin BOOLEAN,
     first_name VARCHAR(128) NOT NULL,
-    last_name VARCHAR(128)
+    last_name VARCHAR(128),
+    CONSTRAINT uq_users_username UNIQUE (username),
+    CONSTRAINT uq_users_email UNIQUE (email)
 );
 
 CREATE TABLE IF NOT EXISTS friendships (
