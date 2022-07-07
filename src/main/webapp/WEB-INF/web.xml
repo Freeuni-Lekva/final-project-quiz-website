@@ -4,11 +4,12 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
     <servlet>
-        <servlet-name>HelloServlet</servlet-name>
-        <servlet-class>com.project.website.servlets.HelloServlet</servlet-class>
+        <servlet-name>HomeServlet</servlet-name>
+        <servlet-class>com.project.website.servlets.HomeServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>HelloServlet</servlet-name>
+        <servlet-name>HomeServlet</servlet-name>
         <url-pattern></url-pattern>
+        <url-pattern>/home</url-pattern>
     </servlet-mapping>
 </web-app>
