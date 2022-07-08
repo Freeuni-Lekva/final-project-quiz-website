@@ -1,7 +1,5 @@
-USE quiz_website;
-
 CREATE TABLE IF NOT EXISTS users (
-    id bigint PRIMARY KEY AUTO_INCREMENT,
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(128) NOT NULL,
     password_hash VARCHAR(512) NOT NULL,
     email VARCHAR(256),

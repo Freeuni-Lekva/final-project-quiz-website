@@ -41,14 +41,17 @@ public interface UserDAO {
 
     /**
      * @return all users that have the given first name. returns null in case of an exception.
+     * if the parameter is null, returns an empty list
      * */
     public List<User> getUsersByFirstName(String firstName);
     /**
      * @return all users that have the given last name. returns null in case of an exception.
+     * if the parameter is null, returns an empty list.
      * */
     public List<User> getUsersByLastName(String LastName);
     /**
      * @return all users that have the given full name. returns null in case of an exception.
+     * if one of the fields is null, the search will be based on the other field.
      * */
     public List<User> getUsersByFullName(String firstName, String lastName);
 
@@ -64,7 +67,7 @@ public interface UserDAO {
     public int attemptLoginWithEmail(String email, String passwordHash);
 
     /**
-     * Tries to register a user with the given username, email(optional) and password.
+     * Tries to register a user with the given username, email(can be null) and password.
      * @return one of the values among: SUCCESS, ERROR, USERNAME_TAKEN, EMAIL_TAKEN
      * */
     public int register(String username, String email, String passwordHash);

@@ -24,7 +24,7 @@ public class UserDAOSQL implements UserDAO {
 
     @Override
     public List<User> getAllAdmins() {
-        String query = "SELECT * FROM users WHERE is_admin <> FALSE;";
+        String query = "SELECT * FROM users WHERE is_admin <> 0;";
         return getUsers(query);
     }
 
@@ -81,18 +81,29 @@ public class UserDAOSQL implements UserDAO {
 
     @Override
     public List<User> getUsersByFirstName(String firstName) {
+        if(firstName == null)
+            return new ArrayList<>();
+
         String query = "SELECT * FROM users WHERE first_name = \"" + firstName + "\";";
         return getUsers(query);
     }
 
     @Override
     public List<User> getUsersByLastName(String lastName) {
+        if(lastName == null)
+            return new ArrayList<>();
+
         String query = "SELECT * FROM users WHERE last_name = \"" + lastName + "\";";
         return getUsers(query);
     }
 
     @Override
     public List<User> getUsersByFullName(String firstName, String lastName) {
+        if(firstName == null)
+            return getUsersByLastName(lastName);
+        if(lastName == null)
+            return getUsersByFirstName(firstName);
+
         String query = "SELECT * FROM users WHERE first_name = \"" + firstName + "\" AND " +
                 "last_name = \"" + lastName + "\";";
         return getUsers(query);
@@ -130,7 +141,7 @@ public class UserDAOSQL implements UserDAO {
         PreparedStatement pstmt = null;
         try {
             pstmt = conn.prepareStatement("INSERT INTO users (username, email, password_hash, is_admin) " +
-                    "VALUES (?, ?, ?, FALSE)");
+                    "VALUES (?, ?, ?, 0)");
             pstmt.setString(1, username);
             pstmt.setString(2, email);
             pstmt.setString(3, passwordHash);
@@ -163,7 +174,7 @@ public class UserDAOSQL implements UserDAO {
         if(user == null) {
             return USER_DOES_NOT_EXIST;
         }
-        return updateUserData("UPDATE users SET is_admin = TRUE WHERE id = " + userID + ";");
+        return updateUserData("UPDATE users SET is_admin = 1 WHERE id = " + userID + ";");
     }
 
     @Override
@@ -172,7 +183,7 @@ public class UserDAOSQL implements UserDAO {
         if(user == null) {
             return USER_DOES_NOT_EXIST;
         }
-        return updateUserData("UPDATE users SET is_admin = FALSE WHERE id = " + user.getId() + ";");
+        return updateUserData("UPDATE users SET is_admin = 0 WHERE id = " + user.getId() + ";");
     }
 
     @Override
@@ -187,6 +198,6 @@ public class UserDAOSQL implements UserDAO {
             lastName = "\"" + lastName + "\"";
 
         return updateUserData("UPDATE users SET first_name = " + firstName + ", " +
-                "last_name = " + lastName + ";");
+                "last_name = " + lastName + " WHERE id = " + userID + ";");
     }
 }
