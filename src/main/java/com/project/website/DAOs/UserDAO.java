@@ -67,10 +67,10 @@ public interface UserDAO {
     public int attemptLoginWithEmail(String email, String passwordHash);
 
     /**
-     * Tries to register a user with the given username, email(can be null) and password.
+     * Tries to register a user with the given username, password hash and email(can be null).
      * @return one of the values among: SUCCESS, ERROR, USERNAME_TAKEN, EMAIL_TAKEN
      * */
-    public int register(String username, String email, String passwordHash);
+    public int register(String username, String passwordHash, String email);
 
     /**
      * Tries to promote the given user to administrative position.
@@ -84,7 +84,7 @@ public interface UserDAO {
     public int removeAdminPrivileges(long userID);
 
     /**
-     * Tries to change the name of the given user. The parameters can be null.
+     * Tries to change the name of the given user. The name parameters can be null.
      * @return one of the values among: SUCCESS, ERROR, USER_DOES_NOT_EXIST
      * */
     public int changeName(long userID, String firstName, String lastName);

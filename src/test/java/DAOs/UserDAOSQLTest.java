@@ -22,9 +22,9 @@ public class UserDAOSQLTest extends TestCase {
     List<User> testUsers;
 
     /*some private methods to make testing easier. they make changes in the local list as well as in the DAO.*/
-    private void register(String username, String email, String passwordHash) {
+    private void register(String username, String passwordHash, String email) {
         testUsers.add(new User(testUsers.size(), username, passwordHash, email, false, null, null));
-        dao.register(username, email, passwordHash);
+        dao.register(username, passwordHash, email);
     }
 
     private void changeName(int id, String firstName, String lastName) {
@@ -53,15 +53,15 @@ public class UserDAOSQLTest extends TestCase {
         testUsers.add(null);    // add a null user so that the list indices match user IDs
         dao = new UserDAOSQL(conn);
 
-        register("user1", "user1@org.org", Hasher.getHash("a"));
-        register("user2", "user2@com.com", Hasher.getHash("b"));
-        register("user3", null, Hasher.getHash("a"));
-        register("admin1", "admin1@w.w", Hasher.getHash("aa"));
-        register("admin2", null, Hasher.getHash("ab"));
-        register("firstnameuser", null, Hasher.getHash("wow, name"));
-        register("fullnameuser", null, Hasher.getHash("wow, full name"));
-        register("former admin", "demoted@!admin.admin", Hasher.getHash("d"));
-        register("nullman", "null@null.null", Hasher.getHash("null"));
+        register("user1", Hasher.getHash("a"), "user1@org.org");
+        register("user2", Hasher.getHash("b"), "user2@com.com");
+        register("user3", Hasher.getHash("a"), null);
+        register("admin1", Hasher.getHash("aa"), "admin1@w.w");
+        register("admin2", Hasher.getHash("ab"), null);
+        register("firstnameuser", Hasher.getHash("wow, name"), null);
+        register("fullnameuser", Hasher.getHash("wow, full name"), null);
+        register("former admin", Hasher.getHash("d"), "demoted@!admin.admin");
+        register("nullman", Hasher.getHash("null"), "null@null.null");
 
         promoteToAdmin(4);
         promoteToAdmin(5);
@@ -210,9 +210,9 @@ public class UserDAOSQLTest extends TestCase {
 
     @Test
     public void testRegisterOnExistingUser() {
-        int result = dao.register(testUsers.get(1).getUsername(), null, "a");
+        int result = dao.register(testUsers.get(1).getUsername(),  "a", null);
         assertEquals(result, UserDAO.USERNAME_TAKEN);
-        result = dao.register("AAAAAAAAAAAAAAAAAAAA", testUsers.get(1).getEmail(), "a");
+        result = dao.register("AAAAAAAAAAAAAAAAAAAA", "a", testUsers.get(1).getEmail());
         assertEquals(result, UserDAO.EMAIL_TAKEN);
     }
 

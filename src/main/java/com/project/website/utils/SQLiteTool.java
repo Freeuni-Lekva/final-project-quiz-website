@@ -50,8 +50,8 @@ public class SQLiteTool {
                 if (((line = reader.readLine()) == null)) break;
                 // SQLite uses a different dialect from mySQL. statements won't execute without these replacements
                 line = line.split("--")[0]; // remove comments
-                line = line.trim().replaceFirst("AUTO_INCREMENT", "AUTOINCREMENT").
-                        replaceFirst("BIGINT", "INTEGER").replaceFirst(",", ", ");
+                line = line.trim().replaceAll("(?i)AUTO_INCREMENT", "AUTOINCREMENT").
+                        replaceAll("(?i)BIGINT", "INTEGER").replaceAll(",", ", ");
                 stringBuilder.append(line);
             } catch (IOException e) {
                 e.printStackTrace();

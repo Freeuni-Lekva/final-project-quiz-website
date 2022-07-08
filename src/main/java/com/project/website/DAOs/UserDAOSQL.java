@@ -130,7 +130,7 @@ public class UserDAOSQL implements UserDAO {
     }
 
     @Override
-    public int register(String username, String email, String passwordHash) {
+    public int register(String username, String passwordHash, String email) {
         User user = getUserByUsername(username);
         if(user != null)
             return USERNAME_TAKEN;
