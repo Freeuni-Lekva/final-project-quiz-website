@@ -27,7 +27,7 @@ public class UserDAOSQLTest extends TestCase {
         dao.register(username, email, passwordHash);
     }
 
-    private void setName(int id, String firstName, String lastName) {
+    private void changeName(int id, String firstName, String lastName) {
         testUsers.get(id).setFirstName(firstName);
         testUsers.get(id).setLastName(lastName);
         dao.changeName(id, firstName, lastName);
@@ -66,9 +66,9 @@ public class UserDAOSQLTest extends TestCase {
         promoteToAdmin(4);
         promoteToAdmin(5);
 
-        setName(6, "name", null);
-        setName(7, "name", "last name");
-        setName(8, "null", "null");
+        changeName(6, "name", null);
+        changeName(7, "name", "last name");
+        changeName(8, "null", "null");
 
         promoteToAdmin(8);
         removeAdminPrivileges(8);
