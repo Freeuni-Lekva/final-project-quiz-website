@@ -1,10 +1,12 @@
+USE quiz_website;
+
 CREATE TABLE IF NOT EXISTS users (
     id bigint PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(128) NOT NULL,
-    password_hash VARCHAR(128) NOT NULL,
+    password_hash VARCHAR(512) NOT NULL,
     email VARCHAR(256),
     is_admin BOOLEAN,
-    first_name VARCHAR(128) NOT NULL,
+    first_name VARCHAR(128),
     last_name VARCHAR(128),
     CONSTRAINT uq_users_username UNIQUE (username),
     CONSTRAINT uq_users_email UNIQUE (email)
