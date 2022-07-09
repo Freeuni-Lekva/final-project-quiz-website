@@ -16,6 +16,10 @@ public class UserDAOSQL implements UserDAO {
         this.conn = conn;
     }
 
+    public Connection getConnection() {
+        return conn;
+    }
+
     @Override
     public List<User> getAllUsers() {
         String query = "SELECT * FROM users;";

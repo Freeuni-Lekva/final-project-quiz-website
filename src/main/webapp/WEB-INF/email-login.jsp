@@ -10,7 +10,7 @@
 </head>
 <body>
     <h2>Please Log In.</h2>
-    <form method="post" action="/login">
+    <form method="post" action="login">
         <label for="email">E-Mail:</label>
         <input type="text" id="email" name="email" class="bottom-gap">
         <br>

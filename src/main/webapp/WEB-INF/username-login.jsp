@@ -10,7 +10,7 @@
 </head>
 <body>
     <h2>Please Log In.</h2>
-    <form method="post" action="/login">
+    <form method="post" action="login">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" class="bottom-gap">
         <br>
