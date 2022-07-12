@@ -1,5 +1,10 @@
 package com.project.website.utils;
 
+import org.sqlite.SQLiteConfig;
+import org.sqlite.SQLiteDataSource;
+import org.sqlite.javax.SQLiteConnectionPoolDataSource;
+
+import javax.sql.DataSource;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -25,6 +30,16 @@ public class SQLiteTool {
             return null;
         }
         return conn;
+    }
+
+    /**
+     * Creates an in memory SQLite Data source
+     * @return the specified data source
+     */
+    public static DataSource getSQLiteDataSource() {
+        SQLiteConnectionPoolDataSource ds = new SQLiteConnectionPoolDataSource();
+        ds.setUrl("jdbc:sqlite:memory:");
+        return ds;
     }
 
     /**
@@ -58,6 +73,7 @@ public class SQLiteTool {
                 return false;
             }
         }
+
 
         // split the read file into separate executable statements
         String[] commands = stringBuilder.toString().split(";");
