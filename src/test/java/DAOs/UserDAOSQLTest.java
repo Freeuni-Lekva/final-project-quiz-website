@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class UserDAOSQLTest {
@@ -46,11 +47,8 @@ public class UserDAOSQLTest {
         dao.removeAdminPrivileges(id);
     }
 
-    boolean setUpIsDone = false;
     @Before
     public void setUp() {
-//        if(setUpIsDone)
-//            return;
         src = SQLiteTool.getSQLiteDataSource();
         try(Connection conn = src.getConnection()) {
             SQLiteTool.createTables(conn, "sql/create.sql");
@@ -81,7 +79,6 @@ public class UserDAOSQLTest {
 
         promoteToAdmin(8);
         removeAdminPrivileges(8);
-        setUpIsDone = true;
     }
 
     @Test
@@ -113,7 +110,7 @@ public class UserDAOSQLTest {
         assertEquals(admins.size(), adminCount);
         // for each user returned by the DAO, check that they're an admin in the test users list
         for(User possibleAdmin : admins) {
-            Assertions.assertTrue(testUsers.get((int)possibleAdmin.getId()).isAdmin());
+            assertTrue(testUsers.get((int)possibleAdmin.getId()).isAdmin());
         }
     }
 
