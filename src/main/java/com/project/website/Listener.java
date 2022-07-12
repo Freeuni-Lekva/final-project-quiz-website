@@ -1,11 +1,13 @@
 package com.project.website;
 
+import com.project.website.DAOs.QuizSiteDataSource;
 import com.project.website.DAOs.UserDAO;
 import com.project.website.DAOs.UserDAOSQL;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -20,14 +22,10 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
     public void contextInitialized(ServletContextEvent sce) {
         /* This method is called when the servlet context is initialized(when the Web application is deployed). */
         // initialize database connection
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/quiz_website", "", "");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+
+        DataSource src = new QuizSiteDataSource();
         // initialize user DAO
-        UserDAO dao = new UserDAOSQL(conn);
+        UserDAO dao = new UserDAOSQL(src);
         // set the DAO as a context attribute
         sce.getServletContext().setAttribute("DAO", dao);
     }

@@ -2,6 +2,7 @@ package com.project.website.DAOs;
 
 import com.project.website.Objects.User;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,14 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAOSQL implements UserDAO {
-    private Connection conn;
+    private final DataSource src;
 
-    public UserDAOSQL(Connection conn) {
-        this.conn = conn;
-    }
-
-    public Connection getConnection() {
-        return conn;
+    public UserDAOSQL(DataSource src) {
+        this.src = src;
     }
 
     @Override
@@ -36,11 +33,10 @@ public class UserDAOSQL implements UserDAO {
      * @return all users selected by the given query. returns null in case of an exception
      * */
     private List<User> getUsers(String query) {
-        ResultSet rs = null;
         List<User> retval = new ArrayList<>();
 
-        try {
-            rs = conn.createStatement().executeQuery(query);
+        try (Connection conn = src.getConnection();
+             ResultSet rs = conn.createStatement().executeQuery(query)){
 
             while(rs.next()) {
                 retval.add(new User(rs.getLong(1), rs.getString(2), rs.getString(3), rs.getString(4),
@@ -142,10 +138,9 @@ public class UserDAOSQL implements UserDAO {
         if(user != null)
             return EMAIL_TAKEN;
 
-        PreparedStatement pstmt = null;
-        try {
-            pstmt = conn.prepareStatement("INSERT INTO users (username, email, password_hash, is_admin) " +
-                    "VALUES (?, ?, ?, 0)");
+        try(Connection conn = src.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO users (username, email, password_hash, is_admin) " +
+                    "VALUES (?, ?, ?, 0)")) {
             pstmt.setString(1, username);
             pstmt.setString(2, email);
             pstmt.setString(3, passwordHash);
@@ -162,9 +157,8 @@ public class UserDAOSQL implements UserDAO {
      * @return SUCCESS or ERROR
      * */
     private int updateUserData(String updateStatement) {
-        PreparedStatement pstmt = null;
-        try {
-            pstmt = conn.prepareStatement(updateStatement);
+        try(Connection conn = src.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(updateStatement)) {
             pstmt.executeUpdate();
             return SUCCESS;
         } catch (SQLException e) {

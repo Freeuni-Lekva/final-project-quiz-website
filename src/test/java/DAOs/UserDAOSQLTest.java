@@ -5,20 +5,24 @@ import com.project.website.DAOs.UserDAOSQL;
 import com.project.website.Objects.User;
 import com.project.website.utils.Hasher;
 import com.project.website.utils.SQLiteTool;
-import junit.framework.TestCase;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAOSQLTest extends TestCase {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-    Connection conn;
+
+public class UserDAOSQLTest {
+
+    DataSource src;
     UserDAOSQL dao;
-
     List<User> testUsers;
 
     /*some private methods to make testing easier. they make changes in the local list as well as in the DAO.*/
@@ -43,15 +47,18 @@ public class UserDAOSQLTest extends TestCase {
         dao.removeAdminPrivileges(id);
     }
 
-    @Override
+    @Before
     public void setUp() {
-        conn = SQLiteTool.getSQLiteConnection();
-
-        SQLiteTool.createTables(conn, "sql/create.sql");
+        src = SQLiteTool.getSQLiteDataSource();
+        try(Connection conn = src.getConnection()) {
+            SQLiteTool.createTables(conn, "sql/create.sql");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         testUsers = new ArrayList<>();
         testUsers.add(null);    // add a null user so that the list indices match user IDs
-        dao = new UserDAOSQL(conn);
+        dao = new UserDAOSQL(src);
 
         register("user1", Hasher.getHash("a"), "user1@org.org");
         register("user2", Hasher.getHash("b"), "user2@com.com");
