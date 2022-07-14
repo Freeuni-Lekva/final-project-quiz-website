@@ -14,8 +14,8 @@ CREATE TABLE IF NOT EXISTS friendships (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     first_user_id BIGINT,
     second_user_id BIGINT,
-    FOREIGN KEY (first_user_id) REFERENCES users(id),
-    FOREIGN KEY (second_user_id) REFERENCES users(id)
+    FOREIGN KEY (first_user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (second_user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS friend_requests (
@@ -23,8 +23,8 @@ CREATE TABLE IF NOT EXISTS friend_requests (
     sender_id BIGINT,
     receiver_id BIGINT,
     send_date DATETIME,
-    FOREIGN KEY (sender_id) REFERENCES users(id),
-    FOREIGN KEY (receiver_id) REFERENCES users(id)
+    FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 -- This one needs completion
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS quizzes (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     creator_id BIGINT,
     creation_time DATETIME,
-    FOREIGN KEY (creator_id) REFERENCES users(id)
+    FOREIGN KEY (creator_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS challenges (
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS challenges (
     receiver_id BIGINT,
     quiz_id BIGINT,
     send_date DATETIME,
-    FOREIGN KEY (sender_id) REFERENCES users(id),
-    FOREIGN KEY (receiver_id) REFERENCES users(id),
-    FOREIGN KEY (quiz_id) REFERENCES quizzes(id)
+    FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE
 );
