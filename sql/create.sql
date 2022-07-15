@@ -35,6 +35,22 @@ CREATE TABLE IF NOT EXISTS quizzes (
     FOREIGN KEY (creator_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS questions (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    creator_id BIGINT,
+    creation_time DATETIME,
+    question_object MEDIUMBLOB,
+    FOREIGN KEY (creator_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS question_to_quiz (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    question_id BIGINT,
+    quiz_id BIGINT,
+    FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE,
+    FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS challenges (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     sender_id BIGINT,
