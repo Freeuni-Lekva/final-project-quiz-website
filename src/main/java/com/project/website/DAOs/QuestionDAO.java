@@ -1,7 +1,6 @@
 package com.project.website.DAOs;
 
-import com.project.website.questions.Question;
-import com.project.website.questions.QuestionEntry;
+import com.project.website.Objects.questions.QuestionEntry;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package com.project.website.DAOs;
 
-import com.project.website.questions.Question;
-import com.project.website.questions.QuestionEntry;
+import com.project.website.Objects.questions.AnswerableHTML;
+import com.project.website.Objects.questions.QuestionEntry;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionDAOSQL implements QuestionDAO {
-    DataSource dataSource;
+    private final DataSource dataSource;
 
     public QuestionDAOSQL(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -20,7 +20,7 @@ public class QuestionDAOSQL implements QuestionDAO {
         try(ResultSet rs = preparedStatement.executeQuery()) {
             while(rs.next()) {
                 retVal.add(new QuestionEntry(rs.getInt(1), rs.getInt(2), rs.getInt(3),
-                            rs.getTimestamp(4), rs.getObject(5, Question.class)));
+                            rs.getTimestamp(4), rs.getObject(5, AnswerableHTML.class)));
             }
         } catch(SQLException e) {
             return null;

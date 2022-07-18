@@ -1,14 +1,23 @@
-package com.project.website.questions;
+package com.project.website.Objects.questions;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 public class QuestionEntry {
+
+    public static final int NO_ID = -1;
+
+    public static final Timestamp NO_DATE = null;
+
     private final int id, creator_id, category_id;
     private final Timestamp creation_time;
-    private final Question question;
+    private final AnswerableHTML question;
 
-    public QuestionEntry(int id, int creator_id, int category_id, Timestamp creation_time, Question question) {
+
+    public QuestionEntry(int creator_id, int category_id, AnswerableHTML question) {
+        this(NO_ID, creator_id, category_id, NO_DATE, question);
+    }
+
+    public QuestionEntry(int id, int creator_id, int category_id, Timestamp creation_time, AnswerableHTML question) {
         this.id = id;
         this.creator_id = creator_id;
         this.category_id = category_id;
@@ -32,7 +41,7 @@ public class QuestionEntry {
         return creation_time;
     }
 
-    public Question getQuestion() {
+    public AnswerableHTML getQuestion() {
         return question;
     }
 }
