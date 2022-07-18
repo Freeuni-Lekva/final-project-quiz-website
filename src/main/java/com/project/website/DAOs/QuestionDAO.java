@@ -13,12 +13,13 @@ public interface QuestionDAO {
      */
     QuestionEntry getQuestionById(int questionId);
 
+    int INSERT_FAILED = -1;
     /**
      *
      * @param questionEntry to be inserted
-     * @return true if the insertion was successful, false otherwise
+     * @return id if insertion was successful, INSERT_FAILED otherwise
      */
-    boolean insertQuestion(QuestionEntry questionEntry);
+    int insertQuestion(QuestionEntry questionEntry);
 
     /**
      * @param questionId id of question to be deleted

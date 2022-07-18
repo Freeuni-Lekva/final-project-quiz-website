@@ -47,18 +47,26 @@ public class QuestionDAOSQL implements QuestionDAO {
     }
 
     @Override
-    public boolean insertQuestion(QuestionEntry questionEntry) {
+    public int insertQuestion(QuestionEntry questionEntry) {
         try(Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(
                 "INSERT INTO " +
                 "questions(creator_id, category_id, question_object) " +
-                "VALUES (?, ?, ?)")) {
+                "VALUES (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setInt(1, questionEntry.getId());
             preparedStatement.setInt(2, questionEntry.getCreator_id());
             preparedStatement.setObject(3, questionEntry.getQuestion());
-            return preparedStatement.executeUpdate() != 0;
+            preparedStatement.executeUpdate();
+            try(ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                if(generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                }
+                else {
+                    throw new SQLException("Failed to insert question");
+                }
+            }
         } catch(SQLException e) {
-            return false;
+            return INSERT_FAILED;
         }
     }
 
