@@ -24,4 +24,11 @@ public interface FriendshipDAO {
      * @return true if friendship deleted, false otherwise
      */
     boolean removeFriendship(long user1Id, long user2Id);
+
+    /*
+     * @param user1Id first user id
+     * @param user2Id second user id
+     * @return true if friendship exists, false otherwise
+     */
+    boolean checkIfFriends(long user1Id, long user2Id);
 }
