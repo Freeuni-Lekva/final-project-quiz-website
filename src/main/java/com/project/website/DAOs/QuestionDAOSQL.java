@@ -4,10 +4,7 @@ import com.project.website.questions.Question;
 import com.project.website.questions.QuestionEntry;
 
 import javax.sql.DataSource;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +37,8 @@ public class QuestionDAOSQL implements QuestionDAO {
 
     @Override
     public QuestionEntry getQuestionById(int questionId) {
-        try(PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement("SELECT * FROM questions WHERE id = ?")) {
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM questions WHERE id = ?")) {
             preparedStatement.setInt(1, questionId);
             return getFirstQuestionEntry(preparedStatement);
         } catch(SQLException e) {
@@ -50,7 +48,8 @@ public class QuestionDAOSQL implements QuestionDAO {
 
     @Override
     public boolean insertQuestion(QuestionEntry questionEntry) {
-        try(PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(
                 "INSERT INTO " +
                 "questions(creator_id, category_id, question_object) " +
                 "VALUES (?, ?, ?)")) {
@@ -65,7 +64,8 @@ public class QuestionDAOSQL implements QuestionDAO {
 
     @Override
     public boolean deleteQuestion(int questionId) {
-        try(PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement("DELETE FROM questions WHERE id = ?")) {
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM questions WHERE id = ?")) {
             preparedStatement.setInt(1, questionId);
             return preparedStatement.executeUpdate() != 0;
         }catch(SQLException e) {
@@ -75,7 +75,8 @@ public class QuestionDAOSQL implements QuestionDAO {
 
     @Override
     public List<QuestionEntry> getQuestionsByCreatorId(int creatorId, int offset, int limit) {
-        try(PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement("SELECT * FROM questions WHERE creator_id = ? LIMIT ?, ?")) {
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM questions WHERE creator_id = ? LIMIT ?, ?")) {
             preparedStatement.setInt(1, creatorId);
             preparedStatement.setInt(2, offset);
             preparedStatement.setInt(3, limit);
@@ -87,7 +88,8 @@ public class QuestionDAOSQL implements QuestionDAO {
 
     @Override
     public List<QuestionEntry> getQuestionsByCategory(int categoryId, int offset, int limit) {
-        try(PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement("SELECT * FROM questions WHERE category_id = ? LIMIT ?, ?")) {
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM questions WHERE category_id = ? LIMIT ?, ?")) {
             preparedStatement.setInt(1, categoryId);
             preparedStatement.setInt(2, offset);
             preparedStatement.setInt(3, limit);
