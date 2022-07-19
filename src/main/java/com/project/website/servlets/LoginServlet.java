@@ -15,10 +15,17 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String loginMethod = request.getParameter("using");
         if(loginMethod == null || loginMethod.equals("username")) {
-            request.getRequestDispatcher("WEB-INF/username-login.jsp").forward(request, response);
+            request.setAttribute("loginMethod", "username");
+            request.setAttribute("loginLabel", "Username");
+            request.setAttribute("alternateLoginMethod", "email");
+            request.setAttribute("alternateLoginLabel", "E-Mail");
         } else {
-            request.getRequestDispatcher("WEB-INF/email-login.jsp").forward(request, response);
+            request.setAttribute("loginMethod", "email");
+            request.setAttribute("loginLabel", "E-Mail");
+            request.setAttribute("alternateLoginMethod", "username");
+            request.setAttribute("alternateLoginLabel", "Username");
         }
+        request.getRequestDispatcher("WEB-INF/login.jsp").forward(request, response);
     }
 
     @Override
