@@ -30,13 +30,13 @@ public class FriendshipDAOSQL implements FriendshipDAO {
                 PreparedStatement newStatement = conn.prepareStatement(
                         "SELECT * FROM users WHERE id = ?")
         ) {
-            preparedStatement.setString(1, Long.toString(userId));
-            preparedStatement.setString(2, Long.toString(userId));
+            preparedStatement.setLong(1, userId);
+            preparedStatement.setLong(2, userId);
 
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 List<User> resultList = new ArrayList<>();
                 while (rs.next()) {
-                    newStatement.setString(1, Long.toString(rs.getLong(1)));
+                    newStatement.setLong(1, rs.getLong(1));
 
                     try (ResultSet nrs = newStatement.executeQuery()) {
                         resultList.add(new User(nrs.getLong(1), nrs.getString(2), nrs.getString(3), nrs.getString(4),
@@ -54,13 +54,16 @@ public class FriendshipDAOSQL implements FriendshipDAO {
 
     @Override
     public boolean addFriendship(long user1Id, long user2Id) {
+        if (checkIfFriends(user1Id, user2Id)) {
+            return false;
+        }
         try (
                 Connection conn = dataSource.getConnection();
                 PreparedStatement preparedStatement = conn.prepareStatement(
                 "INSERT INTO friendships(first_user_id,second_user_id) VALUES(?,?)")
         ) {
-            preparedStatement.setString(1, Long.toString(user1Id));
-            preparedStatement.setString(2, Long.toString(user2Id));
+            preparedStatement.setLong(1, user1Id);
+            preparedStatement.setLong(2, user2Id);
             return preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
             return false;
@@ -74,10 +77,10 @@ public class FriendshipDAOSQL implements FriendshipDAO {
                 PreparedStatement preparedStatement = conn.prepareStatement(
                 "DELETE FROM friendships WHERE (first_user_id = ? AND second_user_id = ?) OR (first_user_id = ? AND second_user_id = ?)")
         ) {
-            preparedStatement.setString(1, Long.toString(user1Id));
-            preparedStatement.setString(2, Long.toString(user2Id));
-            preparedStatement.setString(3, Long.toString(user2Id));
-            preparedStatement.setString(4, Long.toString(user1Id));
+            preparedStatement.setLong(1, user1Id);
+            preparedStatement.setLong(2, user2Id);
+            preparedStatement.setLong(3, user2Id);
+            preparedStatement.setLong(4, user1Id);
             return preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
             return false;
@@ -91,10 +94,10 @@ public class FriendshipDAOSQL implements FriendshipDAO {
                 PreparedStatement preparedStatement = conn.prepareStatement(
                 "SELECT * FROM friendships WHERE (first_user_id = ? AND second_user_id = ?) OR (first_user_id = ? AND second_user_id = ?)")
         ) {
-            preparedStatement.setString(1, Long.toString(user1Id));
-            preparedStatement.setString(2, Long.toString(user2Id));
-            preparedStatement.setString(3, Long.toString(user2Id));
-            preparedStatement.setString(4, Long.toString(user1Id));
+            preparedStatement.setLong(1, user1Id);
+            preparedStatement.setLong(2, user2Id);
+            preparedStatement.setLong(3, user2Id);
+            preparedStatement.setLong(4, user1Id);
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 return rs.next();
             }

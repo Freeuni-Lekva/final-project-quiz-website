@@ -27,6 +27,7 @@ public class FriendshipDAOSQLTest {
     public void setUp() {
         src = SQLiteTool.getSQLiteDataSource();
         try(Connection conn = src.getConnection()) {
+            SQLiteTool.createTables(conn, "sql/drop.sql");
             SQLiteTool.createTables(conn, "sql/create.sql");
         } catch (SQLException e) {
             throw new RuntimeException(e);
