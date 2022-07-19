@@ -25,10 +25,12 @@ public class CategoryDAOSQL implements CategoryDAO {
                             "VALUES (?)", PreparedStatement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, category.getCategoryName());
             preparedStatement.executeUpdate();
-            ResultSet rs =  preparedStatement.getGeneratedKeys();
-
-            if (rs.next())
-                return rs.getInt(1);
+            try(ResultSet rs =  preparedStatement.getGeneratedKeys()) {
+                if (rs.next())
+                    return rs.getInt(1);
+                else
+                    throw new SQLException("Insert failed");
+            }
         } catch(SQLException ignored) {}
         return INSERTION_ERROR;
     }
@@ -49,10 +51,13 @@ public class CategoryDAOSQL implements CategoryDAO {
         try(Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM categories WHERE id = ?")) {
             preparedStatement.setInt(1, id);
-            preparedStatement.executeQuery();
-            ResultSet rs = preparedStatement.getResultSet();
-            if (rs.next()) {
-                return new Category(rs.getInt(1), rs.getString(2));
+            try(ResultSet rs = preparedStatement.executeQuery()) {
+                if (rs.next()) {
+                    return new Category(rs.getInt(1), rs.getString(2));
+                }
+                else {
+                    throw new SQLException("Get failed");
+                }
             }
         } catch(SQLException ignored) {}
 

@@ -23,6 +23,7 @@ public class CategoryDaoSQLTest {
 
     private void addCategory(String name) {
         Category cat = new Category(name);
+        dao.insertCategory(cat);
         testCategories.add(cat);
     }
 
@@ -30,6 +31,7 @@ public class CategoryDaoSQLTest {
     public void setUp() {
         src = SQLiteTool.getSQLiteDataSource();
         try(Connection conn = src.getConnection()) {
+            SQLiteTool.createTables(conn, "sql/drop.sql");
             SQLiteTool.createTables(conn, "sql/create.sql");
         } catch (SQLException e) {
             throw new RuntimeException(e);
