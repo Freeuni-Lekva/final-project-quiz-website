@@ -24,10 +24,13 @@ public class CategoryDAOSQL implements CategoryDAO {
                             "categories(category_name) " +
                             "VALUES (?)", PreparedStatement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, category.getCategoryName());
-            return preparedStatement.getGeneratedKeys().getInt(1);
-        } catch(SQLException e) {
-            return INSERTION_ERROR;
-        }
+            preparedStatement.executeUpdate();
+            ResultSet rs =  preparedStatement.getGeneratedKeys();
+
+            if (rs.next())
+                return rs.getInt(1);
+        } catch(SQLException ignored) {}
+        return INSERTION_ERROR;
     }
 
     @Override

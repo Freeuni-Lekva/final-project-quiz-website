@@ -23,7 +23,7 @@ public class RegisterServlet extends HttpServlet {
         String username = request.getParameter("username");
         String passwordHash = Hasher.getHash(request.getParameter("password"));
 
-        UserDAO DAO = (UserDAO) request.getServletContext().getAttribute("DAO");
+        UserDAO DAO = (UserDAO) request.getServletContext().getAttribute("UserDAO");
         int regResult = DAO.register(username, passwordHash, email);
 
         if(regResult == UserDAO.SUCCESS) {

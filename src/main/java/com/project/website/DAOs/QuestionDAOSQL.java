@@ -4,6 +4,7 @@ import com.project.website.Objects.questions.AnswerableHTML;
 import com.project.website.Objects.questions.QuestionEntry;
 
 import javax.sql.DataSource;
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +20,14 @@ public class QuestionDAOSQL implements QuestionDAO {
         List<QuestionEntry> retVal = new ArrayList<>();
         try(ResultSet rs = preparedStatement.executeQuery()) {
             while(rs.next()) {
+                ObjectInput in = new ObjectInputStream(rs.getBlob(5).getBinaryStream());
+                AnswerableHTML question = (AnswerableHTML) in.readObject();
+
                 retVal.add(new QuestionEntry(rs.getInt(1), rs.getInt(2), rs.getInt(3),
-                            rs.getTimestamp(4), rs.getObject(5, AnswerableHTML.class)));
+                            rs.getTimestamp(4), question));
+
             }
-        } catch(SQLException e) {
+        } catch(Exception e) {
             return null;
         }
         return retVal;
@@ -53,9 +58,14 @@ public class QuestionDAOSQL implements QuestionDAO {
                 "INSERT INTO " +
                 "questions(creator_id, category_id, question_object) " +
                 "VALUES (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setInt(1, questionEntry.getId());
-            preparedStatement.setInt(2, questionEntry.getCreator_id());
-            preparedStatement.setObject(3, questionEntry.getQuestion());
+            preparedStatement.setInt(1, questionEntry.getCreator_id());
+            preparedStatement.setInt(2, questionEntry.getCategory_id());
+
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ObjectOutputStream out = new ObjectOutputStream(bos);
+            out.writeObject(questionEntry.getQuestion());
+            out.flush();
+            preparedStatement.setBlob(3, new ByteArrayInputStream(bos.toByteArray()));
             preparedStatement.executeUpdate();
             try(ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                 if(generatedKeys.next()) {
@@ -65,7 +75,7 @@ public class QuestionDAOSQL implements QuestionDAO {
                     throw new SQLException("Failed to insert question");
                 }
             }
-        } catch(SQLException e) {
+        } catch(Exception e) {
             return INSERT_FAILED;
         }
     }

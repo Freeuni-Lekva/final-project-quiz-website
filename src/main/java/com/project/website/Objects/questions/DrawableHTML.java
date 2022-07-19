@@ -1,6 +1,6 @@
 package com.project.website.Objects.questions;
 
-import com.project.website.utils.JSPParamPair;
+import com.project.website.utils.JSPAttributePair;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public interface DrawableHTML {
 
     /**
      *
-     * @return a list of all the params to be set for the Answerable class JSP
+     * @return a list of all the attributes to be set for the Answerable class JSP
      */
-    List<JSPParamPair> getJSPParams();
+    List<JSPAttributePair> getJSPParams();
 }
