@@ -35,12 +35,19 @@ CREATE TABLE IF NOT EXISTS quizzes (
     FOREIGN KEY (creator_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS categories(
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    category_name VARCHAR(64)
+);
+
 CREATE TABLE IF NOT EXISTS questions (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     creator_id BIGINT,
-    creation_time DATETIME,
+    category_id BIGINT DEFAULT NULL,
+    creation_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     question_object MEDIUMBLOB,
-    FOREIGN KEY (creator_id) REFERENCES users(id) ON DELETE CASCADE
+    FOREIGN KEY (creator_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS question_to_quiz (
