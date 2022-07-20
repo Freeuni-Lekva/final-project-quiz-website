@@ -11,7 +11,7 @@
             </c:when>
             <c:otherwise>
                 <%-- href="profile" is just a placeholder --%>
-                <li style="float:right"><a href="profile">Logout</a></li>
+                <li style="float:right"><a href="logout">Logout</a></li>
                 <li style="float:right"><a href="profile"><i>You are logged in as <b>${username}</b></i></a></li>
             </c:otherwise>
         </c:choose>
