@@ -27,7 +27,7 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
         // initialize user DAO
         UserDAO dao = new UserDAOSQL(src);
         // set the DAO as a context attribute
-        sce.getServletContext().setAttribute("DAO", dao);
+        sce.getServletContext().setAttribute("UserDAO", dao);
     }
 
     @Override

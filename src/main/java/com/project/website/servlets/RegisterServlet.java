@@ -1,6 +1,7 @@
 package com.project.website.servlets;
 
 import com.project.website.DAOs.UserDAO;
+import com.project.website.Objects.User;
 import com.project.website.utils.Hasher;
 
 import javax.servlet.*;
@@ -23,12 +24,13 @@ public class RegisterServlet extends HttpServlet {
         String username = request.getParameter("username");
         String passwordHash = Hasher.getHash(request.getParameter("password"));
 
-        UserDAO DAO = (UserDAO) request.getServletContext().getAttribute("DAO");
+        UserDAO DAO = (UserDAO) request.getServletContext().getAttribute("UserDAO");
         int regResult = DAO.register(username, passwordHash, email);
 
         if(regResult == UserDAO.SUCCESS) {
             // save the user info in the session and redirect them to the home page
-            request.getSession().setAttribute("userID", DAO.getUserByUsername(username).getId());
+            User user = DAO.getUserByUsername(username);
+            request.getSession().setAttribute("userID", user.getId());
             request.getSession().setAttribute("username", username);
             response.sendRedirect("home");
         } else if(regResult == UserDAO.USERNAME_TAKEN) {

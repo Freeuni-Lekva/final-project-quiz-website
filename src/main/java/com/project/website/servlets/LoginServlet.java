@@ -30,7 +30,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserDAO DAO = (UserDAO) request.getServletContext().getAttribute("DAO");
+        UserDAO DAO = (UserDAO) request.getServletContext().getAttribute("UserDAO");
 
         String passwordHash = Hasher.getHash(request.getParameter("password"));
         if(request.getParameter("email") == null) {
@@ -40,7 +40,8 @@ public class LoginServlet extends HttpServlet {
 
             if(loginResult == UserDAO.SUCCESS) {
                 // save the user info in the session and redirect them to the home page
-                request.getSession().setAttribute("userID", DAO.getUserByUsername(username));
+                User user = DAO.getUserByUsername(username);
+                request.getSession().setAttribute("userID", user.getId());
                 request.getSession().setAttribute("username", username);
                 response.sendRedirect("home");
             } else if(loginResult == UserDAO.USERNAME_DOES_NOT_EXIST) {
