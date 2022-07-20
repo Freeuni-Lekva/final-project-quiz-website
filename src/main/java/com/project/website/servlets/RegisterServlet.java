@@ -2,6 +2,7 @@ package com.project.website.servlets;
 
 import com.project.website.DAOs.UserDAO;
 import com.project.website.utils.Hasher;
+import com.project.website.utils.EmailSender;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -21,7 +22,9 @@ public class RegisterServlet extends HttpServlet {
         if(email.equals(""))
             email = null;
         String username = request.getParameter("username");
-        String passwordHash = Hasher.getHash(request.getParameter("password"));
+
+        String password = EmailSender.sendRandomPasswordToEmail(email,username);
+        String passwordHash = Hasher.getHash(password);
 
         UserDAO DAO = (UserDAO) request.getServletContext().getAttribute("DAO");
         int regResult = DAO.register(username, passwordHash, email);
