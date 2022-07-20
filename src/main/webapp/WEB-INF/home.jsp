@@ -3,8 +3,9 @@
 <head>
     <title>Quiz Website</title>
 </head>
-<body>
-<p style="position:absolute; right:1%"><i>You are logged in as ${username}</i></p>
+<body style="margin: 0;">
+<jsp:include page="modules/navbar.jsp"/>
+<div class="sub-body" style="margin: 10px;">
     <h1>Quiz Website</h1>
     <div class="announcements">
         <h2>Announcements</h2>
@@ -51,5 +52,6 @@
     <div class="friends-activities">
         <!-- TODO -->
     </div>
+</div>
 </body>
 </html>

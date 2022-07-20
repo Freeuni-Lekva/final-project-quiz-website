@@ -40,7 +40,8 @@ public class LoginServlet extends HttpServlet {
 
             if(loginResult == UserDAO.SUCCESS) {
                 // save the user info in the session and redirect them to the home page
-                request.getSession().setAttribute("userID", DAO.getUserByUsername(username));
+                User user = DAO.getUserByUsername(username);
+                request.getSession().setAttribute("userID", user.getId());
                 request.getSession().setAttribute("username", username);
                 response.sendRedirect("home");
             } else if(loginResult == UserDAO.USERNAME_DOES_NOT_EXIST) {
