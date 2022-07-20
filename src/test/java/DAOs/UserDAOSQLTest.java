@@ -4,6 +4,7 @@ import com.project.website.DAOs.UserDAO;
 import com.project.website.DAOs.UserDAOSQL;
 import com.project.website.Objects.User;
 import com.project.website.utils.Hasher;
+import com.project.website.utils.MySQLTestingTool;
 import com.project.website.utils.SQLiteTool;
 import org.junit.Before;
 import org.junit.Test;
@@ -49,13 +50,12 @@ public class UserDAOSQLTest {
 
     @Before
     public void setUp() {
-        src = SQLiteTool.getSQLiteDataSource();
+        src = MySQLTestingTool.getTestDataSource();
         try(Connection conn = src.getConnection()) {
-            SQLiteTool.createTables(conn, "sql/create.sql");
+            MySQLTestingTool.resetDB(conn, "sql/drop.sql", "sql/create.sql");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         testUsers = new ArrayList<>();
         testUsers.add(null);    // add a null user so that the list indices match user IDs
         dao = new UserDAOSQL(src);
