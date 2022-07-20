@@ -3,6 +3,7 @@ package DAOs;
 import com.project.website.DAOs.CategoryDAO;
 import com.project.website.DAOs.CategoryDAOSQL;
 import com.project.website.Objects.Category;
+import com.project.website.utils.MySQLTestingTool;
 import com.project.website.utils.SQLiteTool;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,10 +30,9 @@ public class CategoryDaoSQLTest {
 
     @Before
     public void setUp() {
-        src = SQLiteTool.getSQLiteDataSource();
+        src = MySQLTestingTool.getTestDataSource();
         try(Connection conn = src.getConnection()) {
-            SQLiteTool.createTables(conn, "sql/drop.sql");
-            SQLiteTool.createTables(conn, "sql/create.sql");
+            MySQLTestingTool.resetDB(conn, "sql/drop.sql", "sql/create.sql");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

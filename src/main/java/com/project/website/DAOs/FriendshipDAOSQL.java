@@ -39,6 +39,7 @@ public class FriendshipDAOSQL implements FriendshipDAO {
                     newStatement.setLong(1, rs.getLong(1));
 
                     try (ResultSet nrs = newStatement.executeQuery()) {
+                        nrs.next();
                         resultList.add(new User(nrs.getLong(1), nrs.getString(2), nrs.getString(3), nrs.getString(4),
                                 nrs.getBoolean(5), nrs.getString(6), nrs.getString(7)));
                     }

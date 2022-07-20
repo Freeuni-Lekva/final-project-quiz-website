@@ -4,6 +4,7 @@ import com.project.website.DAOs.FriendshipDAOSQL;
 import com.project.website.DAOs.UserDAOSQL;
 import com.project.website.Objects.User;
 import com.project.website.utils.Hasher;
+import com.project.website.utils.MySQLTestingTool;
 import com.project.website.utils.SQLiteTool;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,10 +26,9 @@ public class FriendshipDAOSQLTest {
     String examplePassword = Hasher.getHash("password");
     @Before
     public void setUp() {
-        src = SQLiteTool.getSQLiteDataSource();
+        src = MySQLTestingTool.getTestDataSource();
         try(Connection conn = src.getConnection()) {
-            SQLiteTool.createTables(conn, "sql/drop.sql");
-            SQLiteTool.createTables(conn, "sql/create.sql");
+            MySQLTestingTool.resetDB(conn, "sql/drop.sql", "sql/create.sql");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
