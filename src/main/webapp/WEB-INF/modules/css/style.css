@@ -44,3 +44,56 @@
     border-style: dotted;
     border-width: 3px;
 }
+
+.u-inner-container {
+    display: block;
+    justify-content: center;
+}
+
+.u-choice-list {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+
+.u-choice-item {
+    padding: 10px;
+    margin-left: 5vw;
+    margin-right: 5vw;
+    border: 1px dotted #000;
+    display: block;
+    vertical-align: middle;
+}
+
+.u-choice-item:hover {
+    box-shadow: 0 0 11px rgba(33,33,33,.2);
+}
+
+.u-item-image {
+    width: 200px;
+    height: auto;
+    display: block;
+}
+
+.u-section-title {
+    text-align: center;
+}
+
+.u-item-button {
+    background-color: black;
+    border: 1px solid #ccc;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 16px;
+    margin: 10px 4px 4px;
+    cursor: pointer;
+}
+
+.u-item-button:hover {
+    box-shadow: 0 0 11px rgba(200,33,33,.6);
+}
