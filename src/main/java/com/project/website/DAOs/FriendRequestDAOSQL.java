@@ -36,6 +36,10 @@ public class FriendRequestDAOSQL implements FriendRequestDAO {
 
     @Override
     public boolean removeFriendRequest(long senderUserId, long receiverUserId) {
+        if (!checkIfFriendRequestSent(senderUserId, receiverUserId)) {
+            return false;
+        }
+
         try (
                 Connection conn = dataSource.getConnection();
                 PreparedStatement preparedStatement = conn.prepareStatement(
