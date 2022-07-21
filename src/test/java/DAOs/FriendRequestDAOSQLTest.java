@@ -9,7 +9,6 @@ import com.project.website.utils.MySQLTestingTool;
 import com.project.website.DAOs.FriendRequestDAOSQL;
 
 import java.util.List;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.sql.Connection;
 import javax.sql.DataSource;
@@ -54,20 +53,20 @@ public class FriendRequestDAOSQLTest {
 
     @Test
     public void testAddFriendRequest() {
-        assertTrue(friendRequestsDao.addFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(2).getId(), new Timestamp(System.currentTimeMillis())));
-        assertFalse(friendRequestsDao.addFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(2).getId(), new Timestamp(System.currentTimeMillis())));
+        assertTrue(friendRequestsDao.addFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(2).getId()));
+        assertFalse(friendRequestsDao.addFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(2).getId()));
 
-        assertTrue(friendRequestsDao.addFriendRequest(exampleUsers.get(2).getId(), exampleUsers.get(1).getId(), new Timestamp(System.currentTimeMillis())));
-        assertFalse(friendRequestsDao.addFriendRequest(exampleUsers.get(2).getId(), exampleUsers.get(1).getId(), new Timestamp(System.currentTimeMillis())));
+        assertTrue(friendRequestsDao.addFriendRequest(exampleUsers.get(2).getId(), exampleUsers.get(1).getId()));
+        assertFalse(friendRequestsDao.addFriendRequest(exampleUsers.get(2).getId(), exampleUsers.get(1).getId()));
 
-        assertTrue(friendRequestsDao.addFriendRequest(exampleUsers.get(2).getId(), exampleUsers.get(3).getId(), new Timestamp(System.currentTimeMillis())));
-        assertFalse(friendRequestsDao.addFriendRequest(exampleUsers.get(2).getId(), exampleUsers.get(3).getId(), new Timestamp(System.currentTimeMillis())));
+        assertTrue(friendRequestsDao.addFriendRequest(exampleUsers.get(2).getId(), exampleUsers.get(3).getId()));
+        assertFalse(friendRequestsDao.addFriendRequest(exampleUsers.get(2).getId(), exampleUsers.get(3).getId()));
 
-        assertTrue(friendRequestsDao.addFriendRequest(exampleUsers.get(3).getId(), exampleUsers.get(4).getId(), new Timestamp(System.currentTimeMillis())));
-        assertFalse(friendRequestsDao.addFriendRequest(exampleUsers.get(3).getId(), exampleUsers.get(4).getId(), new Timestamp(System.currentTimeMillis())));
+        assertTrue(friendRequestsDao.addFriendRequest(exampleUsers.get(3).getId(), exampleUsers.get(4).getId()));
+        assertFalse(friendRequestsDao.addFriendRequest(exampleUsers.get(3).getId(), exampleUsers.get(4).getId()));
 
-        assertTrue(friendRequestsDao.addFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(3).getId(), new Timestamp(System.currentTimeMillis())));
-        assertFalse(friendRequestsDao.addFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(3).getId(), new Timestamp(System.currentTimeMillis())));
+        assertTrue(friendRequestsDao.addFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(3).getId()));
+        assertFalse(friendRequestsDao.addFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(3).getId()));
     }
 
     @Test
@@ -75,25 +74,25 @@ public class FriendRequestDAOSQLTest {
         assertFalse(friendRequestsDao.removeFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(2).getId()));
         assertFalse(friendRequestsDao.removeFriendRequest(exampleUsers.get(2).getId(), exampleUsers.get(1).getId()));
 
-        friendRequestsDao.addFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(2).getId(), new Timestamp(System.currentTimeMillis()));
+        friendRequestsDao.addFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(2).getId());
 
         assertTrue(friendRequestsDao.removeFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(2).getId()));
         assertFalse(friendRequestsDao.removeFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(2).getId()));
         assertFalse(friendRequestsDao.removeFriendRequest(exampleUsers.get(2).getId(), exampleUsers.get(1).getId()));
 
-        friendRequestsDao.addFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(2).getId(), new Timestamp(System.currentTimeMillis()));
-        friendRequestsDao.addFriendRequest(exampleUsers.get(2).getId(), exampleUsers.get(1).getId(), new Timestamp(System.currentTimeMillis()));
+        friendRequestsDao.addFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(2).getId());
+        friendRequestsDao.addFriendRequest(exampleUsers.get(2).getId(), exampleUsers.get(1).getId());
 
         assertTrue(friendRequestsDao.removeFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(2).getId()));
         assertFalse(friendRequestsDao.removeFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(2).getId()));
         assertTrue(friendRequestsDao.removeFriendRequest(exampleUsers.get(2).getId(), exampleUsers.get(1).getId()));
         assertFalse(friendRequestsDao.removeFriendRequest(exampleUsers.get(2).getId(), exampleUsers.get(1).getId()));
 
-        friendRequestsDao.addFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(2).getId(), new Timestamp(System.currentTimeMillis()));
-        friendRequestsDao.addFriendRequest(exampleUsers.get(2).getId(), exampleUsers.get(1).getId(), new Timestamp(System.currentTimeMillis()));
-        friendRequestsDao.addFriendRequest(exampleUsers.get(2).getId(), exampleUsers.get(3).getId(), new Timestamp(System.currentTimeMillis()));
-        friendRequestsDao.addFriendRequest(exampleUsers.get(3).getId(), exampleUsers.get(4).getId(), new Timestamp(System.currentTimeMillis()));
-        friendRequestsDao.addFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(3).getId(), new Timestamp(System.currentTimeMillis()));
+        friendRequestsDao.addFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(2).getId());
+        friendRequestsDao.addFriendRequest(exampleUsers.get(2).getId(), exampleUsers.get(1).getId());
+        friendRequestsDao.addFriendRequest(exampleUsers.get(2).getId(), exampleUsers.get(3).getId());
+        friendRequestsDao.addFriendRequest(exampleUsers.get(3).getId(), exampleUsers.get(4).getId());
+        friendRequestsDao.addFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(3).getId());
 
         assertTrue(friendRequestsDao.removeFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(2).getId()));
         assertFalse(friendRequestsDao.removeFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(2).getId()));
@@ -112,12 +111,12 @@ public class FriendRequestDAOSQLTest {
         assertFalse(friendRequestsDao.checkIfFriendRequestSent(exampleUsers.get(1).getId(), exampleUsers.get(2).getId()));
         assertFalse(friendRequestsDao.checkIfFriendRequestSent(exampleUsers.get(2).getId(), exampleUsers.get(1).getId()));
 
-        friendRequestsDao.addFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(2).getId(), new Timestamp(System.currentTimeMillis()));
+        friendRequestsDao.addFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(2).getId());
 
         assertTrue(friendRequestsDao.checkIfFriendRequestSent(exampleUsers.get(1).getId(), exampleUsers.get(2).getId()));
         assertFalse(friendRequestsDao.checkIfFriendRequestSent(exampleUsers.get(2).getId(), exampleUsers.get(1).getId()));
 
-        friendRequestsDao.addFriendRequest(exampleUsers.get(2).getId(), exampleUsers.get(1).getId(), new Timestamp(System.currentTimeMillis()));
+        friendRequestsDao.addFriendRequest(exampleUsers.get(2).getId(), exampleUsers.get(1).getId());
 
         assertTrue(friendRequestsDao.checkIfFriendRequestSent(exampleUsers.get(1).getId(), exampleUsers.get(2).getId()));
         assertTrue(friendRequestsDao.checkIfFriendRequestSent(exampleUsers.get(2).getId(), exampleUsers.get(1).getId()));
@@ -147,7 +146,7 @@ public class FriendRequestDAOSQLTest {
         users = friendRequestsDao.getUserSentFriendRequests(exampleUsers.get(3).getId());
         assertEquals(0, users.size());
 
-        friendRequestsDao.addFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(2).getId(), new Timestamp(System.currentTimeMillis()));
+        friendRequestsDao.addFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(2).getId());
 
         // 1 ---> 2
         users = friendRequestsDao.getUserSentFriendRequests(exampleUsers.get(1).getId());
@@ -160,7 +159,7 @@ public class FriendRequestDAOSQLTest {
         users = friendRequestsDao.getUserSentFriendRequests(exampleUsers.get(3).getId());
         assertEquals(0, users.size());
 
-        friendRequestsDao.addFriendRequest(exampleUsers.get(2).getId(), exampleUsers.get(1).getId(), new Timestamp(System.currentTimeMillis()));
+        friendRequestsDao.addFriendRequest(exampleUsers.get(2).getId(), exampleUsers.get(1).getId());
 
         // 1 ---> 2
         // 2 ---> 1
@@ -175,7 +174,7 @@ public class FriendRequestDAOSQLTest {
         users = friendRequestsDao.getUserSentFriendRequests(exampleUsers.get(3).getId());
         assertEquals(0, users.size());
 
-        friendRequestsDao.addFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(3).getId(), new Timestamp(System.currentTimeMillis()));
+        friendRequestsDao.addFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(3).getId());
 
         // 1 ---> 2
         // 2 ---> 1
@@ -207,7 +206,7 @@ public class FriendRequestDAOSQLTest {
         users = friendRequestsDao.getUserReceivedFriendRequests(exampleUsers.get(3).getId());
         assertEquals(0, users.size());
 
-        friendRequestsDao.addFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(2).getId(), new Timestamp(System.currentTimeMillis()));
+        friendRequestsDao.addFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(2).getId());
 
         // 1 ---> 2
         users = friendRequestsDao.getUserReceivedFriendRequests(exampleUsers.get(1).getId());
@@ -220,7 +219,7 @@ public class FriendRequestDAOSQLTest {
         users = friendRequestsDao.getUserReceivedFriendRequests(exampleUsers.get(3).getId());
         assertEquals(0, users.size());
 
-        friendRequestsDao.addFriendRequest(exampleUsers.get(2).getId(), exampleUsers.get(1).getId(), new Timestamp(System.currentTimeMillis()));
+        friendRequestsDao.addFriendRequest(exampleUsers.get(2).getId(), exampleUsers.get(1).getId());
 
         // 1 ---> 2
         // 2 ---> 1
@@ -235,7 +234,7 @@ public class FriendRequestDAOSQLTest {
         users = friendRequestsDao.getUserReceivedFriendRequests(exampleUsers.get(3).getId());
         assertEquals(0, users.size());
 
-        friendRequestsDao.addFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(3).getId(), new Timestamp(System.currentTimeMillis()));
+        friendRequestsDao.addFriendRequest(exampleUsers.get(1).getId(), exampleUsers.get(3).getId());
 
         // 1 ---> 2
         // 2 ---> 1

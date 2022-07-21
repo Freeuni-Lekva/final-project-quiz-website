@@ -3,7 +3,6 @@ package com.project.website.DAOs;
 import com.project.website.Objects.User;
 
 import java.util.List;
-import java.sql.Timestamp;
 
 public interface FriendRequestDAO {
     /*
@@ -12,7 +11,7 @@ public interface FriendRequestDAO {
      * @param sendDate friend request send date and time
      * @return true if FriendRequest added, false otherwise
      */
-    boolean addFriendRequest(long senderUserId, long receiverUserId, Timestamp sendDate);
+    boolean addFriendRequest(long senderUserId, long receiverUserId);
 
     /*
      * @param senderUserId sender user id

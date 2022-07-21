@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS friend_requests (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     sender_id BIGINT,
     receiver_id BIGINT,
-    send_date DATETIME,
+    send_date  DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE CASCADE
 );
