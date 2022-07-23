@@ -11,9 +11,7 @@
     <title>Question</title>
 </head>
 <body>
-<jsp:include page="navigationBar.jsp" >
-    <%--TODO add params --%>
-</jsp:include>
+<jsp:include page="modules/navbar.jsp"/>
 <form method="post" action="question">
     <p>${statement}</p>
     <label for="answer">Answer</label>

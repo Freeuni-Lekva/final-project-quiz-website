@@ -11,9 +11,6 @@
     <title>Title</title>
 </head>
 <body>
-<jsp:include page="navigationBar.jsp" >
-    <%--TODO add params --%>
-</jsp:include>
-
+<jsp:include page="modules/navbar.jsp"/>
 </body>
 </html>
