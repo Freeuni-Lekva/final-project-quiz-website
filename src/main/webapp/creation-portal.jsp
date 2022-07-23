@@ -10,7 +10,7 @@
 <head>
     <title>Creation portal</title>
 </head>
-<body>
+<body style="margin: 0;">
 <style><%@include file="WEB-INF/modules/css/style.css"%></style>
 
 <jsp:include page="WEB-INF/modules/navbar.jsp"/>
