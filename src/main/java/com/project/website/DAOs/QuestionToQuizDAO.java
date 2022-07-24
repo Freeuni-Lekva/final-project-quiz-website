@@ -21,6 +21,14 @@ public interface QuestionToQuizDAO {
      */
     boolean insert(int question_id, int quiz_id, int local_id);
 
+    int GET_FAILED = -1;
+    /**
+     * @param quiz_id
+     * @param local_id
+     * @return The id of the question with the specified local_id in the specified quiz_id
+     */
+    int getQuestionIDByQuizAndLocalID(int quiz_id, int local_id);
+
     /**
      * @param quiz_id
      * @return List of question ids ordered according to local_id
