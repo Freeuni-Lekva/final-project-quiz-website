@@ -47,7 +47,7 @@ public class QuizDAOSQL implements QuizDAO {
         List<Quiz> retVal = new ArrayList<>();
         try(ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
-                retVal.add(new Quiz(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getDate(4)));
+                retVal.add(new Quiz(rs.getInt(1), rs.getInt(2), rs.getInt(3),rs.getInt(4), rs.getDate(5)));
             }
         } catch (SQLException ignored) {}
         return retVal;
