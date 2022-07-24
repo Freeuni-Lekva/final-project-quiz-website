@@ -67,20 +67,24 @@ public class QuizDAOSQL implements QuizDAO {
     }
 
     @Override
-    public List<Quiz> getQuizByCreator(int creatorID) {
+    public List<Quiz> getQuizByCreator(int creatorID, int offset, int limit) {
         try(Connection connection = dataSource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM quizzes WHERE creator_id = ? ORDER BY creation_time DESC")) {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM quizzes WHERE creator_id = ? ORDER BY creation_time DESC LIMIT ?,?")) {
             preparedStatement.setInt(1, creatorID);
+            preparedStatement.setInt(2, offset);
+            preparedStatement.setInt(3, limit);
             return aggregateQuery(preparedStatement);
         } catch (SQLException ignored) {}
         return null;
     }
 
     @Override
-    public List<Quiz> getQuizByCategory(int categoryID) {
+    public List<Quiz> getQuizByCategory(int categoryID, int offset, int limit) {
         try(Connection connection = dataSource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM quizzes WHERE category_id = ? ORDER BY creation_time DESC")) {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM quizzes WHERE category_id = ? ORDER BY creation_time DESC LIMIT ?,?")) {
             preparedStatement.setInt(1, categoryID);
+            preparedStatement.setInt(2, offset);
+            preparedStatement.setInt(3, limit);
             return aggregateQuery(preparedStatement);
         } catch (SQLException ignored) {}
         return null;
