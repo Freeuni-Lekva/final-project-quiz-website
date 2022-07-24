@@ -34,9 +34,10 @@ public class QuestionToQuizDAOSQL implements QuestionToQuizDAO {
     public boolean insert(int question_id, int quiz_id, int local_id) {
         try(Connection conn = dataSource.getConnection();
             PreparedStatement preparedStatement = conn.prepareStatement(
-                    "INSERT INTO question_to_quiz(QUESTION_ID, QUIZ_ID) VALUES (?, ?)")) {
+                    "INSERT INTO question_to_quiz(QUESTION_ID, QUIZ_ID, LOCAL_ID) VALUES (?, ?, ?)")) {
             preparedStatement.setInt(1, question_id);
             preparedStatement.setInt(2, quiz_id);
+            preparedStatement.setInt(3, local_id);
             return preparedStatement.executeUpdate() != 0;
         } catch(SQLException ignored) {}
         return false;
