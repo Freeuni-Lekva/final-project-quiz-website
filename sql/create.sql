@@ -27,18 +27,21 @@ CREATE TABLE IF NOT EXISTS friend_requests (
     FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- This one needs completion
-CREATE TABLE IF NOT EXISTS quizzes (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    creator_id BIGINT,
-    creation_time DATETIME,
-    FOREIGN KEY (creator_id) REFERENCES users(id) ON DELETE CASCADE
-);
-
 CREATE TABLE IF NOT EXISTS categories(
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     category_name VARCHAR(64)
 );
+
+-- This one needs completion
+CREATE TABLE IF NOT EXISTS quizzes (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    creator_id BIGINT,
+    category_id BIGINT,
+    creation_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (creator_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
+);
+
 
 CREATE TABLE IF NOT EXISTS questions (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
