@@ -7,16 +7,21 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+<style><%@include file="modules/css/style.css"%></style>
 <head>
     <title>Question</title>
 </head>
-<body>
+<body style="margin: 0;">
 <jsp:include page="modules/navbar.jsp"/>
-<form method="post" action="question">
-    <p>${statement}</p>
-    <label for="answer">Answer</label>
-    <input type="text" id="answer" name="answer">
-    <br>
+<form method="post" action="question" class="u-question-form">
+    <form method="post">
+        <h1 class="u-question-title">${title}</h1>
+        <div class="u-question">
+            <label for="answer" class="u-statement">${statement}</label>
+            <input type="text" name="answer" id="answer" class="u-question-input-text" required/>
+        </div>
+        <button class="u-submit-answer-button">Submit</button>
+    </form>
 </form>
 </body>
 </html>

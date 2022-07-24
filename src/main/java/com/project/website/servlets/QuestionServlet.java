@@ -27,6 +27,7 @@ public class QuestionServlet extends HttpServlet {
         for (JSPAttributePair attributePair : questionEntry.getQuestion().getJSPParams()) {
             req.setAttribute(attributePair.getAttributeName(), attributePair.getAttributeValue());
         }
+        req.setAttribute("title", "test"); //TODO implement title logic
         req.getRequestDispatcher(questionEntry.getQuestion().getJSP()).forward(req, resp);
     }
 
