@@ -57,6 +57,7 @@ CREATE TABLE IF NOT EXISTS question_to_quiz (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     question_id BIGINT,
     quiz_id BIGINT,
+    local_id BIGINT,
     FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE,
     FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE
 );
