@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS quizzes (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     creator_id BIGINT,
     category_id BIGINT,
+    last_question_id BIGINT,
     creation_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (creator_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
@@ -57,6 +58,7 @@ CREATE TABLE IF NOT EXISTS question_to_quiz (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     question_id BIGINT,
     quiz_id BIGINT,
+    local_id BIGINT,
     FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE,
     FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE
 );
