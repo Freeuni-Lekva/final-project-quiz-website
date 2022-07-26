@@ -127,6 +127,24 @@
     border-radius: 10px;
 }
 
+.u-choice {
+    transform-origin: left center;
+    color: black;
+    font-weight: 100;
+    letter-spacing: 0.01em;
+    font-size: 17px;
+    box-sizing: border-box;
+    padding: 10px 15px;
+    position: relative;
+    pointer-events: none;
+    background-color: white;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align:center;
+    width: 100%;
+    border-radius: 10px;
+}
+
 .u-question-form {
     position: relative;
     display: inline-block;
@@ -160,6 +178,10 @@
     font-weight: 100;
     letter-spacing: 0.01em;
     position: relative;
+}
+
+.u-question-input-radio {
+    margin-top: 32px;
 }
 
 .u-submit-answer-button {
