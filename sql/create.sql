@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS users (
     is_admin BOOLEAN,
     first_name VARCHAR(128),
     last_name VARCHAR(128),
+    profile_pic_url VARCHAR(256),
     CONSTRAINT uq_users_username UNIQUE (username),
     CONSTRAINT uq_users_email UNIQUE (email)
 );

@@ -13,11 +13,11 @@ import org.junit.jupiter.api.Assertions;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class UserDAOSQLTest {
@@ -28,7 +28,7 @@ public class UserDAOSQLTest {
 
     /*some private methods to make testing easier. they make changes in the local list as well as in the DAO.*/
     private void register(String username, String passwordHash, String email) {
-        testUsers.add(new User(testUsers.size(), username, passwordHash, email, false, null, null));
+        testUsers.add(new User(testUsers.size(), username, passwordHash, email, false, null, null, null));
         dao.register(username, passwordHash, email);
     }
 
@@ -69,6 +69,7 @@ public class UserDAOSQLTest {
         register("fullnameuser", Hasher.getHash("wow, full name"), null);
         register("former admin", Hasher.getHash("d"), "demoted@!admin.admin");
         register("nullman", Hasher.getHash("null"), "null@null.null");
+        register("averageProfilePicEnjoyer", Hasher.getHash("a"), "enjoyer@sigma.org");
 
         promoteToAdmin(4);
         promoteToAdmin(5);
@@ -239,5 +240,39 @@ public class UserDAOSQLTest {
     public void testNameChangeOnWrongId() {
         int result = dao.changeName(1000000000, "name", "last name");
         assertEquals(result, UserDAO.USER_DOES_NOT_EXIST);
+    }
+
+    @Test
+    public void testSearch() {
+        List<User> users;
+
+        users = dao.searchUsers("admin_");
+        assertEquals(2, users.size());
+        assertEquals(testUsers.get(3).getId() + 1, users.get(0).getId());
+        assertEquals(testUsers.get(4).getId() + 1, users.get(1).getId());
+
+        users = dao.searchUsers("%user%");
+        assertEquals(5, users.size());
+
+        users = dao.searchUsers("name"); //Users who first name, last name  or user name is just "name"
+        assertEquals(2, users.size());
+
+        //should be one with last name = "last name"
+        users = dao.searchUsers("last name");
+        assertEquals(1, users.size());
+        assertEquals("fullnameuser",users.get(0).getUsername());
+    }
+
+    @Test
+    public void testImageURL() {
+        User withProfilePic = dao.getUserByUsername("averageProfilePicEnjoyer");
+        assertNull(withProfilePic.getProfilePicURL());
+
+        dao.changeProfilePicture(withProfilePic.getId(), "https://exampleImg.com/ThisIsNotAnActualImg");
+        withProfilePic = dao.getUserByID(withProfilePic.getId());
+        assertEquals("https://exampleImg.com/ThisIsNotAnActualImg", withProfilePic.getProfilePicURL());
+        dao.changeProfilePicture(withProfilePic.getId(), null);
+        withProfilePic = dao.getUserByID(withProfilePic.getId());
+        assertNull(withProfilePic.getProfilePicURL());
     }
 }
