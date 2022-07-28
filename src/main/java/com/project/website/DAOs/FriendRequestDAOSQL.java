@@ -94,7 +94,8 @@ public class FriendRequestDAOSQL implements FriendRequestDAO {
                                 nrs.getString(4),
                                 nrs.getBoolean(5),
                                 nrs.getString(6),
-                                nrs.getString(7)));
+                                nrs.getString(7),
+                                nrs.getString(8)));
                     }
                 }
                 return resultList;
@@ -131,7 +132,8 @@ public class FriendRequestDAOSQL implements FriendRequestDAO {
                                 nrs.getString(4),
                                 nrs.getBoolean(5),
                                 nrs.getString(6),
-                                nrs.getString(7)));
+                                nrs.getString(7),
+                                nrs.getString(8)));
                     }
                 }
                 return resultList;

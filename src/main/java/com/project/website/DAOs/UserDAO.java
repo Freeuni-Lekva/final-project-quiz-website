@@ -56,6 +56,12 @@ public interface UserDAO {
     public List<User> getUsersByFullName(String firstName, String lastName);
 
     /**
+     * @param searchQuery SQL regex for search
+     * @return list of users, whose username/first name/last name corresponds to this searchQuery regex
+     */
+    public List<User> searchUsers(String searchQuery);
+
+    /**
      * Checks if the password hash matches that of the user registered with the given username.
      * @return one of the values among: SUCCESS, USERNAME_DOES_NOT_EXIST, WRONG_PASSWORD
      * */
@@ -88,4 +94,10 @@ public interface UserDAO {
      * @return one of the values among: SUCCESS, ERROR, USER_DOES_NOT_EXIST
      * */
     public int changeName(long userID, String firstName, String lastName);
+
+    /**
+     * Tries to change the picURL of the given user.
+     * @return one of the values among: SUCCESS, ERROR, USER_DOES_NOT_EXIST
+     */
+    public int changeProfilePicture(long userID, String picURL);
 }
