@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface QuizDAO {
     int INSERT_FAILED = -1;
+    String ATTR_NAME = "QuizDAO";
 
     int insertQuiz(Quiz quiz);
     Quiz getQuizById(int id);

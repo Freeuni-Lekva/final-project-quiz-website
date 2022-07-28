@@ -5,6 +5,8 @@ import com.project.website.Objects.User;
 import java.util.List;
 
 public interface FriendshipDAO {
+
+    String ATTR_NAME = "FriendshipDAO";
     /* *
      * @param userId id of user whose friends are returned
      * @return list of users who are friends with given user
