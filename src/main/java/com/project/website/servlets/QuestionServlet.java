@@ -16,7 +16,7 @@ public class QuestionServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int questionID = Integer.parseInt(req.getParameter("questionID"));
-        QuestionDAO questionDAO = (QuestionDAO) req.getServletContext().getAttribute("QuestionDAO");
+        QuestionDAO questionDAO = (QuestionDAO) req.getServletContext().getAttribute(QuestionDAO.ATTR_NAME);
         QuestionEntry questionEntry = questionDAO.getQuestionById(questionID);
 
         if (questionEntry == null) {

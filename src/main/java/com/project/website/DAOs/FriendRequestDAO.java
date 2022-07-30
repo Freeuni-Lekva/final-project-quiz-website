@@ -5,6 +5,7 @@ import com.project.website.Objects.User;
 import java.util.List;
 
 public interface FriendRequestDAO {
+    String ATTR_NAME = "FriendRequestDAO";
     /*
      * @param senderUserId sender user id
      * @param receiverUserId receiver user id
