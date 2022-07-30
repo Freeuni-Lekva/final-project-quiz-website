@@ -64,6 +64,16 @@ CREATE TABLE IF NOT EXISTS question_to_quiz (
     FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS quiz_comments(
+    id      BIGINT PRIMARY KEY AUTO_INCREMENT,
+    quiz_id BIGINT,
+    user_id BIGINT,
+    comment_content VARCHAR(512),
+    creation_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS challenges (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     sender_id BIGINT,
