@@ -27,8 +27,10 @@
     <div class="u-comments">
         <h1> Comments: </h1>
         <div class="u-comment">
-            <input type="text" class="u-comment-input"/>
-            <button type="submit" class="u-comment-submit">submit</button>
+            <form method="post" action="addComment?quizID=${quiz.ID}">
+                <input name="comment_text" id="comment_text" type="text" class="u-comment-input"/>
+                <button type="submit" class="u-comment-submit">submit</button>
+            </form>
         </div>
         <c:forEach items="${comments}" var="comment" >
             <div class="u-comment">
