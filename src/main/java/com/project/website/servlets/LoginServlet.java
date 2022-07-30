@@ -30,7 +30,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserDAO DAO = (UserDAO) request.getServletContext().getAttribute("UserDAO");
+        UserDAO DAO = (UserDAO) request.getServletContext().getAttribute(UserDAO.ATTR_NAME);
 
         String passwordHash = Hasher.getHash(request.getParameter("password"));
         if(request.getParameter("email") == null) {

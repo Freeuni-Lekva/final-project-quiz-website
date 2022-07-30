@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface QuestionDAO {
 
+    String ATTR_NAME = "QuestionDAO";
+
     /**
      * @param questionId id of a question in the database
      * @return the QuestionEntry associated with the inputted id

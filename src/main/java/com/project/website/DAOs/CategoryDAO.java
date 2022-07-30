@@ -3,8 +3,9 @@ package com.project.website.DAOs;
 import com.project.website.Objects.Category;
 
 public interface CategoryDAO {
+    String ATTR_NAME = "CategoryDAO";
 
-    public static final int INSERTION_ERROR = -1;
+    int INSERTION_ERROR = -1;
 
     int insertCategory(Category category);
 

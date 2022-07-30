@@ -28,6 +28,8 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
         DataSource src = new QuizSiteDataSource();
         // initialize user DAO
         UserDAO userDAO = new UserDAOSQL(src);
+        FriendshipDAO friendshipDAO = new FriendshipDAOSQL(src);
+        FriendRequestDAO friendRequestDAO = new FriendRequestDAOSQL(src);
         CategoryDAO categoryDAO = new CategoryDAOSQL(src);
         QuestionDAO questionDAO = new QuestionDAOSQL(src);
         QuizDAO quizDAO = new QuizDAOSQL(src);
@@ -39,10 +41,12 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
         success = questionDAO.insertQuestion(new QuestionEntry(1, 1, new TextQuestion("FUCK ME?", Collections.singletonList("YES"))));
         */
         // set the DAO as a context attribute
-        sce.getServletContext().setAttribute("UserDAO", userDAO);
-        sce.getServletContext().setAttribute("QuestionDAO", questionDAO);
-        sce.getServletContext().setAttribute("CategoryDAO", categoryDAO);
-        sce.getServletContext().setAttribute("QuizDAO", quizDAO);
+        sce.getServletContext().setAttribute(UserDAO.ATTR_NAME, userDAO);
+        sce.getServletContext().setAttribute(FriendshipDAO.ATTR_NAME, friendshipDAO);
+        sce.getServletContext().setAttribute(FriendRequestDAO.ATTR_NAME, friendRequestDAO);
+        sce.getServletContext().setAttribute(QuestionDAO.ATTR_NAME, questionDAO);
+        sce.getServletContext().setAttribute(CategoryDAO.ATTR_NAME, categoryDAO);
+        sce.getServletContext().setAttribute(QuizDAO.ATTR_NAME, quizDAO);
         sce.getServletContext().setAttribute(QuizCommentDAO.ATTR_NAME, quizCommentDAO);
     }
 

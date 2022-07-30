@@ -3,6 +3,7 @@ package com.project.website.DAOs;
 import java.util.List;
 
 public interface QuestionToQuizDAO {
+    String ATTR_NAME = "QuestionToQuizDAO";
 
     /**
      *
