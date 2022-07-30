@@ -14,6 +14,10 @@ public class Quiz {
     private final String title;
     private final String description;
 
+    public Quiz(int creatorID, int categoryID) {
+        this(creatorID, categoryID, "TEST", "TEST");
+    }
+
     public Quiz(int creatorID, int categoryID, String title, String description) {
         this(-1, creatorID, categoryID, -1, null, title, description);
     }
