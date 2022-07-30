@@ -40,6 +40,8 @@ CREATE TABLE IF NOT EXISTS quizzes (
     category_id BIGINT,
     last_question_id BIGINT,
     creation_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    quiz_title VARCHAR(64),
+    quiz_description VARCHAR(64),
     FOREIGN KEY (creator_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
 );
