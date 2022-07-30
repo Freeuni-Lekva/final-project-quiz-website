@@ -15,7 +15,7 @@ public class AddCommentServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getAttribute("userID") == null) {
+        if (req.getSession().getAttribute("userID") == null) {
             resp.sendRedirect("login");
             return;
         }
@@ -26,7 +26,7 @@ public class AddCommentServlet extends HttpServlet {
         }
 
         QuizCommentDAO commentDAO = (QuizCommentDAO) req.getServletContext().getAttribute(QuizCommentDAO.ATTR_NAME);
-        commentDAO.postCommentOnQuiz(Long.parseLong(req.getParameter("quizID")), (Long) req.getAttribute("userID"), (String) req.getAttribute("comment_text"));
+        commentDAO.postCommentOnQuiz(Long.parseLong(req.getParameter("quizID")), (Long) req.getSession().getAttribute("userID"), (String) req.getParameter("comment_text"));
         resp.sendRedirect("quiz?quizID=" + req.getParameter("quizID"));
     }
 }

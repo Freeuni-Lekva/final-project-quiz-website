@@ -34,7 +34,7 @@ public class QuizCommentDAOSQL implements QuizCommentDAO{
             PreparedStatement preparedStatement = conn.prepareStatement(
                     "SELECT id FROM quiz_comments " +
                             "WHERE quiz_id = ? " +
-                            "ORDER BY creation_time " +
+                            "ORDER BY creation_time desc " +
                             "LIMIT ?, ?")) {
             preparedStatement.setLong(1, quizID);
             preparedStatement.setLong(2, offset);

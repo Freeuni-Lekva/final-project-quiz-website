@@ -16,25 +16,27 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-@WebServlet(name = "QuestionServlet", value = "/quiz")
+@WebServlet(name = "QuizServlet", value = "/quiz")
 public class QuizServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String quizID = req.getParameter("quizID");
-        if (quizID == null || ((QuizDAO)req.getServletContext().getAttribute("QuizDao")).getQuizById(Integer.parseInt(quizID)) == null) {
+        if (quizID == null || ((QuizDAO)req.getServletContext().getAttribute("QuizDAO")).getQuizById(Integer.parseInt(quizID)) == null) {
             resp.sendRedirect("home");
             return;
         }
 
-        Quiz quiz = ((QuizDAO)req.getServletContext().getAttribute("QuizDao")).getQuizById(Integer.parseInt(quizID));
+        Quiz quiz = ((QuizDAO)req.getServletContext().getAttribute("QuizDAO")).getQuizById(Integer.parseInt(quizID));
         req.setAttribute("quiz", quiz);
 
         QuizCommentDAO commentDAO = (QuizCommentDAO) req.getServletContext().getAttribute(QuizCommentDAO.ATTR_NAME);
 
-        List<Long> commentIDs = commentDAO.getQuizComments(quiz.getCategoryID(), 0, Long.MAX_VALUE);
+        List<Long> commentIDs = commentDAO.getQuizComments(quiz.getID(), 0, Long.MAX_VALUE);
         List<QuizComment> comments = commentIDs.stream().map(commentDAO::getCommentByID).collect(Collectors.toList());
+
         req.setAttribute("comments", comments);
+        req.getRequestDispatcher("WEB-INF/quiz.jsp").forward(req, resp);
     }
 
     @Override
@@ -42,8 +44,7 @@ public class QuizServlet extends HttpServlet {
         if (req.getParameter("quizID") != null) {
             return;
         }
-        //TODO implement quiz starting and comments
+
+        //TODO start quiz
     }
-
-
 }
