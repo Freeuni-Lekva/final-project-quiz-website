@@ -1,5 +1,6 @@
 <%@ page import="com.project.website.DAOs.UserDAO" %>
 <%@ page import="com.project.website.Objects.QuizComment" %>
+<%@ page import="com.project.website.Objects.Quiz" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -18,9 +19,9 @@
 <style><%@include file="modules/css/style.css"%></style>
 <jsp:include page="modules/navbar.jsp"/>
     <form method="post" action="question" class="u-quiz-form">
-        <a href="profile?id=${creatorID}" class="u-quiz-link">Quiz by <%= dao.getUserByID(Long.parseLong(request.getParameter("creatorID"))).getUsername()%></a>
-        <h1 class="u-quiz-text">${title}</h1>
-        <h2 class="u-quiz-text">${description}</h2>
+        <a href="profile?id=${quiz.creatorID}" class="u-quiz-link">Quiz by <%= dao.getUserByID(((Quiz) request.getAttribute("quiz")).getCreatorID()).getUsername()%></a>
+        <h1 class="u-quiz-text">${quiz.title}</h1>
+        <h2 class="u-quiz-text">${quiz.description}</h2>
         <button class="u-submit-answer-button">Start</button>
     </form>
     <div class="u-comments">
