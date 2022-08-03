@@ -9,9 +9,9 @@
 <head>
     <title><%=userInfo.getUsername()%>'s profile</title>
     <style><%@include file="modules/css/style.css"%></style>
+    <script src="scripts/tabs.js"></script>
 </head>
 <body>
-    <script src="scripts/tabs.js"></script>
     <jsp:include page="modules/navbar.jsp"/>
     <div class="profile-pic">
         <img src="<%=userInfo.getProfilePicURL()%>" alt="profile picture" width="128" height="128"/>
@@ -31,6 +31,9 @@
     </div>
     <div id="friends" class="tab-content">
         <h3>Friends:</h3>
+        <form action="search_users">
+            <button>Search Users</button>
+        </form>
         <ul>
             <li>Placeholder</li>
             <li>Placeholder</li>
