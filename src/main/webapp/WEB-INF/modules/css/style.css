@@ -102,6 +102,70 @@ body {
     box-shadow: 0 0 11px rgba(200,33,33,.6);
 }
 
+.u-quiz-form {
+    position: relative;
+    display: inline-block;
+    justify-items: center;
+    max-width: 700px;
+    min-width: 500px;
+    box-sizing: border-box;
+    padding: 30px 25px;
+    background-color: #005377;
+    border-radius: 40px;
+    margin: 40px 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    border: 3px solid #F1A208;
+    box-shadow: 0 0 3px #052F5F;
+}
+
+.u-quiz-text {
+    text-align: center;
+}
+
+.u-quiz-link:link {
+    color: #F1A208;
+}
+
+.u-submit-answer-button {
+    margin-top: 35px;
+    background-color: white;
+    border: 1px solid;
+    line-height: 0;
+    font-size: 17px;
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 20px 15px;
+    border-radius: 10px;
+    font-weight: 100;
+    letter-spacing: 0.01em;
+    position: relative;
+    margin-left: 40%;
+    margin-right: 40%;
+    width: 20%;
+}
+
+.u-submit-answer-button:hover {
+    cursor: pointer;
+    background-color: #04AA6D;
+}
+
+.u-comment {
+    margin: 5px;
+    padding: 5px;
+    border: 1px dotted #000;
+    height: 4rem;
+}
+
+.u-comment-input {
+    width: 30%;
+    height: 2rem;
+}
+
+.u-comment-submit {
+    margin-top: 5px;
+    display: block;
+}
 .tab {
     overflow: auto;
     border: 1px solid #100F0F;
@@ -133,3 +197,4 @@ body {
     border: 1px solid #100F0F;
     border-top: none;
 }
+
