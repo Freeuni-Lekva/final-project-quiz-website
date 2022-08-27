@@ -5,12 +5,12 @@ import com.project.website.Objects.Quiz;
 import java.util.List;
 
 public interface QuizDAO {
-    public static final int INSERT_FAILED = -1;
+    int INSERT_FAILED = -1;
+    String ATTR_NAME = "QuizDAO";
 
-    public int insertQuiz(Quiz quiz);
+    int insertQuiz(Quiz quiz);
     Quiz getQuizById(int id);
-    List<Quiz> getQuizByCreator(int creatorID);
-    List<Quiz> getQuizByCategory(int categoryID);
-
+    List<Quiz> getQuizByCreator(int creatorID, int offset, int limit);
+    List<Quiz> getQuizByCategory(int categoryID, int offset, int limit);
     boolean deleteQuiz(int id);
 }

@@ -25,10 +25,12 @@ public class QuizDAOSQL implements QuizDAO {
         try(Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(
                     "INSERT INTO " +
-                            "quizzes(creator_id, category_id) " +
-                            "VALUES (?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)) {
+                            "quizzes(creator_id, category_id, quiz_title, quiz_description) " +
+                            "VALUES (?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setInt(1, quiz.getCreatorID());
             preparedStatement.setInt(2, quiz.getCategoryID());
+            preparedStatement.setString(3, quiz.getTitle());
+            preparedStatement.setString(4, quiz.getDescription());
             preparedStatement.executeUpdate();
             try(ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                 if(generatedKeys.next()) {
@@ -47,7 +49,7 @@ public class QuizDAOSQL implements QuizDAO {
         List<Quiz> retVal = new ArrayList<>();
         try(ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
-                retVal.add(new Quiz(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getDate(4)));
+                retVal.add(new Quiz(rs.getInt(1), rs.getInt(2), rs.getInt(3),rs.getInt(4), rs.getDate(5),  rs.getString(6), rs.getString(7)));
             }
         } catch (SQLException ignored) {}
         return retVal;
@@ -67,20 +69,24 @@ public class QuizDAOSQL implements QuizDAO {
     }
 
     @Override
-    public List<Quiz> getQuizByCreator(int creatorID) {
+    public List<Quiz> getQuizByCreator(int creatorID, int offset, int limit) {
         try(Connection connection = dataSource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM quizzes WHERE creator_id = ? ORDER BY creation_time DESC")) {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM quizzes WHERE creator_id = ? ORDER BY creation_time DESC LIMIT ?,?")) {
             preparedStatement.setInt(1, creatorID);
+            preparedStatement.setInt(2, offset);
+            preparedStatement.setInt(3, limit);
             return aggregateQuery(preparedStatement);
         } catch (SQLException ignored) {}
         return null;
     }
 
     @Override
-    public List<Quiz> getQuizByCategory(int categoryID) {
+    public List<Quiz> getQuizByCategory(int categoryID, int offset, int limit) {
         try(Connection connection = dataSource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM quizzes WHERE category_id = ? ORDER BY creation_time DESC")) {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM quizzes WHERE category_id = ? ORDER BY creation_time DESC LIMIT ?,?")) {
             preparedStatement.setInt(1, categoryID);
+            preparedStatement.setInt(2, offset);
+            preparedStatement.setInt(3, limit);
             return aggregateQuery(preparedStatement);
         } catch (SQLException ignored) {}
         return null;
