@@ -18,10 +18,14 @@
         <label for="search-input">Enter username:</label>
         <input type="text" id="search-input" name="q" placeholder="Search..."/>
     </form>
-    <c:forEach items="${requestScope.searchResults}" var="user">
-        <img src="${user.profilePicURL}" alt="profile_pic" height="32" width="32">
-        <a href="profile?id=${user.id}"><c:out value="${user.username}"/></a>
-        <br>
-    </c:forEach>
+    <ul>
+        <c:forEach items="${requestScope.searchResults}" var="user">
+            <li>
+                <img src="${user.profilePicURL}" alt="profile_pic" height="32" width="32">
+                <a href="profile?id=${user.id}"><c:out value="${user.username}"/></a>
+                <br>
+            </li>
+        </c:forEach>
+    </ul>
 </body>
 </html>
