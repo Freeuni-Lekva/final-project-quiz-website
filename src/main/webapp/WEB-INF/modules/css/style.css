@@ -112,6 +112,14 @@ body {
     text-align: center;
 }
 
+.u-question-image {
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
 .u-statement {
     transform-origin: left center;
     color: black;
@@ -121,6 +129,24 @@ body {
     box-sizing: border-box;
     padding: 10px 15px;
     display: block;
+    position: relative;
+    pointer-events: none;
+    background-color: white;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align:center;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.u-choice {
+    transform-origin: left center;
+    color: black;
+    font-weight: 100;
+    letter-spacing: 0.01em;
+    font-size: 17px;
+    box-sizing: border-box;
+    padding: 10px 15px;
     position: relative;
     pointer-events: none;
     background-color: white;
@@ -164,6 +190,10 @@ body {
     font-weight: 100;
     letter-spacing: 0.01em;
     position: relative;
+}
+
+.u-question-input-radio {
+    margin-top: 32px;
 }
 
 .u-submit-answer-button {
