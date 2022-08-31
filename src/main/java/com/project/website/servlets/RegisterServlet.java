@@ -33,12 +33,12 @@ public class RegisterServlet extends HttpServlet {
             request.getSession().setAttribute("userID", user.getId());
             request.getSession().setAttribute("username", username);
             response.sendRedirect("home");
+            return;
         } else if(regResult == UserDAO.USERNAME_TAKEN) {
-            // TODO: redirect the user to the same register page, but with a note about the username
+            request.setAttribute("error", Integer.toString(UserDAO.USERNAME_TAKEN));
         } else if(regResult == UserDAO.EMAIL_TAKEN) {
-            // TODO: redirect the user to the same register page, but with a note about the email
-        } else {
-            // TODO: handle error
+            request.setAttribute("error", Integer.toString(UserDAO.EMAIL_TAKEN));
         }
+        request.getRequestDispatcher("WEB-INF/register.jsp").forward(request, response);
     }
 }
