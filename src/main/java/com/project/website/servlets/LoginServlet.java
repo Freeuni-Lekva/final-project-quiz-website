@@ -46,10 +46,8 @@ public class LoginServlet extends HttpServlet {
                 response.sendRedirect("home");
                 return;
             } else if(loginResult == UserDAO.USERNAME_DOES_NOT_EXIST) {
-                // TODO: redirect the user to the same login page, but with a note about the username
                 request.setAttribute("error", Integer.toString(UserDAO.USERNAME_DOES_NOT_EXIST));
             } else {    // if password wrong
-                // TODO: redirect the user to the same login page, but with a note about the password
                 request.setAttribute("error", Integer.toString(UserDAO.WRONG_PASSWORD));
             }
             request.setAttribute("loginMethod", "username");
@@ -70,10 +68,8 @@ public class LoginServlet extends HttpServlet {
                 response.sendRedirect("home");
                 return;
             } else if(loginResult == UserDAO.EMAIL_DOES_NOT_EXIST) {
-                // TODO: redirect the user to the same login page, but with a note about the email
                 request.setAttribute("error", Integer.toString(UserDAO.EMAIL_DOES_NOT_EXIST));
             } else {    // if password wrong
-                // TODO: redirect the user to the same login page, but with a note about the password
                 request.setAttribute("error", Integer.toString(UserDAO.WRONG_PASSWORD));
             }
             request.setAttribute("loginMethod", "email");
