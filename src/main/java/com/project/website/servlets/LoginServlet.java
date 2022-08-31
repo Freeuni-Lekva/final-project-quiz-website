@@ -44,11 +44,19 @@ public class LoginServlet extends HttpServlet {
                 request.getSession().setAttribute("userID", user.getId());
                 request.getSession().setAttribute("username", username);
                 response.sendRedirect("home");
+                return;
             } else if(loginResult == UserDAO.USERNAME_DOES_NOT_EXIST) {
                 // TODO: redirect the user to the same login page, but with a note about the username
+                request.setAttribute("error", Integer.toString(UserDAO.USERNAME_DOES_NOT_EXIST));
             } else {    // if password wrong
                 // TODO: redirect the user to the same login page, but with a note about the password
+                request.setAttribute("error", Integer.toString(UserDAO.WRONG_PASSWORD));
             }
+            request.setAttribute("loginMethod", "username");
+            request.setAttribute("loginLabel", "Username");
+            request.setAttribute("alternateLoginMethod", "email");
+            request.setAttribute("alternateLoginLabel", "E-Mail");
+            request.getRequestDispatcher("WEB-INF/login.jsp").forward(request, response);
         } else {
             /* login with email */
             String email = request.getParameter("email");
@@ -60,11 +68,19 @@ public class LoginServlet extends HttpServlet {
                 request.getSession().setAttribute("userID", user.getId());
                 request.getSession().setAttribute("username", user.getUsername());
                 response.sendRedirect("home");
+                return;
             } else if(loginResult == UserDAO.EMAIL_DOES_NOT_EXIST) {
                 // TODO: redirect the user to the same login page, but with a note about the email
+                request.setAttribute("error", Integer.toString(UserDAO.EMAIL_DOES_NOT_EXIST));
             } else {    // if password wrong
                 // TODO: redirect the user to the same login page, but with a note about the password
+                request.setAttribute("error", Integer.toString(UserDAO.WRONG_PASSWORD));
             }
+            request.setAttribute("loginMethod", "email");
+            request.setAttribute("loginLabel", "E-Mail");
+            request.setAttribute("alternateLoginMethod", "username");
+            request.setAttribute("alternateLoginLabel", "Username");
+            request.getRequestDispatcher("WEB-INF/login.jsp").forward(request, response);
         }
     }
 }

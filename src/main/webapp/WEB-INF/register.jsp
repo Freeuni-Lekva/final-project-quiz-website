@@ -1,3 +1,4 @@
+<%@ page import="com.project.website.DAOs.UserDAO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style><%@include file="modules/css/style.css"%></style>
 <html>
@@ -19,6 +20,16 @@
             &nbsp<button>Register</button>
         </form>
         <p>Already have an account? You can <a href="login?using=username">log in here</a>.</p>
+        <%
+            int error = UserDAO.ERROR;
+            if (request.getAttribute("error") != null)
+                error = Integer.parseInt(request.getAttribute("error").toString());
+        %>
+        <% if (error == UserDAO.USERNAME_TAKEN) { %>
+            <p style="color: red">User with that name already exists on our site</p>
+        <% } if (error == UserDAO.EMAIL_TAKEN) { %>
+            <p style="color: red">User with that email already exists on our site</p>
+        <% } %>
     </div>
 </body>
 </html>
