@@ -2,8 +2,11 @@ package com.project.website.servlets;
 
 import com.project.website.DAOs.QuizCommentDAO;
 import com.project.website.DAOs.QuizDAO;
+import com.project.website.DAOs.UserSessionsDAO;
 import com.project.website.Objects.Quiz;
 import com.project.website.Objects.QuizComment;
+import com.project.website.Objects.User;
+import com.project.website.Objects.UserSession;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -41,10 +44,26 @@ public class QuizServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getParameter("quizID") != null) {
+        Long userID = (Long) req.getSession().getAttribute("userID");
+
+        if (userID == null) {
+            resp.sendRedirect("login");
             return;
         }
 
-        //TODO start quiz
+        String quizID = req.getParameter("quizID");
+        if (quizID == null || ((QuizDAO)req.getServletContext().getAttribute("QuizDAO")).getQuizById(Integer.parseInt(quizID)) == null) {
+            resp.sendRedirect("home");
+            return;
+        }
+
+        UserSessionsDAO userSessionsDAO = (UserSessionsDAO) req.getServletContext().getAttribute(UserSessionsDAO.ATTR_NAME);
+
+        if (userSessionsDAO.getUserSession(Math.toIntExact(userID)) == null) {
+            userSessionsDAO.insertSession(new UserSession(Math.toIntExact(userID), Integer.parseInt(quizID)));
+        } else {
+            req.setAttribute("errorMessage", "Already in a quiz!");
+            req.getRequestDispatcher("WEB-INF/error-message.jsp").forward(req, resp);
+        }
     }
 }

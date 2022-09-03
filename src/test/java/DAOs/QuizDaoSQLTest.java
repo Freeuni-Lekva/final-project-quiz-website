@@ -148,5 +148,25 @@ public class QuizDaoSQLTest {
         lst = quizDAO.getQuizByCategory(-1, 0, 0);
         assertEquals(Collections.emptyList(), lst);
     }
+    @Test
+    public void testUpdateQuizLocalId() {
+        quizDAO.insertQuiz(new Quiz(1, categoryIDs.get(3)));
+        quizDAO.insertQuiz(new Quiz(1, categoryIDs.get(3)));
 
+        quizDAO.updateQuizLocalId(1, 123);
+        Quiz quiz = quizDAO.getQuizById(1);
+        assertEquals(123, quiz.getLastQuestionID());
+
+        quizDAO.updateQuizLocalId(1, 555);
+        quiz = quizDAO.getQuizById(1);
+        assertEquals(555, quiz.getLastQuestionID());
+
+        quizDAO.updateQuizLocalId(2, 123);
+        quiz = quizDAO.getQuizById(2);
+        assertEquals(123, quiz.getLastQuestionID());
+
+        quizDAO.updateQuizLocalId(2, 555);
+        quiz = quizDAO.getQuizById(2);
+        assertEquals(555, quiz.getLastQuestionID());
+    }
 }

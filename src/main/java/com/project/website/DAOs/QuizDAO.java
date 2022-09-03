@@ -9,6 +9,7 @@ public interface QuizDAO {
     String ATTR_NAME = "QuizDAO";
 
     int insertQuiz(Quiz quiz);
+    boolean updateQuizLocalId(int id, int new_local_id);
     Quiz getQuizById(int id);
     List<Quiz> getQuizByCreator(int creatorID, int offset, int limit);
     List<Quiz> getQuizByCategory(int categoryID, int offset, int limit);

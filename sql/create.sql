@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS quizzes (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     creator_id BIGINT,
     category_id BIGINT,
-    last_question_id BIGINT,
+    last_question_id BIGINT DEFAULT 0,
     creation_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     quiz_title VARCHAR(64),
     quiz_description VARCHAR(64),
@@ -95,4 +95,15 @@ CREATE TABLE IF NOT EXISTS user_sessions (
     start_time DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS quiz_answers (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  user_id BIGINT,
+  quiz_id BIGINT,
+  local_question_id BIGINT,
+  score DOUBLE,
+  UNIQUE(user_id, quiz_id, local_question_id),
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE
 );

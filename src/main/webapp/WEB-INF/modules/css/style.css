@@ -312,3 +312,79 @@ body {
     border-top: none;
 }
 
+.u-table-container {
+    max-width: 1000px;
+    margin-right:auto;
+    margin-left:auto;
+    display:block;
+    justify-content:center;
+    align-items:center;
+    min-height:50vh;
+}
+
+.u-button-container {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.u-button-container button {
+    background-color: white;
+    border: 1px solid;
+    line-height: 0;
+    font-size: 17px;
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 20px 15px;
+    font-weight: 100;
+    letter-spacing: 0.01em;
+    position: relative;
+    width: 150px;
+}
+
+.u-button-container button:hover {
+    cursor: pointer;
+    background-color: #04AA6D;
+}
+
+.u-table {
+    width:100%;
+    border:1px solid #EEEEEE;
+}
+
+.u-table-title {
+    display: block;
+}
+
+.u-table-header {
+    display:flex;
+    width:100%;
+    background:#005377;
+    padding: 18px 0;
+}
+
+.u-table-row {
+    display:flex;
+    width:100%;
+    padding: 18px 0;
+}
+
+.u-table-row:nth-of-type(odd) {
+    background:#EEEEEE;
+}
+
+.u-table-data, .u-header_item {
+    flex: 1 1 20%;
+    text-align:center;
+}
+
+.u-header_item {
+    text-transform:uppercase;
+    color:white;
+    text-decoration: none;
+    position:relative;
+    display:inline-block;
+    padding-left:24px;
+    padding-right:24px;
+    margin: 0;
+}

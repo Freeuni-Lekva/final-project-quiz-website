@@ -45,6 +45,19 @@ public class QuizDAOSQL implements QuizDAO {
         }
     }
 
+    public boolean updateQuizLocalId(int id, int new_local_id) {
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "UPDATE quizzes SET last_question_id= ? WHERE id = ?")) {
+            preparedStatement.setInt(1, new_local_id);
+            preparedStatement.setInt(2, id);
+            return preparedStatement.executeUpdate() != 0;
+
+        } catch(Exception e) {
+            return false;
+        }
+    }
+
     private List<Quiz> aggregateQuery(PreparedStatement statement) {
         List<Quiz> retVal = new ArrayList<>();
         try(ResultSet rs = statement.executeQuery()) {

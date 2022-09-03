@@ -2,6 +2,7 @@ package com.project.website;
 
 import com.project.website.DAOs.*;
 import com.project.website.Objects.Category;
+import com.project.website.Objects.Quiz;
 import com.project.website.Objects.questions.QuestionEntry;
 import com.project.website.Objects.questions.TextQuestion;
 
@@ -34,12 +35,19 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
         QuestionDAO questionDAO = new QuestionDAOSQL(src);
         QuizDAO quizDAO = new QuizDAOSQL(src);
         QuizCommentDAO quizCommentDAO = new QuizCommentDAOSQL(src);
+        UserSessionsDAO userSessionsDAO = new UserSessionsDAOSQL(src);
+        QuestionToQuizDAO questionToQuizDAO = new QuestionToQuizDAOSQL(src);
+        QuizAnswersDAO quizAnswersDAO = new QuizAnswersDAOSQL(src);
 
-        /* Test
         int success = categoryDAO.insertCategory(new Category("AAA"));
-
         success = questionDAO.insertQuestion(new QuestionEntry(1, 1, new TextQuestion("FUCK ME?", Collections.singletonList("YES"))));
-        */
+        quizDAO.insertQuiz(new Quiz(1, 1, "Cum", "cummed"));
+        questionToQuizDAO.insert(1, 1, 1);
+        questionToQuizDAO.insert(1, 1, 2);
+        questionToQuizDAO.insert(1, 1, 3);
+        questionToQuizDAO.insert(1, 1, 4);
+        quizDAO.updateQuizLocalId(1, 5);
+
         // set the DAO as a context attribute
         sce.getServletContext().setAttribute(UserDAO.ATTR_NAME, userDAO);
         sce.getServletContext().setAttribute(FriendshipDAO.ATTR_NAME, friendshipDAO);
@@ -48,6 +56,9 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
         sce.getServletContext().setAttribute(CategoryDAO.ATTR_NAME, categoryDAO);
         sce.getServletContext().setAttribute(QuizDAO.ATTR_NAME, quizDAO);
         sce.getServletContext().setAttribute(QuizCommentDAO.ATTR_NAME, quizCommentDAO);
+        sce.getServletContext().setAttribute(UserSessionsDAO.ATTR_NAME, userSessionsDAO);
+        sce.getServletContext().setAttribute(QuestionToQuizDAO.ATTR_NAME, questionToQuizDAO);
+        sce.getServletContext().setAttribute(QuizAnswersDAO.ATTR_NAME, quizAnswersDAO);
     }
 
     @Override

@@ -68,6 +68,20 @@ public class QuestionToQuizDAOSQL implements QuestionToQuizDAO {
         return GET_FAILED;
     }
 
+    public int getNextLocalId(int quiz_id, int local_id) {
+        try(Connection conn = dataSource.getConnection();
+            PreparedStatement preparedStatement = conn.prepareStatement(
+                    "SELECT local_id FROM question_to_quiz WHERE quiz_id = ? AND local_id >= ?")) {
+            preparedStatement.setInt(1, quiz_id);
+            preparedStatement.setInt(2, local_id);
+            try(ResultSet res = preparedStatement.executeQuery()) {
+                res.next();
+                return res.getInt(1);
+            }
+        } catch(SQLException ignored) {}
+        return GET_FAILED;
+    }
+
     @Override
     public List<Integer> getQuizQuestionIDs(int quiz_id) {
         try(Connection conn = dataSource.getConnection();

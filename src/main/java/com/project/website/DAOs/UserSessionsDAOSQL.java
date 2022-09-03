@@ -2,6 +2,7 @@ package com.project.website.DAOs;
 
 import com.project.website.Objects.Quiz;
 import com.project.website.Objects.UserSession;
+import org.junit.Test;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -36,6 +37,20 @@ public class UserSessionsDAOSQL implements UserSessionsDAO {
                     throw new SQLException("Failed to insert question");
                 }
             }
+        } catch(Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean updateSessionLocalId(int userID, int localID) {
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "UPDATE user_sessions SET current_local_id = ? WHERE user_id = ?")) {
+            preparedStatement.setInt(1, localID);
+            preparedStatement.setInt(2, userID);
+            return preparedStatement.executeUpdate() != 0;
+
         } catch(Exception e) {
             return false;
         }
