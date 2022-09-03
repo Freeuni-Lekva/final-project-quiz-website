@@ -53,6 +53,7 @@ CREATE TABLE IF NOT EXISTS questions (
     category_id BIGINT DEFAULT NULL,
     creation_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     question_object MEDIUMBLOB,
+    question_title VARCHAR(64),
     FOREIGN KEY (creator_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
 );
@@ -104,6 +105,18 @@ CREATE TABLE IF NOT EXISTS quiz_answers (
   local_question_id BIGINT,
   score DOUBLE,
   UNIQUE(user_id, quiz_id, local_question_id),
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS quiz_final_scores (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  user_id BIGINT,
+  quiz_id BIGINT,
+  score DOUBLE,
+  max_score DOUBLE,
+  start_time DATETIME,
+  end_time DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
   FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE
 );

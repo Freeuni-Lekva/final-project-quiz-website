@@ -59,7 +59,7 @@ public class UserSessionsDAOSQL implements UserSessionsDAO {
     private UserSession executeAndFetch(PreparedStatement statement) {
         try(ResultSet rs = statement.executeQuery()) {
             if (rs.next()) {
-                return new UserSession(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getDate(5));
+                return new UserSession(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getTimestamp(5));
             }
         } catch (SQLException ignored) {}
         return null;

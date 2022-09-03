@@ -24,7 +24,7 @@ public class QuestionDAOSQL implements QuestionDAO {
                 AnswerableHTML question = (AnswerableHTML) in.readObject();
 
                 retVal.add(new QuestionEntry(rs.getInt(1), rs.getInt(2), rs.getInt(3),
-                            rs.getTimestamp(4), question));
+                            rs.getTimestamp(4), question, rs.getString(6)));
 
             }
         } catch(Exception e) {
@@ -56,10 +56,11 @@ public class QuestionDAOSQL implements QuestionDAO {
         try(Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(
                 "INSERT INTO " +
-                "questions(creator_id, category_id, question_object) " +
-                "VALUES (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)) {
+                "questions(creator_id, category_id, question_object, question_title) " +
+                "VALUES (?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setInt(1, questionEntry.getCreator_id());
             preparedStatement.setInt(2, questionEntry.getCategory_id());
+            preparedStatement.setString(4, questionEntry.getTitle());
 
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             ObjectOutputStream out = new ObjectOutputStream(bos);

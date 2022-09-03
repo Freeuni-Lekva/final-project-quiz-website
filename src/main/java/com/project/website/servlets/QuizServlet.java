@@ -61,6 +61,7 @@ public class QuizServlet extends HttpServlet {
 
         if (userSessionsDAO.getUserSession(Math.toIntExact(userID)) == null) {
             userSessionsDAO.insertSession(new UserSession(Math.toIntExact(userID), Integer.parseInt(quizID)));
+            req.getRequestDispatcher("activeQuiz").forward(req, resp);
         } else {
             req.setAttribute("errorMessage", "Already in a quiz!");
             req.getRequestDispatcher("WEB-INF/error-message.jsp").forward(req, resp);

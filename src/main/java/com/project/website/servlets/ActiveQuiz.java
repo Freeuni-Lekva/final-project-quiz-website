@@ -72,7 +72,7 @@ public class ActiveQuiz extends HttpServlet {
 
         int localID = questionToQuizDAO.getNextLocalId(session.getQuizID(), session.getCurrentLocalID());
 
-        if (localID != session.getCurrentLocalID()) {
+        if (localID != session.getCurrentLocalID() && localID != QuestionToQuizDAO.GET_FAILED) {
             userSessionsDAO.updateSessionLocalId(userID, localID);
         }
 
@@ -80,6 +80,8 @@ public class ActiveQuiz extends HttpServlet {
 
         if (questionID != QuestionToQuizDAO.GET_FAILED) {
             resp.sendRedirect("question?questionID=" + questionID);
+        } else {
+            resp.sendRedirect("activeQuiz");
         }
     }
 }
