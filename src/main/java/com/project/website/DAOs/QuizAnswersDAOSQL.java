@@ -55,6 +55,18 @@ public class QuizAnswersDAOSQL implements QuizAnswersDAO {
     }
 
     @Override
+    public int deleteAllAnswers(int quizID, int userID) {
+        try(Connection conn = dataSource.getConnection();
+            PreparedStatement preparedStatement = conn.prepareStatement(
+                    "DELETE FROM quiz_answers WHERE user_id = ? AND quiz_id = ?")) {
+            preparedStatement.setInt(1, userID);
+            preparedStatement.setInt(2, quizID);
+            return preparedStatement.executeUpdate();
+        } catch(SQLException ignored) {}
+        return 0;
+    }
+
+    @Override
     public Double getAnswer(int quizID, int userID, int localID) {
         try(Connection conn = dataSource.getConnection();
             PreparedStatement preparedStatement = conn.prepareStatement(

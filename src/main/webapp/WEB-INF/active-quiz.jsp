@@ -42,7 +42,7 @@
     </div>
 </div>
 <div class="u-button-container">
-    <form>
+    <form method="post" action="finishQuiz">
         <button>Finish Quiz</button>
     </form>
     <form method="post" action="activeQuiz">

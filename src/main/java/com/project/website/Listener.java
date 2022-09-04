@@ -38,7 +38,9 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
         UserSessionsDAO userSessionsDAO = new UserSessionsDAOSQL(src);
         QuestionToQuizDAO questionToQuizDAO = new QuestionToQuizDAOSQL(src);
         QuizAnswersDAO quizAnswersDAO = new QuizAnswersDAOSQL(src);
+        QuizFinalScoresDAO quizFinalScoresDAO = new QuizFinalScoresDAOSQL(src);
 
+        /*
         int success = categoryDAO.insertCategory(new Category("AAA"));
         success = questionDAO.insertQuestion(new QuestionEntry(1, 1, new TextQuestion("FUCK ME?", Collections.singletonList("YES"))));
         quizDAO.insertQuiz(new Quiz(1, 1, "Cum", "cummed"));
@@ -47,6 +49,7 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
         questionToQuizDAO.insert(1, 1, 3);
         questionToQuizDAO.insert(1, 1, 4);
         quizDAO.updateQuizLocalId(1, 5);
+        */
 
         // set the DAO as a context attribute
         sce.getServletContext().setAttribute(UserDAO.ATTR_NAME, userDAO);
@@ -59,6 +62,7 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
         sce.getServletContext().setAttribute(UserSessionsDAO.ATTR_NAME, userSessionsDAO);
         sce.getServletContext().setAttribute(QuestionToQuizDAO.ATTR_NAME, questionToQuizDAO);
         sce.getServletContext().setAttribute(QuizAnswersDAO.ATTR_NAME, quizAnswersDAO);
+        sce.getServletContext().setAttribute(QuizFinalScoresDAO.ATTR_NAME, quizFinalScoresDAO);
     }
 
     @Override

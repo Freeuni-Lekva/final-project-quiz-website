@@ -8,6 +8,7 @@ public interface QuizAnswersDAO {
     boolean insertAnswer(int quizID, int userID, int localID, double score);
 
     boolean deleteAnswer(int quizID, int userID, int localID);
+    int deleteAllAnswers(int quizID, int userID);
 
     Double getAnswer(int quizID, int userID, int localID);
 

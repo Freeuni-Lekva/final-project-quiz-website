@@ -104,6 +104,22 @@ public class QuizAnswersDaoSQLTest {
     }
 
     @Test
+    public void testDeleteAll() {
+        Assertions.assertTrue(quizAnswersDAO.insertAnswer(1, 1, 1, 0.123));
+        Assertions.assertTrue(quizAnswersDAO.insertAnswer(1, 1, 2, 0.1351));
+        Assertions.assertTrue(quizAnswersDAO.insertAnswer(1, 1, 3, 0.613461));
+
+        Assertions.assertEquals(3, quizAnswersDAO.deleteAllAnswers(1, 1));
+        Assertions.assertTrue(quizAnswersDAO.insertAnswer(1, 1, 1, 0));
+
+        Assertions.assertEquals(1, quizAnswersDAO.deleteAllAnswers(1, 1));
+
+        Assertions.assertEquals(0, quizAnswersDAO.deleteAllAnswers(1, 1));
+        Assertions.assertEquals(0, quizAnswersDAO.deleteAllAnswers(12321, 1));
+        Assertions.assertEquals(0, quizAnswersDAO.deleteAllAnswers(12321, 1231));
+    }
+
+    @Test
     public void testGetAnswers() {
         Assertions.assertTrue(quizAnswersDAO.insertAnswer(1, 1, 1, 0.123));
         Assertions.assertTrue(quizAnswersDAO.insertAnswer(1, 1, 2, 0.1351));
