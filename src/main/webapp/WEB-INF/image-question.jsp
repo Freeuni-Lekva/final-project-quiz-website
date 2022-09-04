@@ -13,15 +13,13 @@
 </head>
 <body style="margin: 0;">
 <jsp:include page="modules/navbar.jsp"/>
-<form method="post" action="question" class="u-question-form">
-    <form method="post">
-        <img class="u-question-image" src="images/image-question.png"/>
-        <div class="u-question">
-            <label for="answer" class="u-statement">${statement}</label>
-            <input type="text" name="answer" id="answer" class="u-question-input-text" required/>
-        </div>
-        <button class="u-submit-answer-button">Submit</button>
-    </form>
+<form method="post" action="question?questionID=${param.questionID}" class="u-question-form">
+    <img class="u-question-image" src="${imageURL}"/>
+    <div class="u-question">
+        <label for="answer" class="u-statement">${statement}</label>
+        <input type="text" name="answer" id="answer" class="u-question-input-text" required/>
+    </div>
+    <button class="u-submit-answer-button">Submit</button>
 </form>
 </body>
 </html>

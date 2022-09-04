@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: User
@@ -13,24 +14,16 @@
 </head>
 <body style="margin: 0;">
 <jsp:include page="modules/navbar.jsp"/>
-<form method="post" action="question" class="u-question-form">
-    <form method="post">
-        <h1 class="u-question-title">${title}</h1>
-        <div class="u-question">
-            <input type="radio" name="answer" id="choice_A" class="u-question-input-radio" checked>
-            <label for="choice_A" class="u-choice">${choice_A}</label><br>
-
-            <input type="radio" name="answer" id="choice_B" class="u-question-input-radio">
-            <label for="choice_B" class="u-choice">${choice_B}</label><br>
-
-            <input type="radio" name="answer" id="choice_C" class="u-question-input-radio">
-            <label for="choice_C" class="u-choice">${choice_C}</label><br>
-
-            <input type="radio" name="answer" id="choice_D" class="u-question-input-radio">
-            <label for="choice_D" class="u-choice">${choice_D}</label><br>
-        </div>
-        <button class="u-submit-answer-button">Submit</button>
-    </form>
+<form method="post" action="question?questionID=${param.questionID}" class="u-question-form">
+    <h1 class="u-question-title">${title}</h1>
+    <div class="u-question">
+        <p class="u-statement">${statement}</p>
+        <c:forEach items="${choiceList}" var="choice">
+            <input type="radio" name="answer" id="${choice}" value="${choice}" class="u-question-input-radio">
+            <label for="${choice}" class="u-choice">${choice}</label><br>
+        </c:forEach>
+    </div>
+    <button class="u-submit-answer-button">Submit</button>
 </form>
 </body>
 </html>
