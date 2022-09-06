@@ -11,7 +11,7 @@
     <title>Creation portal</title>
 </head>
 <body style="margin: 0;">
-<style><%@include file="WEB-INF/modules/css/style.css"%></style>
+<style><%@include file="modules/css/style.css"%></style>
 
 <jsp:include page="WEB-INF/modules/navbar.jsp"/>
 <div class="u-main-container">
@@ -20,15 +20,15 @@
         <ul class="u-choice-list">
             <li class="u-choice-item">
                 <img class="u-item-image" src="images/text-question.png"/>
-                <a hrefg="#" class="u-item-button">Text Question</a>
+                <a href="create/text-question" class="u-item-button">Text Question</a>
             </li>
             <li class="u-choice-item">
                 <img class="u-item-image" src="images/multi-choice-question.png"/>
-                <a hrefg="#" class="u-item-button">Multiple Choice</a>
+                <a href="create/multi-choice-question" class="u-item-button">Multiple Choice</a>
             </li>
             <li class="u-choice-item">
                 <img class="u-item-image" src="images/image-question.png"/>
-                <a hrefg="#" class="u-item-button">Image Question</a>
+                <a href="create/image-question" class="u-item-button">Image Question</a>
             </li>
         </ul>
     </div>

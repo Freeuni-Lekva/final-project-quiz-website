@@ -60,5 +60,13 @@
         <servlet-name>EditProfileServlet</servlet-name>
         <url-pattern>/edit_profile</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>CreationPortal</servlet-name>
+        <jsp-file>/WEB-INF/creation-portal.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreationPortal</servlet-name>
+        <url-pattern>/create</url-pattern>
+    </servlet-mapping>
 
 </web-app>
