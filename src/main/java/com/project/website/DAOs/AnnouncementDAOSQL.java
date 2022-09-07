@@ -83,8 +83,8 @@ public class AnnouncementDAOSQL implements AnnouncementDAO{
     public List<Announcement> searchAnnouncements(String searchInput) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM announcements WHERE title LIKE ? OR text_html LIKE ?")) {
-            preparedStatement.setString(1, searchInput);
-            preparedStatement.setString(2, searchInput);
+            preparedStatement.setString(1, "%"+searchInput+"%");
+            preparedStatement.setString(2, "%"+searchInput+"%");
             return getAnnouncementEntries(preparedStatement);
         } catch(SQLException e) {
             return Collections.emptyList();
