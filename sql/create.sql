@@ -96,3 +96,12 @@ CREATE TABLE IF NOT EXISTS user_sessions (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS announcements (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    creator_id BIGINT,
+    creation_time DATETIME,
+    title VARCHAR(128),
+    text_html TEXT,
+    FOREIGN KEY (creator_id) REFERENCES users(id) ON DELETE CASCADE
+);

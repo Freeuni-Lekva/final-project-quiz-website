@@ -6,5 +6,6 @@ DROP TABLE IF EXISTS challenges;
 DROP TABLE IF EXISTS question_to_quiz;
 DROP TABLE IF EXISTS quizzes;
 DROP TABLE IF EXISTS questions;
+DROP TABLE IF EXISTS announcements;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS categories;
