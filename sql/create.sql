@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS user_sessions (
 CREATE TABLE IF NOT EXISTS announcements (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     creator_id BIGINT,
-    creation_time DATETIME,
+    creation_time DATETIME DEFAULT CURRENT_TIMESTAMP,
     title VARCHAR(128),
     text_html TEXT,
     FOREIGN KEY (creator_id) REFERENCES users(id) ON DELETE CASCADE
