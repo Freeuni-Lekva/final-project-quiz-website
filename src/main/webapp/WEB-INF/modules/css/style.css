@@ -198,3 +198,9 @@ body {
     border-top: none;
 }
 
+.announcement {
+    background-color : #ffd763;
+    padding : 5px;
+    margin : 10px;
+}
+
