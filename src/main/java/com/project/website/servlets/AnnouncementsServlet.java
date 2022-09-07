@@ -1,6 +1,7 @@
 package com.project.website.servlets;
 
 import com.project.website.DAOs.AnnouncementDAO;
+import com.project.website.DAOs.UserDAO;
 import com.project.website.Objects.Announcement;
 
 import javax.servlet.*;
@@ -25,6 +26,7 @@ public class AnnouncementsServlet extends HttpServlet {
         }
 
         request.setAttribute("announcements", announcementList);
+        request.setAttribute("userDAO", request.getServletContext().getAttribute(UserDAO.ATTR_NAME));
         request.getRequestDispatcher("WEB-INF/announcements.jsp").forward(request, response);
     }
 }
