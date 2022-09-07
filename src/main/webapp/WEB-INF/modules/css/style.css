@@ -202,8 +202,16 @@ body {
     background-color : #ffd763;
     padding : 5px;
     margin : 10px;
+    overflow : hidden;
 }
 
 .announcement i {
     color : #333333;
+    font-size : 0.8em;
+}
+
+.announcements-list {
+    list-style-type: none;
+    padding : 0;
+    margin : 0;
 }
