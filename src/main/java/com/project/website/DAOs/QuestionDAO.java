@@ -36,6 +36,15 @@ public interface QuestionDAO {
      */
     List<QuestionEntry> getQuestionsByCreatorId(int creatorId, int offset, int limit);
 
+
+    /**
+     *
+     * @param offset offset in the table
+     * @param limit limit of entries returned
+     * @return list of entries
+     */
+    List<QuestionEntry> getQuestions(int offset, int limit);
+
     /**
      * @param categoryId database id of category
      * @param offset offset in the table

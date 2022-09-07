@@ -105,6 +105,17 @@ public class QuestionDAOSQL implements QuestionDAO {
         }
     }
 
+    public List<QuestionEntry> getQuestions(int offset, int limit) {
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM questions LIMIT ?, ?")) {
+            preparedStatement.setInt(1, offset);
+            preparedStatement.setInt(2, limit);
+            return getQuestionEntries(preparedStatement);
+        } catch(SQLException e) {
+            return null;
+        }
+    }
+
     @Override
     public List<QuestionEntry> getQuestionsByCategory(int categoryId, int offset, int limit) {
         try(Connection connection = dataSource.getConnection();

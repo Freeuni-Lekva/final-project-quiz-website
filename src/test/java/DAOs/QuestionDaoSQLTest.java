@@ -171,6 +171,34 @@ public class QuestionDaoSQLTest {
     }
 
     @Test
+    public void testGetQuestions() {
+        List<Integer> questionIds = new ArrayList<>();
+        questionIds.add(questionDAO.insertQuestion(new QuestionEntry(1, 1, question)));
+        questionIds.add(questionDAO.insertQuestion(new QuestionEntry(2, 1, question)));
+        questionIds.add(questionDAO.insertQuestion(new QuestionEntry(3, 3, question)));
+        questionIds.add(questionDAO.insertQuestion(new QuestionEntry(4, 3, question)));
+
+        List<QuestionEntry> questions = questionDAO.getQuestions( 0, 111);
+        Assertions.assertEquals(4, questions.size());
+        Assertions.assertEquals(Arrays.asList(questionIds.get(0), questionIds.get(1), questionIds.get(2), questionIds.get(3)), questions.stream().map(QuestionEntry::getId).collect(Collectors.toList()));
+
+        questions = questionDAO.getQuestions(0, 1);
+        Assertions.assertEquals(1, questions.size());
+        Assertions.assertEquals(Collections.singletonList(questionIds.get(0)), questions.stream().map(QuestionEntry::getId).collect(Collectors.toList()));
+
+        questions = questionDAO.getQuestions(1, 1);
+        Assertions.assertEquals(1, questions.size());
+        Assertions.assertEquals(Collections.singletonList(questionIds.get(1)), questions.stream().map(QuestionEntry::getId).collect(Collectors.toList()));
+
+        questions = questionDAO.getQuestions( 5, 1);
+        Assertions.assertEquals(0, questions.size());
+
+        questions = questionDAO.getQuestions( 1, 100);
+        Assertions.assertEquals(3, questions.size());
+        Assertions.assertEquals(Arrays.asList(questionIds.get(1), questionIds.get(2), questionIds.get(3)), questions.stream().map(QuestionEntry::getId).collect(Collectors.toList()));
+    }
+
+    @Test
     public void testGetByCategoryId() {
         List<Integer> questionIds = new ArrayList<>();
         questionIds.add(questionDAO.insertQuestion(new QuestionEntry(1, 1, question)));
