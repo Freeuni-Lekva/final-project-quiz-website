@@ -7,7 +7,7 @@
 </head>
 <body>
     <jsp:include page="modules/navbar.jsp"/>
-    <form style="padding : 5px">
+    <form action="announcements" style="padding : 5px">
         <label for="announcement-search-input">Search Announcements:</label>
         <input type="text" id="announcement-search-input" name="q" placeholder="Search...">
         <button type="submit">Search</button>
@@ -15,10 +15,17 @@
     <ul>
         <c:forEach items="${announcements}" var="anc">
             <li class="announcement">
+                <i style="text-align : left">
+                    ${anc.getCreationTime().getDay()}.${anc.getCreationTime().getMonth()}.${anc.getCreationTime().getYear()}
+                    &nbsp${anc.getCreationTime().getHours()}:${anc.getCreationTime().getMinutes()}
+                </i>
                 <h4>${anc.getTitle()}</h4>
                 <p>
                     ${anc.getText()}
                 </p>
+                <i style="text-align : right">
+                    announcement made by ${userDAO.getUserById(anc.getCreatorId()).getUsername()}
+                </i>
             </li>
         </c:forEach>
     </ul>
