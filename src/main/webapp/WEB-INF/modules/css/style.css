@@ -215,3 +215,20 @@ body {
     padding : 0;
     margin : 0;
 }
+
+.paging {
+    display: inline-block;
+    border: 1px solid #333333;
+    border-radius: 10px;
+}
+
+.paging:not(.active):hover {
+    background-color: #DDDDDD;
+}
+
+.paging a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+}

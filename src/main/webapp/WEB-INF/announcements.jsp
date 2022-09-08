@@ -1,5 +1,3 @@
-<%@ page import="com.project.website.DAOs.UserDAO" %>
-<%@ page import="com.project.website.Objects.Announcement" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -12,6 +10,7 @@
     <div style="width : 60%; margin : auto;">
         <form action="announcements" style="padding : 5px">
             <label for="announcement-search-input">Search Announcements:</label>
+            <input type="hidden" name="page" value="1">
             <input type="text" id="announcement-search-input" name="q" placeholder="Search...">
             <button type="submit">Search</button>
         </form>
@@ -31,6 +30,14 @@
                 </li>
             </c:forEach>
         </ul>
+        <div>
+            <c:set var="pageNumber" value="${Integer.parseInt(param.page)}"></c:set>
+            <c:forEach var="i" begin="1" end="${pageCount}">
+                <span class="paging <c:if test="${param.page!=null&&pageNumber == i}"> active</c:if>">  <%--test if the current page is active--%>
+                    <a href="announcements?page=${i}<c:if test="${param.q!=null}">&q=${param.q}</c:if>">${i}</a> <%--test if there was a search query--%>
+                </span>
+            </c:forEach>
+        </div>
     </div>
 </body>
 </html>
