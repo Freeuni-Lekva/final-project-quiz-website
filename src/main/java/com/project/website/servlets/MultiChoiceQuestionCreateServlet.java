@@ -37,7 +37,9 @@ public class MultiChoiceQuestionCreateServlet extends HttpServlet {
         List<String> questionChoices = Arrays.asList(request.getParameterValues("choice"));
 
         QuestionDAO questionDAO = (QuestionDAO) request.getServletContext().getAttribute(QuestionDAO.ATTR_NAME);
-        QuestionEntry newEntry = new QuestionEntry(Math.toIntExact(creator), categoryID, new MultiChoiceQuestion(questionStatement, questionAnswers, questionChoices));
+        QuestionEntry newEntry = new QuestionEntry(Math.toIntExact(creator), categoryID, new MultiChoiceQuestion(questionStatement, questionAnswers, questionChoices), questionTitle);
         questionDAO.insertQuestion(newEntry);
+
+        response.sendRedirect("/final_project_quiz_website_war_exploded/create");
     }
 }

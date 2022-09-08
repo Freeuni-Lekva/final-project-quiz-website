@@ -37,7 +37,9 @@ public class ImageQuestionCreateServlet extends HttpServlet {
         List<String> questionAnswers = Arrays.asList(request.getParameterValues("answer"));
 
         QuestionDAO questionDAO = (QuestionDAO) request.getServletContext().getAttribute(QuestionDAO.ATTR_NAME);
-        QuestionEntry newEntry = new QuestionEntry(Math.toIntExact(creator), categoryID, new ImageQuestion(questionStatement,imageURL, questionAnswers));
-        questionDAO.insertQuestion(newEntry);
+        QuestionEntry newEntry = new QuestionEntry(Math.toIntExact(creator), categoryID, new ImageQuestion(questionStatement,imageURL, questionAnswers), questionTitle);
+
+
+        response.sendRedirect("/final_project_quiz_website_war_exploded/create");
     }
 }

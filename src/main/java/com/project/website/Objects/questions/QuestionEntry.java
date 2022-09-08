@@ -15,7 +15,11 @@ public class QuestionEntry {
     private final String title;
 
     public QuestionEntry(int creator_id, int category_id, AnswerableHTML question) {
-        this(NO_ID, creator_id, category_id, NO_DATE, question, "");
+        this(creator_id, category_id, question, "");
+    }
+
+    public QuestionEntry(int creator_id, int category_id, AnswerableHTML question, String title) {
+        this(NO_ID, creator_id, category_id, NO_DATE, question, title);
     }
 
     public QuestionEntry(int id, int creator_id, int category_id, Timestamp creation_time, AnswerableHTML question, String title) {
