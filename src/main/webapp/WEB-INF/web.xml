@@ -69,4 +69,12 @@
         <servlet-name>FriendRequestServlet</servlet-name>
         <url-pattern>/add_friend</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>AdminServlet</servlet-name>
+        <servlet-class>com.project.website.servlets.AdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminServlet</servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
 </web-app>
