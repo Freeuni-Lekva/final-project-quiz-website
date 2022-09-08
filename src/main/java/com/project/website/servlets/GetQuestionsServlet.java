@@ -2,6 +2,7 @@ package com.project.website.servlets;
 
 import com.google.gson.Gson;
 import com.project.website.DAOs.QuestionDAO;
+import com.project.website.DAOs.UserDAO;
 import com.project.website.Objects.questions.QuestionEntry;
 import com.project.website.utils.QuestionJson;
 import com.project.website.utils.QuestionsQuery;
@@ -28,6 +29,7 @@ public class GetQuestionsServlet extends HttpServlet {
         QuizWebsiteController controller = new QuizWebsiteController(req, resp);
         QuestionDAO questionDAO = (QuestionDAO) req.getServletContext().getAttribute(QuestionDAO.ATTR_NAME);
         QuestionsQuery query = gson.fromJson(controller.getJsonBody(), QuestionsQuery.class);
+        UserDAO userDAO = (UserDAO) req.getServletContext().getAttribute(UserDAO.ATTR_NAME);
 
         List<QuestionEntry> questions;
         if (query.getCategory() >= 0) {
@@ -40,7 +42,9 @@ public class GetQuestionsServlet extends HttpServlet {
             return;
         }
         List<QuestionJson> questionJsons = questions.stream()
-                .map(questionEntry -> new QuestionJson(questionEntry.getId(), questionEntry.getTitle()))
+                .map(questionEntry -> new QuestionJson(questionEntry.getId(),
+                        questionEntry.getTitle(), questionEntry.getCreator_id(),
+                        userDAO.getUserByID(questionEntry.getCreator_id()).getUsername()))
                 .collect(Collectors.toList());
 
         String returnJson = gson.toJson(questionJsons);
