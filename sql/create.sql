@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS quizzes (
     creation_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     quiz_title VARCHAR(64),
     quiz_description VARCHAR(64),
+    quiz_timer BIGINT DEFAULT 0,
     FOREIGN KEY (creator_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
 );
@@ -94,6 +95,7 @@ CREATE TABLE IF NOT EXISTS user_sessions (
     quiz_id BIGINT,
     current_local_id BIGINT DEFAULT 0,
     start_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    quiz_time BIGINT,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE
 );

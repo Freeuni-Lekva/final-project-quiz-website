@@ -10,6 +10,7 @@ import com.project.website.Objects.UserSession;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +24,11 @@ public class QuizWebsiteController {
         this.resp = resp;
     }
 
+    public boolean isLoggedIn() {
+        return req.getSession().getAttribute("userID") != null;
+    }
     public boolean assertLoggedIn() throws IOException {
-        if (req.getSession().getAttribute("userID") == null) {
+        if (!isLoggedIn()) {
             resp.sendRedirect("login");
             return false;
         }
@@ -35,6 +39,15 @@ public class QuizWebsiteController {
         return Math.toIntExact((Long) req.getSession().getAttribute("userID"));
     }
 
+    public boolean isActiveQuiz() {
+        if (!isLoggedIn()) {
+            return false;
+        }
+        UserSessionsDAO userSessionsDAO = (UserSessionsDAO) req.getServletContext().getAttribute(UserSessionsDAO.ATTR_NAME);
+        UserSession session = userSessionsDAO.getUserSession(getUserID());
+
+        return session != null;
+    }
     public boolean assertActiveQuiz() throws IOException, ServletException {
         if (!assertLoggedIn()) {
             return false;
@@ -62,6 +75,16 @@ public class QuizWebsiteController {
         return quizDAO.getQuizById(activeSession.getQuizID());
     }
 
+    public String getJsonBody() {
+        StringBuilder jb = new StringBuilder();
+        String line = null;
+        try {
+            BufferedReader reader = req.getReader();
+            while ((line = reader.readLine()) != null)
+                jb.append(line);
+        } catch (Exception ignored) {}
+        return jb.toString();
+    }
     public List<Double> getQuizScores() {
         List<Double> scores = new ArrayList<>();
         QuestionToQuizDAO questionToQuizDAO = (QuestionToQuizDAO) req.getServletContext().getAttribute(QuestionToQuizDAO.ATTR_NAME);

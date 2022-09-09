@@ -14,14 +14,16 @@ public class Quiz {
     private final String title;
     private final String description;
 
+    private final int timer;
+
     public Quiz(int creatorID, int categoryID) {
-        this(creatorID, categoryID, "TEST", "TEST");
+        this(creatorID, categoryID, "TEST", "TEST", 0);
     }
 
-    public Quiz(int creatorID, int categoryID, String title, String description) {
-        this(-1, creatorID, categoryID, -1, null, title, description);
+    public Quiz(int creatorID, int categoryID, String title, String description, int timer) {
+        this(-1, creatorID, categoryID, -1, null, title, description, timer);
     }
-    public Quiz(int ID, int creatorID, int categoryID, int lastQuestionID, Date creationTime, String title, String description) {
+    public Quiz(int ID, int creatorID, int categoryID, int lastQuestionID, Date creationTime, String title, String description, int timer) {
         this.ID = ID;
         this.creatorID = creatorID;
         this.categoryID = categoryID;
@@ -29,6 +31,11 @@ public class Quiz {
         this.creationTime = creationTime;
         this.title = title;
         this.description = description;
+        this.timer = timer;
+    }
+
+    public int getTimer() {
+        return timer;
     }
 
     public String getTitle() {
