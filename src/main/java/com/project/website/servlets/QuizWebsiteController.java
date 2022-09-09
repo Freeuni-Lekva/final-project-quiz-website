@@ -24,8 +24,11 @@ public class QuizWebsiteController {
         this.resp = resp;
     }
 
+    public boolean isLoggedIn() {
+        return req.getSession().getAttribute("userID") != null;
+    }
     public boolean assertLoggedIn() throws IOException {
-        if (req.getSession().getAttribute("userID") == null) {
+        if (!isLoggedIn()) {
             resp.sendRedirect("login");
             return false;
         }
@@ -36,6 +39,15 @@ public class QuizWebsiteController {
         return Math.toIntExact((Long) req.getSession().getAttribute("userID"));
     }
 
+    public boolean isActiveQuiz() {
+        if (!isLoggedIn()) {
+            return false;
+        }
+        UserSessionsDAO userSessionsDAO = (UserSessionsDAO) req.getServletContext().getAttribute(UserSessionsDAO.ATTR_NAME);
+        UserSession session = userSessionsDAO.getUserSession(getUserID());
+
+        return session != null;
+    }
     public boolean assertActiveQuiz() throws IOException, ServletException {
         if (!assertLoggedIn()) {
             return false;

@@ -1,7 +1,6 @@
 package com.project.website.servlets;
 
 import com.project.website.DAOs.*;
-import com.project.website.Objects.Quiz;
 import com.project.website.Objects.QuizFinalScore;
 import com.project.website.Objects.UserSession;
 
@@ -11,13 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @WebServlet(name = "FinishQuiz", value = "/finishQuiz")
 public class FinishQuizServlet extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         QuizWebsiteController controller = new QuizWebsiteController(req, resp);
 
         if (!controller.assertActiveQuiz()) {
@@ -31,10 +30,23 @@ public class FinishQuizServlet extends HttpServlet {
         QuizAnswersDAO quizAnswersDAO = (QuizAnswersDAO) req.getServletContext().getAttribute(QuizAnswersDAO.ATTR_NAME);
         int userID = controller.getUserID();
 
-        quizFinalScoresDAO.insertQuizFinalScore(new QuizFinalScore(session, scores));
+        QuizFinalScore finalScore = new QuizFinalScore(session, scores);
+        quizFinalScoresDAO.insertQuizFinalScore(finalScore);
         quizAnswersDAO.deleteAllAnswers(session.getQuizID(), session.getUserID());
         userSessionsDAO.deleteSession(userID);
 
-        //TODO redirect to results
+        long secondsLeft = Calendar.getInstance().getTimeInMillis() - session.getStartDate().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+        df.setTimeZone(TimeZone.getTimeZone("GMT"));
+        String time = df.format(new Date(
+                (Calendar.getInstance().getTimeInMillis() - session.getStartDate().getTime())));
+
+        req.setAttribute("time", time);
+        req.setAttribute("finalScore", finalScore.getScore());
+        req.setAttribute("maxScore", finalScore.getMaxScore());
+        req.setAttribute("questionScores", scores);
+        req.setAttribute("quizID", session.getQuizID());
+
+        req.getRequestDispatcher("WEB-INF/quiz-results.jsp").forward(req, resp);
     }
 }
