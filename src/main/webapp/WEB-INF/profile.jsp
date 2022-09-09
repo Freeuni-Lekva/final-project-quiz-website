@@ -1,8 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.project.website.Objects.User" %>
-<%@ page import="com.project.website.DAOs.FriendRequestDAO" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.project.website.DAOs.FriendshipDAO" %>
+<%@ page import="com.project.website.Objects.Challenge" %>
+<%@ page import="com.project.website.DAOs.*" %>
+<%@ page import="java.util.stream.Collectors" %>
+<%@ page import="com.project.website.Objects.Quiz" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
@@ -32,6 +34,7 @@
         <button id="friends-tab" class="tab-button" onclick='openProfileTab(this.id,"friends")'>Friends</button>
         <c:if test="${ownProfile}">
             <button id="friend-requests-tab" class="tab-button" onclick='openProfileTab(this.id, "friend-requests")'>Friend Requests</button>
+            <button id="challenges-tab" class="tab-button" onclick='openProfileTab(this.id, "challenges")'>Challenges</button>
         </c:if>
     </div>
     <div id="user-info" class="tab-content">
@@ -66,8 +69,19 @@
     <c:if test="${ownProfile}">
         <%
             FriendRequestDAO friendRequestDAO = (FriendRequestDAO) request.getServletContext().getAttribute(FriendRequestDAO.ATTR_NAME);
+            ChallengeDAO challengeDAO = (ChallengeDAO) request.getServletContext().getAttribute(ChallengeDAO.ATTR_NAME);
+            UserDAO userDAO = (UserDAO) request.getServletContext().getAttribute(UserDAO.ATTR_NAME);
+            QuizDAO quizDAO = (QuizDAO) request.getServletContext().getAttribute(QuizDAO.ATTR_NAME);
+
             List<User> receivedFriendRequests = friendRequestDAO.getUserReceivedFriendRequests(userInfo.getId());
             request.setAttribute("receivedFriendRequests", receivedFriendRequests);
+
+            List<Challenge> challenges = challengeDAO.getChallengesTo(Math.toIntExact(sessionUserID));
+            List<User> challengeSenders = challenges.stream().map(challenge -> userDAO.getUserByID(challenge.getFromUserID())).collect(Collectors.toList());
+            List<Quiz> challengeQuizzes = challenges.stream().map(challenge -> quizDAO.getQuizById(challenge.getQuizID())).collect(Collectors.toList());
+            request.setAttribute("challenges", challenges);
+            request.setAttribute("challengeSenders", challengeSenders);
+            request.setAttribute("challengeQuizzes", challengeQuizzes);
         %>
         <div id="friend-requests" class="tab-content">
             <h3>Friend Requests</h3>
@@ -79,6 +93,22 @@
                         <jsp:include page="modules/friend-btn.jsp">
                             <jsp:param name="receiver_id" value="${friendRequester.id}"/>
                         </jsp:include>
+                    </li>
+                </c:forEach>
+            </ul>
+        </div>
+        <div id="challenges" class="tab-content">
+            <ul>
+                <c:forEach items="${challenges}" var="challenge" varStatus="loop">
+                    <li>
+                        <img src="${challengeSenders[loop.index].profilePicURL}" alt="profile_pic" height="32" width="32">
+                        <a href="profile?id=${challengeSenders[loop.index]}"><c:out value="${challengeSenders[loop.index].username}"/></a>
+                        Challenged you to do <a href="quiz?challengeID=${challenge.id}">${challengeQuizzes[loop.index].title}</a> in ${challenge.time} seconds!
+                        <form method="POST" action="deleteChallenge?challengeID=${challenge.id}">
+                            <button>
+                                Delete
+                            </button>
+                        </form>
                     </li>
                 </c:forEach>
             </ul>

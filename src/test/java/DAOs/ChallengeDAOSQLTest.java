@@ -63,6 +63,8 @@ public class ChallengeDAOSQLTest {
         Assertions.assertFalse(challengeDAO.insertChallenge(new Challenge(14, 77, 512, 100)));
     }
 
+
+
     @Test
     public void testDelete() {
         Assertions.assertTrue(challengeDAO.insertChallenge(new Challenge(1, 2, 1, 1001)));
@@ -103,5 +105,36 @@ public class ChallengeDAOSQLTest {
 
         challenges = challengeDAO.getChallengesTo(3);
         Assertions.assertEquals(0, challenges.size());
+    }
+
+    @Test
+    public void testChallengesGet() {
+        Assertions.assertTrue(challengeDAO.insertChallenge(new Challenge(1, 2, 1, 1001)));
+        Assertions.assertTrue(challengeDAO.insertChallenge(new Challenge(1, 3, 2, 10042)));
+        Assertions.assertTrue(challengeDAO.insertChallenge(new Challenge(1, 3, 3, 1030)));
+
+        Challenge challenge = challengeDAO.getChallenge(1);
+        Assertions.assertNotNull(challenge);
+        Assertions.assertEquals(1, challenge.getToUserID());
+        Assertions.assertEquals(2, challenge.getFromUserID());
+
+        challenge = challengeDAO.getChallenge(2);
+        Assertions.assertNotNull(challenge);
+        Assertions.assertEquals(1, challenge.getToUserID());
+        Assertions.assertEquals(3, challenge.getFromUserID());
+
+        challenge = challengeDAO.getChallenge(3);
+        Assertions.assertNotNull(challenge);
+        Assertions.assertEquals(1, challenge.getToUserID());
+        Assertions.assertEquals(3, challenge.getFromUserID());
+
+        challenge = challengeDAO.getChallenge(123);
+        Assertions.assertNull(challenge);
+
+        challenge = challengeDAO.getChallenge(55);
+        Assertions.assertNull(challenge);
+
+        challenge = challengeDAO.getChallenge(53);
+        Assertions.assertNull(challenge);
     }
 }

@@ -44,6 +44,20 @@ public class ChallengeDAOSQL implements ChallengeDAO {
     }
 
     @Override
+    public Challenge getChallenge(int id) {
+        try(Connection conn = dataSource.getConnection();
+            PreparedStatement preparedStatement = conn.prepareStatement(
+                    "SELECT * FROM quiz_challenges WHERE id = ? ORDER BY date_sent")) {
+            preparedStatement.setInt(1, id);
+            List<Challenge> result =  aggregateQuery(preparedStatement);
+            if (result.size() > 0) {
+                return result.get(0);
+            }
+        } catch(SQLException ignored) {}
+        return null;
+    }
+
+    @Override
     public boolean deleteChallenge(int id) {
         try(Connection conn = dataSource.getConnection();
             PreparedStatement preparedStatement = conn.prepareStatement(

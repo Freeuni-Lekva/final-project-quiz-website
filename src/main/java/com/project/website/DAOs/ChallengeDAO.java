@@ -11,6 +11,8 @@ public interface ChallengeDAO {
 
    boolean deleteChallenge(int id);
 
+   Challenge getChallenge(int id);
+
    List<Challenge> getChallengesTo(int toUserID);
 
 }

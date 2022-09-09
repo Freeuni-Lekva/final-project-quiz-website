@@ -14,7 +14,7 @@ public class Quiz {
     private final String title;
     private final String description;
 
-    private final int timer;
+    private int timer;
 
     public Quiz(int creatorID, int categoryID) {
         this(creatorID, categoryID, "TEST", "TEST", 0);
@@ -64,5 +64,9 @@ public class Quiz {
 
     public int getCategoryID() {
         return categoryID;
+    }
+
+    public void setTimer(int timer) {
+        this.timer = timer;
     }
 }
