@@ -32,16 +32,28 @@
         <div class="column">
             <h2>Users</h2>
             <%
+                UserDAO userDAO = (UserDAO) request.getServletContext().getAttribute(UserDAO.ATTR_NAME);
                 String query = "";
                 String queryCount = "10";
                 if (request.getParameter("q") != null)
                     query = request.getParameter("q");
                 if (request.getParameter("qc") != null && !request.getParameter("qc").equals(""))
                     queryCount = request.getParameter("qc");
+                if (request.getParameter("demote") != null) {
+                    long id = Integer.parseInt(request.getParameter("demote"));
+                    userDAO.removeAdminPrivileges(id);
+                }
+                if (request.getParameter("promote") != null) {
+                    long id = Integer.parseInt(request.getParameter("promote"));
+                    userDAO.promoteToAdmin(id);
+                }
 
-                List<User> users = ((UserDAO) request.getServletContext().getAttribute(UserDAO.ATTR_NAME)).searchUsers("%"+query+"%");
+
+                List<User> users = userDAO.searchUsers("%"+query+"%");
                 users = users.subList(0, Math.min(users.size(), Integer.parseInt(queryCount)));
                 request.setAttribute("users", users);
+
+
             %>
             <form action="admin" method="get" style="display: flex">
                 <input type="text" name="q" value="<% out.write(query); %>" placeholder="Search query" style="float: left; margin-left: 20px;"/>
@@ -54,6 +66,7 @@
                     <th>Username</th>
                     <th>First Name</th>
                     <th>Last Name</th>
+                    <th>Admin</th>
                     <th>Delete</th>
                 </tr>
 
@@ -63,6 +76,14 @@
                         <td><a href="profile?id=${user.id}"><c:out value="${user.username}"/></a></td>
                         <td><c:out value="${user.firstName}"/></td>
                         <td><c:out value="${user.lastName}"/></td>
+                        <c:choose>
+                            <c:when test="${user.admin == true}">
+                                <td><a href="admin?demote=<c:out value="${user.id}"/>">Demote</a></td>
+                            </c:when>
+                            <c:otherwise>
+                                <td><a href="admin?promote=<c:out value="${user.id}"/>">Promote</a></td>
+                            </c:otherwise>
+                        </c:choose>
                         <td><a href="admin?delete-user=${user.id}">Delete</a></td>
                     </tr>
                 </c:forEach>

@@ -95,7 +95,7 @@ public class UserDAOSQLTest {
             assertEquals(localUser.getEmail(), user.getEmail());
             assertEquals(localUser.getFirstName(), user.getFirstName());
             assertEquals(localUser.getLastName(), user.getLastName());
-            assertEquals(localUser.isAdmin(), user.isAdmin());
+            assertEquals(localUser.getAdmin(), user.getAdmin());
         }
     }
 
@@ -104,11 +104,11 @@ public class UserDAOSQLTest {
         List<User> admins = dao.getAllAdmins();
         // count the amount of admins in the test users list
         int adminCount = testUsers.stream().reduce(0,
-                (a, u) -> a + (u == null ? 0 : (u.isAdmin() ? 1 : 0)), (a, b) -> a + b);
+                (a, u) -> a + (u == null ? 0 : (u.getAdmin() ? 1 : 0)), (a, b) -> a + b);
         assertEquals(admins.size(), adminCount);
         // for each user returned by the DAO, check that they're an admin in the test users list
         for(User possibleAdmin : admins) {
-            assertTrue(testUsers.get((int)possibleAdmin.getId()).isAdmin());
+            assertTrue(testUsers.get((int)possibleAdmin.getId()).getAdmin());
         }
     }
 
@@ -124,7 +124,7 @@ public class UserDAOSQLTest {
             assertEquals(localUser.getEmail(), user.getEmail());
             assertEquals(localUser.getFirstName(), user.getFirstName());
             assertEquals(localUser.getLastName(), user.getLastName());
-            assertEquals(localUser.isAdmin(), user.isAdmin());
+            assertEquals(localUser.getAdmin(), user.getAdmin());
         }
     }
 
@@ -140,7 +140,7 @@ public class UserDAOSQLTest {
             assertEquals(localUser.getEmail(), user.getEmail());
             assertEquals(localUser.getFirstName(), user.getFirstName());
             assertEquals(localUser.getLastName(), user.getLastName());
-            assertEquals(localUser.isAdmin(), user.isAdmin());
+            assertEquals(localUser.getAdmin(), user.getAdmin());
         }
     }
 
@@ -157,7 +157,7 @@ public class UserDAOSQLTest {
             assertEquals(localUser.getEmail(), user.getEmail());
             assertEquals(localUser.getFirstName(), user.getFirstName());
             assertEquals(localUser.getLastName(), user.getLastName());
-            assertEquals(localUser.isAdmin(), user.isAdmin());
+            assertEquals(localUser.getAdmin(), user.getAdmin());
         }
     }
 

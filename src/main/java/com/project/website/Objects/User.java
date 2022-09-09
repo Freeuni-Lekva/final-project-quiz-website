@@ -5,7 +5,7 @@ public class User {
     private String username;
     private String passwordHash;
     private String email;
-    private boolean isAdmin;
+    private boolean admin;
     private String firstName;
     private String lastName;
 
@@ -16,7 +16,7 @@ public class User {
         this.username = username;
         this.passwordHash = passwordHash;
         this.email = email;
-        this.isAdmin = isAdmin;
+        this.admin = isAdmin;
         this.firstName = firstName;
         this.lastName = lastName;
         this.profilePicURL = profilePicURL;
@@ -38,8 +38,8 @@ public class User {
         return email;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
+    public boolean getAdmin() {
+        return admin;
     }
 
     public String getFirstName() {
@@ -69,7 +69,7 @@ public class User {
     }
 
     public void setAdmin(boolean admin) {
-        isAdmin = admin;
+        this.admin = admin;
     }
 
     public void setFirstName(String firstName) {
