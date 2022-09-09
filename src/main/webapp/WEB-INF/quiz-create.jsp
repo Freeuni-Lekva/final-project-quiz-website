@@ -78,6 +78,10 @@
                 <tbody id="search-results">
                 </tbody>
             </table>
+            <div style="float: right">
+                <button id="next-page" disabled> prev </button>
+                <button id="prev-page" disabled> next </button>
+            </div>
         </div>
     </div>
 </body>

@@ -1,5 +1,8 @@
 let searchData = {category: -1, query: "", page: 0, showMine: false}
 
+const MAX_QUESTIONS = 50;
+let questionCount = 0;
+
 onClickAdd = ( (questionData) => {
     const tableBody = document.getElementById("added-questions-table-body");
     const newRow = tableBody.insertRow();
@@ -120,14 +123,27 @@ fetchQuestions = (async () => {
         creatorLink.innerHTML = content[i].creatorName;
         row.insertCell(4).appendChild(creatorLink);
     }
+
+    questionCount = content.length;
 });
 
 searchQuestions = ( () => {
     searchData.page = 0
     fetchQuestions();
+    document.getElementById("next-page").disabled = questionCount < MAX_QUESTIONS;
+    document.getElementById("prev-page").disabled = true;
 });
 
 nextPage = ( () => {
     searchData.page++;
     fetchQuestions();
+    document.getElementById("next-page").disabled = questionCount < MAX_QUESTIONS;
+    document.getElementById("prev-page").disabled = false;
 });
+
+prevPage = ( () => {
+    searchData.page--;
+    fetchQuestions();
+    document.getElementById("next-page").disabled = questionCount < MAX_QUESTIONS;
+    document.getElementById("prev-page").disabled = searchData.page === 0;
+})
