@@ -69,4 +69,21 @@
         <url-pattern>/create</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>SearchUsersServlet</servlet-name>
+        <servlet-class>com.project.website.servlets.SearchUsersServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SearchUsersServlet</servlet-name>
+        <url-pattern>/search_users</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>FriendRequestServlet</servlet-name>
+        <servlet-class>com.project.website.servlets.FriendRequestServlet</servlet-class>
+
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FriendRequestServlet</servlet-name>
+        <url-pattern>/add_friend</url-pattern>
+    </servlet-mapping>
 </web-app>
