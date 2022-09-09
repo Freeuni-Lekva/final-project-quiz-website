@@ -126,4 +126,15 @@ public class QuizRatingsDAOSQLTest {
         assertEquals(4, quizRatingsDAO.getQuizRatingSum(quizIDs.get(0)));
         assertEquals(2, quizRatingsDAO.getQuizRatingSum(quizIDs.get(1)));
     }
+
+    @Test
+    public void testSetRating() {
+        long ratingID = quizRatingsDAO.insertRating(new QuizRating(quizIDs.get(0), 2, 3));
+
+        QuizRating quizRating = quizRatingsDAO.getRating(ratingID);
+        assertEquals(3, quizRating.getRating());
+        assertTrue(quizRatingsDAO.setRating(ratingID, 5));
+        quizRating = quizRatingsDAO.getRating(ratingID);
+        assertEquals(5, quizRating.getRating());
+    }
 }

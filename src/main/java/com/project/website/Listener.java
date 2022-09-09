@@ -35,6 +35,7 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
         QuizDAO quizDAO = new QuizDAOSQL(src);
         QuizCommentDAO quizCommentDAO = new QuizCommentDAOSQL(src);
         AnnouncementDAO announcementDAO = new AnnouncementDAOSQL(src);
+        QuizRatingsDAO quizRatingsDAO = new QuizRatingsDAOSQL(src);
 
         /* Test
         int success = categoryDAO.insertCategory(new Category("AAA"));
@@ -50,6 +51,7 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
         sce.getServletContext().setAttribute(QuizDAO.ATTR_NAME, quizDAO);
         sce.getServletContext().setAttribute(QuizCommentDAO.ATTR_NAME, quizCommentDAO);
         sce.getServletContext().setAttribute(AnnouncementDAO.ATTR_NAME, announcementDAO);
+        sce.getServletContext().setAttribute(QuizRatingsDAO.ATTR_NAME, quizRatingsDAO);
     }
 
     @Override

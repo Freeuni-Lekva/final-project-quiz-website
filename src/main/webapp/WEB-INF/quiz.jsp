@@ -23,15 +23,28 @@
         <h1 class="u-quiz-text">${quiz.title}</h1>
         <h2 class="u-quiz-text">${quiz.description}</h2>
         <button class="u-submit-answer-button">Start</button>
-
-        <div id="stars">
-            <span class="fa fa-star" onmouseout="starMouseOut()" onmouseover="starMouseOver(1)" onclick="starClick(1)"></span>
-            <span class="fa fa-star" onmouseout="starMouseOut()" onmouseover="starMouseOver(2)" onclick="starClick(2)"></span>
-            <span class="fa fa-star" onmouseout="starMouseOut()" onmouseover="starMouseOver(3)" onclick="starClick(3)"></span>
-            <span class="fa fa-star" onmouseout="starMouseOut()" onmouseover="starMouseOver(4)" onclick="starClick(4)"></span>
-            <span class="fa fa-star" onmouseout="starMouseOut()" onmouseover="starMouseOver(5)" onclick="starClick(5)"></span>
-        </div>
     </form>
+    <div>
+        <script>
+            loadedRating = <%=request.getAttribute("myQuizRating")%>
+        </script>
+        <form id="rating-form" action="rate" method="post">
+            <div id="my-rating">
+                <h3>My Rating</h3>
+                <div id="stars">
+                    <span class="fa fa-star" onmouseout="starMouseOut()" onmouseover="starMouseOver(1)" onclick="sendRating(1)"></span>
+                    <span class="fa fa-star" onmouseout="starMouseOut()" onmouseover="starMouseOver(2)" onclick="sendRating(2)"></span>
+                    <span class="fa fa-star" onmouseout="starMouseOut()" onmouseover="starMouseOver(3)" onclick="sendRating(3)"></span>
+                    <span class="fa fa-star" onmouseout="starMouseOut()" onmouseover="starMouseOver(4)" onclick="sendRating(4)"></span>
+                    <span class="fa fa-star" onmouseout="starMouseOut()" onmouseover="starMouseOver(5)" onclick="sendRating(5)"></span>
+                </div>
+            </div>
+        </form>
+        <div>
+            <h3>Total Ratings: ${ratingCount}</h3>
+            <h3>Average Rating: ${ratingAvg} </h3>
+        </div>
+    </div>
     <div class="u-comments">
         <h1> Comments: </h1>
         <div class="u-comment">

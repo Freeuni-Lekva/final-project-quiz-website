@@ -69,6 +69,37 @@ public class QuizRatingsDAOSQL implements QuizRatingsDAO {
     }
 
     @Override
+    public QuizRating getRatingByUser(long quizID, long userID) {
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM quiz_ratings WHERE quiz_id = ? AND creator_id = ?")) {
+            preparedStatement.setLong(1, quizID);
+            preparedStatement.setLong(2, userID);
+            try(ResultSet resultSet = preparedStatement.executeQuery()) {
+                if(resultSet.next()) {
+                    return new QuizRating(resultSet.getLong(1), resultSet.getLong(2), resultSet.getLong(3), resultSet.getInt(4));
+                }
+                else {
+                    throw new SQLException("Get Failed");
+                }
+            }
+        } catch(Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public boolean setRating(long ratingID, int newRating) {
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE quiz_ratings SET rating = ? WHERE id = ?")) {
+            preparedStatement.setInt(1, newRating);
+            preparedStatement.setLong(2, ratingID);
+            return preparedStatement.executeUpdate() != 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
     public long getQuizRatingCount(long quizID) {
         try(Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM quiz_ratings WHERE quiz_id = ?")) {
