@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @WebServlet(name = "ActiveQuiz", value = "/activeQuiz")
@@ -23,6 +24,12 @@ public class ActiveQuiz extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         QuizWebsiteController controller = new QuizWebsiteController(req, resp);
         if (!controller.assertActiveQuiz()) {
+            return;
+        }
+
+        UserSession session = controller.getUserSession();
+        if (session.getTime() > 0 && (Calendar.getInstance().getTimeInMillis() - session.getStartDate().getTime()) / 1000 - session.getTime() > 0) {
+            resp.sendRedirect("finishQuiz");
             return;
         }
 

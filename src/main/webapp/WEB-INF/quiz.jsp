@@ -18,10 +18,13 @@
 <body style="margin: 0;">
 <style><%@include file="modules/css/style.css"%></style>
 <jsp:include page="modules/navbar.jsp"/>
-    <form method="post" action="quiz?quizID=${quiz.ID}" class="u-quiz-form">
+    <form method="post" class="u-quiz-form">
         <a href="profile?id=${quiz.creatorID}" class="u-quiz-link">Quiz by <%= dao.getUserByID(((Quiz) request.getAttribute("quiz")).getCreatorID()).getUsername()%></a>
         <h1 class="u-quiz-text">${quiz.title}</h1>
         <h2 class="u-quiz-text">${quiz.description}</h2>
+        <c:if test="${timeLimit != null}">
+            <h2 class="u-quiz-text">You will have ${timeLimit} to do this quiz!</h2>
+        </c:if>
         <button class="u-submit-answer-button">Start</button>
     </form>
     <div class="u-comments">

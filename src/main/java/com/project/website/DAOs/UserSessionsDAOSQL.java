@@ -24,10 +24,11 @@ public class UserSessionsDAOSQL implements UserSessionsDAO {
         try(Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(
                     "INSERT INTO " +
-                            "user_sessions(user_id, quiz_id) " +
-                            "VALUES (?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)) {
+                            "user_sessions(user_id, quiz_id, quiz_time) " +
+                            "VALUES (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setInt(1, session.getUserID());
             preparedStatement.setInt(2, session.getQuizID());
+            preparedStatement.setLong(3, session.getTime());
             preparedStatement.executeUpdate();
             try(ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                 if(generatedKeys.next()) {
@@ -59,7 +60,7 @@ public class UserSessionsDAOSQL implements UserSessionsDAO {
     private UserSession executeAndFetch(PreparedStatement statement) {
         try(ResultSet rs = statement.executeQuery()) {
             if (rs.next()) {
-                return new UserSession(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getTimestamp(5));
+                return new UserSession(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getTimestamp(5), rs.getLong(6));
             }
         } catch (SQLException ignored) {}
         return null;

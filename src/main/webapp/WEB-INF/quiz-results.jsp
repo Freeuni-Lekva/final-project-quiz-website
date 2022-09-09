@@ -3,12 +3,12 @@
 <style><%@include file="modules/css/style.css"%></style>
 <html>
 <head>
-    <title>Active Quiz</title>
+    <title>Quiz Results</title>
 </head>
 <body>
 <jsp:include page="modules/navbar.jsp"/>
 <div class="u-table-container">
-    <h1 class="u-table-title">Currently active <a href="quiz?quizID=${quizID}">quiz.</a></h1>
+    <h1 class="u-table-title"><a href="quiz?quizID=${quizID}">quiz finished in ${time}. with a score of ${finalScore} / ${maxScore}</a></h1>
     <div class="u-table">
         <div class="u-table-header">
             <p class="u-header_item">Status</p>
@@ -40,14 +40,6 @@
             </c:forEach>
         </div>
     </div>
-</div>
-<div class="u-button-container">
-    <form method="get" action="finishQuiz">
-        <button>Finish Quiz</button>
-    </form>
-    <form method="post" action="activeQuiz">
-        <button>Next Question</button>
-    </form>
 </div>
 </body>
 </html>

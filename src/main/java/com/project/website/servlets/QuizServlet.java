@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -38,6 +38,15 @@ public class QuizServlet extends HttpServlet {
         List<Long> commentIDs = commentDAO.getQuizComments(quiz.getID(), 0, Long.MAX_VALUE);
         List<QuizComment> comments = commentIDs.stream().map(commentDAO::getCommentByID).collect(Collectors.toList());
 
+        String timedParam = req.getParameter("timeLimit");
+        int time = timedParam != null ? Integer.parseInt(timedParam) : quiz.getTimer();
+
+        if (time != 0) {
+            SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+            df.setTimeZone(TimeZone.getTimeZone("GMT"));
+            String timeString = df.format(new Date(time * 1000L));
+            req.setAttribute("timeLimit", timeString);
+        }
         req.setAttribute("comments", comments);
         req.getRequestDispatcher("WEB-INF/quiz.jsp").forward(req, resp);
     }
@@ -52,17 +61,26 @@ public class QuizServlet extends HttpServlet {
         }
 
         String quizID = req.getParameter("quizID");
-        if (quizID == null || ((QuizDAO)req.getServletContext().getAttribute("QuizDAO")).getQuizById(Integer.parseInt(quizID)) == null) {
-            resp.sendRedirect("home");
-            return;
-        }
 
-        UserSessionsDAO userSessionsDAO = (UserSessionsDAO) req.getServletContext().getAttribute(UserSessionsDAO.ATTR_NAME);
+        try {
+            if (quizID == null || ((QuizDAO)req.getServletContext().getAttribute("QuizDAO")).getQuizById(Integer.parseInt(quizID)) == null) {
+                resp.sendRedirect("home");
+                return;
+            }
 
-        if (userSessionsDAO.getUserSession(Math.toIntExact(userID)) == null) {
-            userSessionsDAO.insertSession(new UserSession(Math.toIntExact(userID), Integer.parseInt(quizID)));
-            req.getRequestDispatcher("activeQuiz").forward(req, resp);
-        } else {
+            QuizDAO quizDAO = (QuizDAO) req.getServletContext().getAttribute(QuizDAO.ATTR_NAME);
+            UserSessionsDAO userSessionsDAO = (UserSessionsDAO) req.getServletContext().getAttribute(UserSessionsDAO.ATTR_NAME);
+
+            String timedParam = req.getParameter("timeLimit");
+            if (userSessionsDAO.getUserSession(Math.toIntExact(userID)) == null) {
+                int time = timedParam != null ? Integer.parseInt(timedParam) : quizDAO.getQuizById(Integer.parseInt(quizID)).getTimer();
+                userSessionsDAO.insertSession(new UserSession(Math.toIntExact(userID), Integer.parseInt(quizID), time));
+                req.getRequestDispatcher("activeQuiz").forward(req, resp);
+            } else {
+                req.setAttribute("errorMessage", "Already in a quiz!");
+                req.getRequestDispatcher("WEB-INF/error-message.jsp").forward(req, resp);
+            }
+        } catch(NumberFormatException ignored) {
             req.setAttribute("errorMessage", "Already in a quiz!");
             req.getRequestDispatcher("WEB-INF/error-message.jsp").forward(req, resp);
         }

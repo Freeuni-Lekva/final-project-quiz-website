@@ -1,5 +1,6 @@
 <%@ page import="com.project.website.DAOs.UserSessionsDAO" %>
 <%@ page import="com.project.website.Objects.UserSession" %>
+<%@ page import="java.util.Calendar" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     UserSessionsDAO userSessionsDAO = (UserSessionsDAO) request.getServletContext().getAttribute(UserSessionsDAO.ATTR_NAME);
@@ -29,6 +30,10 @@
                 <li style="float:right"><a href="profile"><i>You are logged in as <b>${username}</b></i></a></li>
                 <c:if test="${userSession != null}">
                     <li style="float:right"><a href="activeQuiz">Active Quiz</a></li>
+                    <c:if test="${userSession.time != 0}">
+                        <script src="scripts/quizTimer.js"></script>
+                        <li style="float:right"><a id="timer">00:00:00</a></li>
+                    </c:if>
                 </c:if>
             </c:otherwise>
         </c:choose>
