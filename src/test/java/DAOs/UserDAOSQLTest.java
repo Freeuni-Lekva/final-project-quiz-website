@@ -5,15 +5,12 @@ import com.project.website.DAOs.UserDAOSQL;
 import com.project.website.Objects.User;
 import com.project.website.utils.Hasher;
 import com.project.website.utils.MySQLTestingTool;
-import com.project.website.utils.SQLiteTool;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -274,5 +271,12 @@ public class UserDAOSQLTest {
         dao.changeProfilePicture(withProfilePic.getId(), null);
         withProfilePic = dao.getUserByID(withProfilePic.getId());
         assertNull(withProfilePic.getProfilePicURL());
+    }
+
+    @Test
+    public void testDeleteUserById() {
+        assertEquals(dao.SUCCESS, dao.deleteUserById(testUsers.get(1).getId()));
+        assertEquals(dao.USER_DOES_NOT_EXIST, dao.deleteUserById(testUsers.get(1).getId()));
+        assertNull(dao.getUserByID(testUsers.get(1).getId()));
     }
 }
