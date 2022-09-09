@@ -1,4 +1,4 @@
-let searchData = {category: -1, page: 0, showMine: false}
+let searchData = {category: -1, query: "", page: 0, showMine: false}
 
 onClickAdd = ( (questionData) => {
     const tableBody = document.getElementById("added-questions-table-body");
@@ -10,9 +10,10 @@ onClickAdd = ( (questionData) => {
     creatorLink.setAttribute("href", "profile?id=" + questionData.creatorID);
     creatorLink.innerHTML = questionData.creatorName;
     newRow.insertCell(2).appendChild(creatorLink);
+    newRow.insertCell(3).innerHTML = questionData.categoryName;
     const upBtn = makeUpButton();
     const downBtn = makeDownButton();
-    const swapCell = newRow.insertCell(3);
+    const swapCell = newRow.insertCell(4);
     swapCell.appendChild(upBtn);
     swapCell.appendChild(downBtn);
     const removeBtn = document.createElement("button");
@@ -21,7 +22,7 @@ onClickAdd = ( (questionData) => {
     removeBtn.addEventListener("click", (event) => {
       onClickRemove(event);
     })
-    newRow.insertCell(4).appendChild(removeBtn);
+    newRow.insertCell(5).appendChild(removeBtn);
     const hiddenInput = document.createElement("input");
     hiddenInput.setAttribute("type", "hidden");
     hiddenInput.setAttribute("name", "question");
@@ -76,6 +77,10 @@ getCategory = ( () => {
     return document.getElementById("search-category").value
 });
 
+getQuery = ( () => {
+    return document.getElementById("search-query").value;
+})
+
 makeMoveButton = ( (rowNum, questionData) => {
     let result = document.createElement("button");
     result.addEventListener("click", () => {
@@ -87,6 +92,7 @@ makeMoveButton = ( (rowNum, questionData) => {
 
 fetchQuestions = (async () => {
     searchData.category = getCategory();
+    searchData.query = getQuery();
     const rawResponse = await fetch('../getQuestions', {
         method: 'POST',
         headers: {
@@ -101,22 +107,18 @@ fetchQuestions = (async () => {
     const newTable = document.createElement("tbody");
     newTable.setAttribute("id", "search-results");
     document.getElementById("search-results-table").replaceChild(newTable, oldTable);
-    // let headerRow = newTable.insertRow();
-    // headerRow.insertCell(0).innerHTML = "";
-    // headerRow.insertCell(1).innerHTML = "ID";
-    // headerRow.insertCell(2).innerHTML = "Title";
-    // headerRow.insertCell(3).innerHTML = "Creator";
 
     for(let i = 0; i < content.length; i++) {
         let row = newTable.insertRow(i);
         row.insertCell(0).appendChild(makeMoveButton(i, content[i]));
         row.insertCell(1).innerHTML = content[i].id;
         row.insertCell(2).innerHTML = content[i].title;
+        row.insertCell(3).innerHTML = content[i].categoryName;
 
         const creatorLink = document.createElement("a");
         creatorLink.setAttribute("href", "profile?id=" + content[i].creatorID);
         creatorLink.innerHTML = content[i].creatorName;
-        row.insertCell(3).appendChild(creatorLink);
+        row.insertCell(4).appendChild(creatorLink);
     }
 });
 

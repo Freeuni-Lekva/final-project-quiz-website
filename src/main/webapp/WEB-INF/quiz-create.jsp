@@ -46,8 +46,10 @@
                 <tr>
                     <th>ID</th>
                     <th>Title</th>
+                    <th>Category</th>
                     <th>Creator</th>
-                    <th>Button</th>
+                    <th> </th>
+                    <th> </th>
                 </tr>
                 <tbody id="added-questions-table-body"></tbody>
             </table>
@@ -67,8 +69,10 @@
             <button type="button" onclick="searchQuestions()">Search</button>
             <table id="search-results-table">
                 <tr>
+                    <th> </th>
                     <th>ID</th>
                     <th>Title</th>
+                    <th>Category</th>
                     <th>Creator</th>
                 </tr>
                 <tbody id="search-results">

@@ -6,12 +6,15 @@ public class QuestionJson {
 
     private final int creatorID;
 
+    private final String categoryName;
+
     private final String creatorName;
 
-    public QuestionJson(int id, String title, int creatorID, String creatorName) {
+    public QuestionJson(int id, String title, int creatorID, String categoryName, String creatorName) {
         this.id = id;
         this.title = title;
         this.creatorID = creatorID;
+        this.categoryName = categoryName;
         this.creatorName = creatorName;
     }
 

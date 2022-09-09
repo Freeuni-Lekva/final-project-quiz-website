@@ -37,7 +37,9 @@ public class QuizCreateServlet extends HttpServlet {
         String quizTitle = request.getParameter("title");
         String quizDescription = request.getParameter("description");
         Integer quizCategory = Integer.parseInt(request.getParameter("category"));
-        Quiz quiz = new Quiz(Math.toIntExact(userID), quizCategory, quizTitle, quizDescription);
+        String quizTimerParam = request.getParameter("timeLimit");
+        int quizTimer = quizTimerParam == null ? 0 : Integer.parseInt(quizTimerParam);
+        Quiz quiz = new Quiz(Math.toIntExact(userID), quizCategory, quizTitle, quizDescription, quizTimer);
         int newQuizID = quizDAO.insertQuiz(quiz);
         int success = 0;
         for(int i = 0; i < questionIDs.size(); i++) {
@@ -46,6 +48,8 @@ public class QuizCreateServlet extends HttpServlet {
                 success++;
             }
         }
-        quizDAO.updateQuizLocalId(newQuizID, success);
+        quizDAO.updateQuizLocalId(newQuizID, success + 1);
+
+        response.sendRedirect("../create");
     }
 }

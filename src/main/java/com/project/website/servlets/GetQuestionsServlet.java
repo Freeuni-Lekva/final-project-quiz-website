@@ -1,6 +1,8 @@
 package com.project.website.servlets;
 
 import com.google.gson.Gson;
+import com.project.website.DAOs.CategoryDAO;
+import com.project.website.DAOs.Filters.*;
 import com.project.website.DAOs.QuestionDAO;
 import com.project.website.DAOs.UserDAO;
 import com.project.website.Objects.questions.QuestionEntry;
@@ -15,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,22 +32,28 @@ public class GetQuestionsServlet extends HttpServlet {
         Gson gson = new Gson();
         QuizWebsiteController controller = new QuizWebsiteController(req, resp);
         QuestionDAO questionDAO = (QuestionDAO) req.getServletContext().getAttribute(QuestionDAO.ATTR_NAME);
+        CategoryDAO categoryDAO = (CategoryDAO) req.getServletContext().getAttribute(CategoryDAO.ATTR_NAME);
         QuestionsQuery query = gson.fromJson(controller.getJsonBody(), QuestionsQuery.class);
         UserDAO userDAO = (UserDAO) req.getServletContext().getAttribute(UserDAO.ATTR_NAME);
 
         List<QuestionEntry> questions;
-        if (query.getCategory() >= 0) {
-            questions = questionDAO.getQuestionsByCategory(query.getCategory(), (query.getPage() - 1) * MAX_QUESTIONS, MAX_QUESTIONS);
-        } else {
-            questions = questionDAO.getQuestions(query.getPage() * MAX_QUESTIONS, MAX_QUESTIONS);
-        }
-        
+
+        List<SQLFilter> filters = new ArrayList<>();
+        if(query.getCategory() >= 0)
+            filters.add(new CategoryFilter(query.getCategory()));
+
+        Long userID = (Long) req.getSession().getAttribute("userID");
+        if(userID != null && query.isShowMine())
+            filters.add(new CreatorFilter(Math.toIntExact(userID)));
+        filters.add(new TitleLikeFilter("%" + query.getQuery() + "%"));
+        questions = questionDAO.searchQuestions(new AndFilter(filters), query.getPage() * MAX_QUESTIONS, MAX_QUESTIONS);
         if (questions == null) {
             return;
         }
         List<QuestionJson> questionJsons = questions.stream()
                 .map(questionEntry -> new QuestionJson(questionEntry.getId(),
                         questionEntry.getTitle(), questionEntry.getCreator_id(),
+                        categoryDAO.getCategory(questionEntry.getCategory_id()).getCategoryName(),
                         userDAO.getUserByID(questionEntry.getCreator_id()).getUsername()))
                 .collect(Collectors.toList());
 
