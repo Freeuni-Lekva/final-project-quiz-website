@@ -2,17 +2,17 @@
 <%@ page import="com.project.website.Objects.QuizComment" %>
 <%@ page import="com.project.website.Objects.Quiz" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: User
-  Date: 19-Jul-22
-  Time: 8:41 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .fa-star-checked {
+            color: #FFA500;
+        }
+    </style>
+    <script src="scripts/ratings.js"></script>
 </head>
 <% UserDAO dao = (UserDAO) request.getServletContext().getAttribute("UserDAO"); %>
 <body style="margin: 0;">
@@ -23,6 +23,14 @@
         <h1 class="u-quiz-text">${quiz.title}</h1>
         <h2 class="u-quiz-text">${quiz.description}</h2>
         <button class="u-submit-answer-button">Start</button>
+
+        <div id="stars">
+            <span class="fa fa-star" onmouseout="starMouseOut()" onmouseover="starMouseOver(1)" onclick="starClick(1)"></span>
+            <span class="fa fa-star" onmouseout="starMouseOut()" onmouseover="starMouseOver(2)" onclick="starClick(2)"></span>
+            <span class="fa fa-star" onmouseout="starMouseOut()" onmouseover="starMouseOver(3)" onclick="starClick(3)"></span>
+            <span class="fa fa-star" onmouseout="starMouseOut()" onmouseover="starMouseOver(4)" onclick="starClick(4)"></span>
+            <span class="fa fa-star" onmouseout="starMouseOut()" onmouseover="starMouseOver(5)" onclick="starClick(5)"></span>
+        </div>
     </form>
     <div class="u-comments">
         <h1> Comments: </h1>

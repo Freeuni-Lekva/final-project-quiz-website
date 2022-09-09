@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS quiz_ratings;
 DROP TABLE IF EXISTS user_sessions;
 DROP TABLE IF EXISTS quiz_comments;
 DROP TABLE IF EXISTS friendships;
