@@ -1,3 +1,6 @@
+<%@ page import="com.project.website.Objects.User" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.project.website.DAOs.UserDAO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <c:if test="${sessionScope.admin != true}">
@@ -28,7 +31,24 @@
     <div class="column-container" style="display: flex">
         <div class="column">
             <h2>Users</h2>
-            <table>
+            <%
+                String query = "";
+                String queryCount = "10";
+                if (request.getParameter("q") != null)
+                    query = request.getParameter("q");
+                if (request.getParameter("qc") != null && !request.getParameter("qc").equals(""))
+                    queryCount = request.getParameter("qc");
+
+                List<User> users = ((UserDAO) request.getServletContext().getAttribute(UserDAO.ATTR_NAME)).searchUsers("%"+query+"%");
+                users = users.subList(0, Math.min(users.size(), Integer.parseInt(queryCount)));
+                request.setAttribute("users", users);
+            %>
+            <form action="admin" method="get" style="display: flex">
+                <input type="text" name="q" value="<% out.write(query); %>" placeholder="Search query" style="float: left; margin-left: 20px;"/>
+                <input type="number" name="qc" value="<% out.write(queryCount); %>" style="width: 40px;"/>
+                <input type="submit" value="Search"/>
+            </form>
+            <table style="margin: auto;">
                 <tr>
                     <th>Profile Picture</th>
                     <th>Username</th>
@@ -36,6 +56,7 @@
                     <th>Last Name</th>
                     <th>Delete</th>
                 </tr>
+
                 <c:forEach items="${requestScope.users}" var="user">
                     <tr>
                         <td><img src="${user.profilePicURL}" alt="profile_pic" height="64" width="64"></td>

@@ -20,7 +20,6 @@ public class AdminServlet extends HttpServlet {
             int userId = Integer.parseInt((String) request.getParameter("delete-user"));
             userDAO.deleteUserById(userId);
         }
-        request.setAttribute("users", ((UserDAO) request.getServletContext().getAttribute(UserDAO.ATTR_NAME)).getAllUsers());
         request.getRequestDispatcher("WEB-INF/admin.jsp").forward(request, response);
     }
 
