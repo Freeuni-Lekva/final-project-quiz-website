@@ -1,25 +1,38 @@
 package com.project.website.Objects;
 
-import java.util.Date;
+import java.sql.Date;
+import java.sql.Timestamp;
 
 public class UserSession {
     private final int id;
     private final int userID;
     private final int quizID;
     private final int currentLocalID;
-    private final Date startDate;
+    private final Timestamp startDate;
+
+    private final long time;
 
 
     public UserSession(int userID, int quizID) {
-        this(-1, userID, quizID, 0, null);
+        this(-1, userID, quizID, 0, null, 0);
     }
 
-    public UserSession(int id, int userID, int quizID, int currentLocalID, Date startDate) {
+
+    public UserSession(int userID, int quizID, int time) {
+        this(-1, userID, quizID, 0, null, time);
+    }
+
+    public UserSession(int id, int userID, int quizID, int currentLocalID, Timestamp startDate, long time) {
         this.id = id;
         this.userID = userID;
         this.quizID = quizID;
         this.currentLocalID = currentLocalID;
         this.startDate = startDate;
+        this.time = time;
+    }
+
+    public long getTime() {
+        return time;
     }
 
     public int getId() {
@@ -38,7 +51,7 @@ public class UserSession {
         return currentLocalID;
     }
 
-    public Date getStartDate() {
+    public Timestamp getStartDate() {
         return startDate;
     }
 }

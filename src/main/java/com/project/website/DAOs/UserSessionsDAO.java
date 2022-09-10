@@ -1,5 +1,6 @@
 package com.project.website.DAOs;
 
+import com.project.website.Objects.User;
 import com.project.website.Objects.UserSession;
 
 public interface UserSessionsDAO {
@@ -11,6 +12,8 @@ public interface UserSessionsDAO {
      * @return true if inserted successfully
      */
     boolean insertSession(UserSession session);
+
+    boolean updateSessionLocalId(int userID, int localID);
 
     /**
      *

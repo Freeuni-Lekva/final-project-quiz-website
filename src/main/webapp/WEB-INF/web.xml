@@ -13,6 +13,14 @@
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>QuestionServlet</servlet-name>
+        <servlet-class>com.project.website.servlets.QuestionServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>QuestionServlet</servlet-name>
+        <url-pattern>/question</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>com.project.website.servlets.LoginServlet</servlet-class>
     </servlet>
@@ -52,6 +60,15 @@
         <servlet-name>EditProfileServlet</servlet-name>
         <url-pattern>/edit_profile</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>CreationPortal</servlet-name>
+        <jsp-file>/WEB-INF/creation-portal.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreationPortal</servlet-name>
+        <url-pattern>/create</url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <servlet-name>SearchUsersServlet</servlet-name>
         <servlet-class>com.project.website.servlets.SearchUsersServlet</servlet-class>

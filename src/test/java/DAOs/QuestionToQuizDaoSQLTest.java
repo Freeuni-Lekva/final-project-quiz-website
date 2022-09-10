@@ -129,4 +129,21 @@ public class QuestionToQuizDaoSQLTest {
         Assertions.assertEquals(2, questionToQuizDAO.getQuestionIDByQuizAndLocalID(2, 1231));
         Assertions.assertEquals(3, questionToQuizDAO.getQuestionIDByQuizAndLocalID(2, 3));
     }
+
+    @Test
+    public void  testGetNextQuestionID() {
+        Assertions.assertTrue(questionToQuizDAO.insert(1, 1, 5));
+        Assertions.assertTrue(questionToQuizDAO.insert(2, 1, 10));
+        Assertions.assertTrue(questionToQuizDAO.insert(3, 1, 11));
+
+        Assertions.assertEquals(5, questionToQuizDAO.getNextLocalId(1, 0));
+        Assertions.assertEquals(5, questionToQuizDAO.getNextLocalId(1, 1));
+        Assertions.assertEquals(5, questionToQuizDAO.getNextLocalId(1, 2));
+        Assertions.assertEquals(10, questionToQuizDAO.getNextLocalId(1, 10));
+        Assertions.assertEquals(10, questionToQuizDAO.getNextLocalId(1, 6));
+
+        Assertions.assertEquals(QuestionToQuizDAO.GET_FAILED, questionToQuizDAO.getNextLocalId(1, 24));
+        Assertions.assertEquals(QuestionToQuizDAO.GET_FAILED, questionToQuizDAO.getNextLocalId(1, 12));
+        Assertions.assertEquals(QuestionToQuizDAO.GET_FAILED, questionToQuizDAO.getNextLocalId(1, 13));
+    }
 }

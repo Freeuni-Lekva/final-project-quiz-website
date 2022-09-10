@@ -1,5 +1,6 @@
 package com.project.website.DAOs;
 
+import com.project.website.DAOs.Filters.SQLFilter;
 import com.project.website.Objects.questions.QuestionEntry;
 
 import java.util.List;
@@ -36,6 +37,15 @@ public interface QuestionDAO {
      */
     List<QuestionEntry> getQuestionsByCreatorId(int creatorId, int offset, int limit);
 
+
+    /**
+     *
+     * @param offset offset in the table
+     * @param limit limit of entries returned
+     * @return list of entries
+     */
+    List<QuestionEntry> getQuestions(int offset, int limit);
+
     /**
      * @param categoryId database id of category
      * @param offset offset in the table
@@ -43,4 +53,14 @@ public interface QuestionDAO {
      * @return list of entries
      */
     List<QuestionEntry> getQuestionsByCategory(int categoryId, int offset, int limit);
+
+
+    /**
+     *
+     * @param filter self-explanatory
+     * @param offset self-explanatory
+     * @param limit self-explanatory
+     * @return
+     */
+    public List<QuestionEntry> searchQuestions(SQLFilter filter, int offset, int limit);
 }

@@ -63,4 +63,10 @@ public class CategoryDaoSQLTest {
             Assertions.assertNull(dao.getCategory(i));
         }
     }
+
+    @Test
+    public void categoryTestGetAll() {
+        List<Category> categories = dao.getAllCategories();
+        Assertions.assertEquals(5, categories.size());
+    }
 }

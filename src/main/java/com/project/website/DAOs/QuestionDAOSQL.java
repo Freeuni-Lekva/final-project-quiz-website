@@ -1,5 +1,6 @@
 package com.project.website.DAOs;
 
+import com.project.website.DAOs.Filters.SQLFilter;
 import com.project.website.Objects.questions.AnswerableHTML;
 import com.project.website.Objects.questions.QuestionEntry;
 
@@ -24,7 +25,7 @@ public class QuestionDAOSQL implements QuestionDAO {
                 AnswerableHTML question = (AnswerableHTML) in.readObject();
 
                 retVal.add(new QuestionEntry(rs.getInt(1), rs.getInt(2), rs.getInt(3),
-                            rs.getTimestamp(4), question));
+                            rs.getTimestamp(4), question, rs.getString(6)));
 
             }
         } catch(Exception e) {
@@ -56,10 +57,11 @@ public class QuestionDAOSQL implements QuestionDAO {
         try(Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(
                 "INSERT INTO " +
-                "questions(creator_id, category_id, question_object) " +
-                "VALUES (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)) {
+                "questions(creator_id, category_id, question_object, question_title) " +
+                "VALUES (?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setInt(1, questionEntry.getCreator_id());
             preparedStatement.setInt(2, questionEntry.getCategory_id());
+            preparedStatement.setString(4, questionEntry.getTitle());
 
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             ObjectOutputStream out = new ObjectOutputStream(bos);
@@ -104,6 +106,17 @@ public class QuestionDAOSQL implements QuestionDAO {
         }
     }
 
+    public List<QuestionEntry> getQuestions(int offset, int limit) {
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM questions LIMIT ?, ?")) {
+            preparedStatement.setInt(1, offset);
+            preparedStatement.setInt(2, limit);
+            return getQuestionEntries(preparedStatement);
+        } catch(SQLException e) {
+            return null;
+        }
+    }
+
     @Override
     public List<QuestionEntry> getQuestionsByCategory(int categoryId, int offset, int limit) {
         try(Connection connection = dataSource.getConnection();
@@ -111,6 +124,18 @@ public class QuestionDAOSQL implements QuestionDAO {
             preparedStatement.setInt(1, categoryId);
             preparedStatement.setInt(2, offset);
             preparedStatement.setInt(3, limit);
+            return getQuestionEntries(preparedStatement);
+        } catch(SQLException e) {
+            return null;
+        }
+    }
+
+    public List<QuestionEntry> searchQuestions(SQLFilter filter, int offset, int limit) {
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM questions WHERE " + filter.getWhereClause() + " LIMIT ?, ?")) {
+            int lastIndex = filter.insertValuesIntoPreparedStatement(preparedStatement, 1);
+            preparedStatement.setInt(lastIndex, offset);
+            preparedStatement.setInt(lastIndex+1, limit);
             return getQuestionEntries(preparedStatement);
         } catch(SQLException e) {
             return null;

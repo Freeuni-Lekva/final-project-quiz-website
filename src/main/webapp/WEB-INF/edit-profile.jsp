@@ -15,14 +15,7 @@
     <style><%@include file="modules/css/style.css"%></style>
 </head>
 <body>
-    <script>
-        function testImage() {
-            let images = document.querySelectorAll(".prof_pic")
-            for(let img of images) {
-                img.src = document.getElementById("imgURL").value
-            }
-        }
-    </script>
+    <script src="scripts/testImage.js"></script>
     <jsp:include page="modules/navbar.jsp"/>
     <h1>Edit Profile:</h1>
     <form method="post" action="edit_profile">
@@ -37,7 +30,7 @@
             <p id="message"></p>
             <label for="imgURL">Profile Picture URL:</label>
             <input type="text" id="imgURL" name="imgURL" value="<%=userInfo.getProfilePicURL() == null ? "" : userInfo.getProfilePicURL()%>"><br>
-            <button type="button" onclick="testImage()">test</button>
+            <button type="button" onclick="testImage('.prof_pic')">test</button>
         </div>
         <input type="submit" value="Save changes">
     </form>

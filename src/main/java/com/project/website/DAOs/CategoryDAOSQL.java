@@ -3,10 +3,13 @@ package com.project.website.DAOs;
 import com.project.website.Objects.Category;
 
 import javax.sql.DataSource;
+import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CategoryDAOSQL implements CategoryDAO {
 
@@ -59,6 +62,21 @@ public class CategoryDAOSQL implements CategoryDAO {
                     throw new SQLException("Get failed");
                 }
             }
+        } catch(SQLException ignored) {}
+
+        return null;
+    }
+
+    @Override
+    public List<Category> getAllCategories() {
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM categories");
+            ResultSet resultSet = preparedStatement.executeQuery()) {
+            List<Category> categories = new ArrayList<>();
+            while(resultSet.next()) {
+                categories.add(new Category(resultSet.getInt(1), resultSet.getString(2)));
+            }
+            return categories;
         } catch(SQLException ignored) {}
 
         return null;

@@ -30,6 +30,8 @@ public interface QuestionToQuizDAO {
      */
     int getQuestionIDByQuizAndLocalID(int quiz_id, int local_id);
 
+    int getNextLocalId(int quiz_id, int local_id);
+
     /**
      * @param quiz_id
      * @return List of question ids ordered according to local_id

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebServlet(name = "QuestionServlet", value = "/addComment")
+@WebServlet(name = "CommentServlet", value = "/addComment")
 public class AddCommentServlet extends HttpServlet {
 
     @Override

@@ -146,4 +146,37 @@ public class UserSessionsDAOSQLTest {
         Assertions.assertFalse(userSessionsDAO.deleteSession(6342));
     }
 
+    @Test
+    public void testUpdateSession() {
+        userSessionsDAO.insertSession(new UserSession(1, 1));
+        userSessionsDAO.insertSession(new UserSession(2, 1));
+
+        Assertions.assertTrue(userSessionsDAO.updateSessionLocalId(1, 45));
+        Assertions.assertEquals(45, userSessionsDAO.getUserSession(1).getCurrentLocalID());
+
+        Assertions.assertTrue(userSessionsDAO.updateSessionLocalId(1, 11));
+        Assertions.assertEquals(11, userSessionsDAO.getUserSession(1).getCurrentLocalID());
+
+        Assertions.assertTrue(userSessionsDAO.updateSessionLocalId(1, 6546));
+        Assertions.assertEquals(6546, userSessionsDAO.getUserSession(1).getCurrentLocalID());
+
+        Assertions.assertTrue(userSessionsDAO.updateSessionLocalId(1, 4));
+        Assertions.assertEquals(4, userSessionsDAO.getUserSession(1).getCurrentLocalID());
+
+        Assertions.assertTrue(userSessionsDAO.updateSessionLocalId(2, 45));
+        Assertions.assertEquals(45, userSessionsDAO.getUserSession(2).getCurrentLocalID());
+
+        Assertions.assertTrue(userSessionsDAO.updateSessionLocalId(2, 11));
+        Assertions.assertEquals(11, userSessionsDAO.getUserSession(2).getCurrentLocalID());
+
+        Assertions.assertTrue(userSessionsDAO.updateSessionLocalId(2, 6546));
+        Assertions.assertEquals(6546, userSessionsDAO.getUserSession(2).getCurrentLocalID());
+
+        Assertions.assertTrue(userSessionsDAO.updateSessionLocalId(2, 4));
+        Assertions.assertEquals(4, userSessionsDAO.getUserSession(2).getCurrentLocalID());
+
+        Assertions.assertFalse(userSessionsDAO.updateSessionLocalId(5, 4));
+        Assertions.assertFalse(userSessionsDAO.updateSessionLocalId(123, 4));
+        Assertions.assertFalse(userSessionsDAO.updateSessionLocalId(123, 4));
+    }
 }

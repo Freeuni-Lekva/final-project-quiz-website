@@ -2,6 +2,7 @@ package com.project.website;
 
 import com.project.website.DAOs.*;
 import com.project.website.Objects.Category;
+import com.project.website.Objects.Quiz;
 import com.project.website.Objects.questions.QuestionEntry;
 import com.project.website.Objects.questions.TextQuestion;
 
@@ -36,6 +37,10 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
         QuizCommentDAO quizCommentDAO = new QuizCommentDAOSQL(src);
         AnnouncementDAO announcementDAO = new AnnouncementDAOSQL(src);
         QuizRatingsDAO quizRatingsDAO = new QuizRatingsDAOSQL(src);
+        UserSessionsDAO userSessionsDAO = new UserSessionsDAOSQL(src);
+        QuestionToQuizDAO questionToQuizDAO = new QuestionToQuizDAOSQL(src);
+        QuizAnswersDAO quizAnswersDAO = new QuizAnswersDAOSQL(src);
+        QuizFinalScoresDAO quizFinalScoresDAO = new QuizFinalScoresDAOSQL(src);
 
         /* Test
         int success = categoryDAO.insertCategory(new Category("AAA"));
@@ -52,6 +57,10 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
         sce.getServletContext().setAttribute(QuizCommentDAO.ATTR_NAME, quizCommentDAO);
         sce.getServletContext().setAttribute(AnnouncementDAO.ATTR_NAME, announcementDAO);
         sce.getServletContext().setAttribute(QuizRatingsDAO.ATTR_NAME, quizRatingsDAO);
+        sce.getServletContext().setAttribute(UserSessionsDAO.ATTR_NAME, userSessionsDAO);
+        sce.getServletContext().setAttribute(QuestionToQuizDAO.ATTR_NAME, questionToQuizDAO);
+        sce.getServletContext().setAttribute(QuizAnswersDAO.ATTR_NAME, quizAnswersDAO);
+        sce.getServletContext().setAttribute(QuizFinalScoresDAO.ATTR_NAME, quizFinalScoresDAO);
     }
 
     @Override

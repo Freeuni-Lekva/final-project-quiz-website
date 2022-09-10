@@ -38,10 +38,11 @@ CREATE TABLE IF NOT EXISTS quizzes (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     creator_id BIGINT,
     category_id BIGINT,
-    last_question_id BIGINT,
+    last_question_id BIGINT DEFAULT 0,
     creation_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     quiz_title VARCHAR(64),
     quiz_description VARCHAR(64),
+    quiz_timer BIGINT DEFAULT 0,
     FOREIGN KEY (creator_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
 );
@@ -53,6 +54,7 @@ CREATE TABLE IF NOT EXISTS questions (
     category_id BIGINT DEFAULT NULL,
     creation_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     question_object MEDIUMBLOB,
+    question_title VARCHAR(64),
     FOREIGN KEY (creator_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
 );
@@ -93,8 +95,32 @@ CREATE TABLE IF NOT EXISTS user_sessions (
     quiz_id BIGINT,
     current_local_id BIGINT DEFAULT 0,
     start_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    quiz_time BIGINT,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS quiz_answers (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  user_id BIGINT,
+  quiz_id BIGINT,
+  local_question_id BIGINT,
+  score DOUBLE,
+  UNIQUE(user_id, quiz_id, local_question_id),
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS quiz_final_scores (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  user_id BIGINT,
+  quiz_id BIGINT,
+  score DOUBLE,
+  max_score DOUBLE,
+  start_time DATETIME,
+  end_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS announcements (

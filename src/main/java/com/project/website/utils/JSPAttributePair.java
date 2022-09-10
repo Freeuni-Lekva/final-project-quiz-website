@@ -3,10 +3,10 @@ package com.project.website.utils;
 import java.io.Serializable;
 
 public class JSPAttributePair implements Serializable {
-    private String attributeName;
-    private String attributeValue;
+    private final String attributeName;
+    private final Serializable attributeValue;
 
-    public JSPAttributePair(String attributeName, String attributeValue) {
+    public JSPAttributePair(String attributeName, Serializable attributeValue) {
         this.attributeName = attributeName;
         this.attributeValue = attributeValue;
     }
@@ -15,7 +15,7 @@ public class JSPAttributePair implements Serializable {
         return attributeName;
     }
 
-    public String getAttributeValue() {
+    public Serializable getAttributeValue() {
         return attributeValue;
     }
 }
