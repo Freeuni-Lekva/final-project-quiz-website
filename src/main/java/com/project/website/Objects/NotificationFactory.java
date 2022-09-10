@@ -19,4 +19,13 @@ public class NotificationFactory {
                 achievementText
         );
     }
+
+    public static Notification buildChallengeNotification(long senderID, long receiverID, String senderName) {
+        return new Notification(
+                receiverID,
+                profileHREF,
+                "You've been challenged!!!",
+                senderName + " has challenged you!"
+        );
+    }
 }
