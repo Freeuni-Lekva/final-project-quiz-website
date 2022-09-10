@@ -5,6 +5,13 @@ import com.project.website.DAOs.QuizCommentDAO;
 import com.project.website.DAOs.QuizDAO;
 import com.project.website.DAOs.UserSessionsDAO;
 import com.project.website.Objects.*;
+import com.project.website.DAOs.QuizRatingsDAO;
+import com.project.website.DAOs.QuizRatingsDAOSQL;
+import com.project.website.Objects.Quiz;
+import com.project.website.Objects.QuizComment;
+import com.project.website.Objects.User;
+import com.project.website.Objects.UserSession;
+import com.project.website.Objects.QuizRating;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -49,7 +56,7 @@ public class QuizServlet extends HttpServlet {
         private Challenge getChallenge() {
             return challenge;
         }
-        
+
         private void endChallenge() {
             challengeDAO.deleteChallenge(challenge.getId());
         }
@@ -83,6 +90,20 @@ public class QuizServlet extends HttpServlet {
                 String timeString = df.format(new Date(quiz.getTimer() * 1000L));
                 req.setAttribute("timeLimit", timeString);
             }
+
+            QuizRatingsDAO quizRatingsDAO = (QuizRatingsDAO) req.getServletContext().getAttribute(QuizRatingsDAO.ATTR_NAME);
+            long quizRatingCount = quizRatingsDAO.getQuizRatingCount(quiz.getID());
+            Double quizRatingAvg = quizRatingsDAO.getQuizRatingSum(quiz.getID()) / (double) (quizRatingCount == 0 ? 1 : quizRatingCount);
+            int myQuizRating = 0;
+            Long userID = (Long) req.getSession().getAttribute("userID");
+            if(userID != null) {
+                QuizRating userRating = quizRatingsDAO.getRatingByUser(quiz.getID(), userID);
+                myQuizRating = userRating != null ? userRating.getRating() : 0;
+            }
+            req.setAttribute("myQuizRating", myQuizRating);
+            req.setAttribute("ratingCount", quizRatingCount);
+            req.setAttribute("ratingAvg", quizRatingAvg);
+
             req.setAttribute("comments", comments);
             req.getRequestDispatcher("WEB-INF/quiz.jsp").forward(req, resp);
         } catch (NumberFormatException ignored) {

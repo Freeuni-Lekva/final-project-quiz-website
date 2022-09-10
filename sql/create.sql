@@ -134,3 +134,21 @@ CREATE TABLE IF NOT EXISTS quiz_challenges (
   FOREIGN KEY (to_user_id) REFERENCES users(id) ON DELETE CASCADE,
   FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE
 );
+CREATE TABLE IF NOT EXISTS announcements (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    creator_id BIGINT,
+    creation_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    title VARCHAR(128),
+    text_html TEXT,
+    FOREIGN KEY (creator_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS quiz_ratings (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    quiz_id BIGINT,
+    creator_id BIGINT,
+    rating INT,
+    FOREIGN KEY (creator_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE,
+    CONSTRAINT rating_ck CHECK (rating BETWEEN 1 AND 5)
+);

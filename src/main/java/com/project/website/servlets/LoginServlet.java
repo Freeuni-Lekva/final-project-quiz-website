@@ -43,6 +43,7 @@ public class LoginServlet extends HttpServlet {
                 User user = DAO.getUserByUsername(username);
                 request.getSession().setAttribute("userID", user.getId());
                 request.getSession().setAttribute("username", username);
+                request.getSession().setAttribute("admin", user.getAdmin());
                 response.sendRedirect("home");
                 return;
             } else if(loginResult == UserDAO.USERNAME_DOES_NOT_EXIST) {
@@ -65,6 +66,7 @@ public class LoginServlet extends HttpServlet {
                 User user = DAO.getUserByEmail(email);
                 request.getSession().setAttribute("userID", user.getId());
                 request.getSession().setAttribute("username", user.getUsername());
+                request.getSession().setAttribute("admin", user.getAdmin());
                 response.sendRedirect("home");
                 return;
             } else if(loginResult == UserDAO.EMAIL_DOES_NOT_EXIST) {

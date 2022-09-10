@@ -1,6 +1,5 @@
 package com.project.website.DAOs;
 
-import com.mysql.cj.x.protobuf.MysqlxPrepare;
 import com.project.website.Objects.User;
 
 import javax.sql.DataSource;
@@ -294,6 +293,19 @@ public class UserDAOSQL implements UserDAO {
             preparedStatement.setLong(2, userID);
             return updateUserData(preparedStatement);
         } catch(SQLException e) {
+            return ERROR;
+        }
+    }
+    @Override
+    public int deleteUserById(long userID) {
+        try(Connection connection = src.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM users WHERE id = ?")) {
+            preparedStatement.setLong(1, userID);
+            if (preparedStatement.executeUpdate() != 0)
+                return SUCCESS;
+            else
+                return USER_DOES_NOT_EXIST;
+        }catch(SQLException e) {
             return ERROR;
         }
     }

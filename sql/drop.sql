@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS quiz_challenges;
 DROP TABLE IF EXISTS quiz_final_scores;
 DROP TABLE IF EXISTS quiz_answers;
+DROP TABLE IF EXISTS quiz_ratings;
 DROP TABLE IF EXISTS user_sessions;
 DROP TABLE IF EXISTS quiz_comments;
 DROP TABLE IF EXISTS friendships;
@@ -9,5 +10,6 @@ DROP TABLE IF EXISTS challenges;
 DROP TABLE IF EXISTS question_to_quiz;
 DROP TABLE IF EXISTS quizzes;
 DROP TABLE IF EXISTS questions;
+DROP TABLE IF EXISTS announcements;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS categories;
