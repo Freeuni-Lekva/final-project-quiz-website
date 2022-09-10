@@ -10,12 +10,12 @@
         .sidebar {
             width: 25%;
             min-height: 500px;
-            background: #F1A208;
+            /*background: #F1A208;*/
         }
         .main-content {
             width: 50%;
             min-height: 500px;
-            background: #04AA6D;
+            /*background: #04AA6D;*/
         }
         .inside-content {
             margin: 25px;
