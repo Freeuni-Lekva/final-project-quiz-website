@@ -115,7 +115,6 @@
     <ul>
         <li><a href="/final_project_quiz_website_war_exploded/home">Home</a></li>
         <li><a href="/final_project_quiz_website_war_exploded/quizzes">Quizzes</a></li>
-        <li><a href="/final_project_quiz_website_war_exploded/questions">Questions</a></li>
         <li><a href="/final_project_quiz_website_war_exploded/create">Create</a></li>
         <c:choose>
             <c:when test="${sessionScope.userID == null}">

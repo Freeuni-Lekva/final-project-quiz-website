@@ -17,11 +17,13 @@ public class AndFilter implements SQLFilter {
         if(filters == null || filters.isEmpty())
             return "1=1";
         StringBuilder builder = new StringBuilder();
+        builder.append("(");
         builder.append(filters.get(0).getWhereClause());
         for(int i = 1; i < filters.size(); i++) {
-            builder.append(" AND ");
+            builder.append(") AND (");
             builder.append(filters.get(i).getWhereClause());
         }
+        builder.append(")");
         return builder.toString();
     }
     @Override
@@ -32,8 +34,7 @@ public class AndFilter implements SQLFilter {
     @Override
     public int insertValuesIntoPreparedStatement(PreparedStatement statement, int lastIndex) throws SQLException {
         for(SQLFilter filter : filters) {
-            filter.insertValuesIntoPreparedStatement(statement, lastIndex);
-            lastIndex++;
+            lastIndex = filter.insertValuesIntoPreparedStatement(statement, lastIndex);
         }
         return lastIndex;
     }

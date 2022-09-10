@@ -11,6 +11,7 @@ public interface QuizFinalScoresDAO {
     int insertQuizFinalScore(QuizFinalScore score);
     boolean deleteQuizFinalScore(int id);
     QuizFinalScore getQuizFinalScore(int id);
+    QuizFinalScore getQuizMaxFinalScore(int quizId, int userID);
     List<QuizFinalScore> getQuizFinalScores(int quizId, int userID);
     List<QuizFinalScore> getUserFinalScores(int userID);
 }

@@ -77,6 +77,20 @@ public class QuizFinalScoresDAOSQL implements QuizFinalScoresDAO {
     }
 
     @Override
+    public QuizFinalScore getQuizMaxFinalScore(int quizId, int userID) {
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM quiz_final_scores WHERE quiz_id = ? AND user_id = ? ORDER BY score DESC LIMIT 1")) {
+            preparedStatement.setInt(1, quizId);
+            preparedStatement.setInt(2, userID);
+            List<QuizFinalScore> list = aggregateQuery(preparedStatement);
+            if (list.size() > 0) {
+                return list.get(0);
+            }
+        } catch (SQLException ignored) {}
+        return null;
+    }
+
+    @Override
     public List<QuizFinalScore> getQuizFinalScores(int quizId, int userID) {
         try(Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM quiz_final_scores WHERE quiz_id = ? AND user_id = ? ORDER BY end_time")) {

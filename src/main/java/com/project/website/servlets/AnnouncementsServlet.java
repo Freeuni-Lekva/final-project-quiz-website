@@ -43,6 +43,7 @@ public class AnnouncementsServlet extends HttpServlet {
 
         request.setAttribute("announcements", announcementList);
         request.setAttribute("userDAO", request.getServletContext().getAttribute(UserDAO.ATTR_NAME));
+        request.setAttribute("pageNumber", pageNumber);
         request.setAttribute("pageCount", pageCount);
         request.getRequestDispatcher("WEB-INF/announcements.jsp").forward(request, response);
     }

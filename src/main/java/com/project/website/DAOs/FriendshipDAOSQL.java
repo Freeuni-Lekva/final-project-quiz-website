@@ -24,14 +24,11 @@ public class FriendshipDAOSQL implements FriendshipDAO {
         try (
                 Connection conn = dataSource.getConnection();
                 PreparedStatement preparedStatement = conn.prepareStatement(
-                        "SELECT second_user_id FROM friendships WHERE first_user_id = ? " +
-                        "UNION " +
                         "SELECT first_user_id FROM friendships WHERE second_user_id = ?");
                 PreparedStatement newStatement = conn.prepareStatement(
                         "SELECT * FROM users WHERE id = ?")
         ) {
             preparedStatement.setLong(1, userId);
-            preparedStatement.setLong(2, userId);
 
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 List<User> resultList = new ArrayList<>();
@@ -41,7 +38,7 @@ public class FriendshipDAOSQL implements FriendshipDAO {
                     try (ResultSet nrs = newStatement.executeQuery()) {
                         nrs.next();
                         resultList.add(new User(nrs.getLong(1), nrs.getString(2), nrs.getString(3), nrs.getString(4),
-                                nrs.getBoolean(5), nrs.getString(6), nrs.getString(7), nrs.getString(8)));
+                                nrs.getBoolean(5), nrs.getString(6), nrs.getString(7), nrs.getString(8), nrs.getString(9)));
                     }
                 }
                 return resultList;
@@ -61,10 +58,12 @@ public class FriendshipDAOSQL implements FriendshipDAO {
         try (
                 Connection conn = dataSource.getConnection();
                 PreparedStatement preparedStatement = conn.prepareStatement(
-                "INSERT INTO friendships(first_user_id,second_user_id) VALUES(?,?)")
+                        "INSERT INTO friendships(first_user_id,second_user_id) VALUES(?,?),(?, ?)")
         ) {
             preparedStatement.setLong(1, user1Id);
             preparedStatement.setLong(2, user2Id);
+            preparedStatement.setLong(3, user2Id);
+            preparedStatement.setLong(4, user1Id);
             return preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
             return false;

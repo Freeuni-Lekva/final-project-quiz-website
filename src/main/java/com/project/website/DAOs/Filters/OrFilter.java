@@ -17,11 +17,13 @@ public class OrFilter implements SQLFilter {
         if(filters == null || filters.isEmpty())
             return "1=1";
         StringBuilder builder = new StringBuilder();
+        builder.append("(");
         builder.append(filters.get(0).getWhereClause());
         for(int i = 1; i < filters.size(); i++) {
-            builder.append(" OR ");
+            builder.append(") OR (");
             builder.append(filters.get(i).getWhereClause());
         }
+        builder.append(")");
         return builder.toString();
     }
     @Override

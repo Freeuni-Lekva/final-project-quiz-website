@@ -1,16 +1,16 @@
 package com.project.website.DAOs;
 
+import com.project.website.DAOs.Filters.SQLFilter;
+import com.project.website.DAOs.Order.SQLOrder;
 import com.project.website.Objects.Quiz;
 
 import javax.sql.DataSource;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class QuizDAOSQL implements QuizDAO {
@@ -107,6 +107,20 @@ public class QuizDAOSQL implements QuizDAO {
     }
 
     @Override
+    public List<Quiz> searchQuizzes(SQLFilter filter, SQLOrder order, int offset, int limit) {
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "SELECT * FROM quizzes as q WHERE " + filter.getWhereClause() + " ORDER BY " + order.getOrderByClause("q") + " LIMIT ?, ?")) {
+            int lastIndex = filter.insertValuesIntoPreparedStatement(preparedStatement, 1);
+            preparedStatement.setInt(lastIndex, offset);
+            preparedStatement.setInt(lastIndex+1, limit);
+            return aggregateQuery(preparedStatement);
+        } catch(SQLException exception) {
+            return null;
+        }
+    }
+
+    @Override
     public boolean deleteQuiz(int id) {
         try(Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM quizzes WHERE id = ?")) {
@@ -115,5 +129,15 @@ public class QuizDAOSQL implements QuizDAO {
         }catch(SQLException e) {
             return false;
         }
+    }
+
+    @Override
+    public List<Quiz> getAllQuizzes() {
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM quizzes")) {
+            List<Quiz> list = aggregateQuery(preparedStatement);
+            return list;
+        } catch (SQLException ignored) {}
+        return Collections.emptyList();
     }
 }

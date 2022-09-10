@@ -14,7 +14,7 @@
 <script src="../scripts/addAnswers.js"></script>
 <script src="../scripts/testImage.js"></script>
 <jsp:include page="modules/navbar.jsp"/>
-<form method="post" action="#" class="u-question-form" id="create-text-question">
+<form method="post" action="" class="u-question-form" id="create-text-question">
     <label for="title" class="u-statement">Title</label>
     <input type="text" name="title" id="title" class="u-question-input-text"  required>
     <br>
