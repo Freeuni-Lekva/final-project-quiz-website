@@ -1,5 +1,7 @@
 package com.project.website.Objects;
 
+import org.apache.commons.text.StringEscapeUtils;
+
 public class User {
     private long id;
     private String username;
@@ -13,12 +15,12 @@ public class User {
 
     public User(long id, String username, String passwordHash, String email, boolean isAdmin, String firstName, String lastName, String profilePicURL) {
         this.id = id;
-        this.username = username;
+        this.username = StringEscapeUtils.escapeHtml4(username);
         this.passwordHash = passwordHash;
         this.email = email;
         this.admin = isAdmin;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstName = StringEscapeUtils.escapeHtml4(firstName);
+        this.lastName = StringEscapeUtils.escapeHtml4(lastName);
         this.profilePicURL = profilePicURL;
     }
 

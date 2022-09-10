@@ -1,6 +1,7 @@
 package com.project.website.Objects.questions;
 
 import com.project.website.utils.JSPAttributePair;
+import org.apache.commons.text.StringEscapeUtils;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -11,7 +12,7 @@ public class TextQuestion implements AnswerableHTML {
     private final List<String> possibleAnswers;
 
     public TextQuestion(String statement, List<String> possibleAnswers) {
-        this.statement = statement;
+        this.statement = StringEscapeUtils.escapeHtml4(statement);
         this.possibleAnswers = possibleAnswers;
     }
 

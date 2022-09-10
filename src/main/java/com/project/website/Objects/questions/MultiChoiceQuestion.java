@@ -1,11 +1,13 @@
 package com.project.website.Objects.questions;
 
 import com.project.website.utils.JSPAttributePair;
+import org.apache.commons.text.StringEscapeUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MultiChoiceQuestion implements AnswerableHTML {
 
@@ -16,9 +18,9 @@ public class MultiChoiceQuestion implements AnswerableHTML {
     private final List<String> choices;
 
     public MultiChoiceQuestion(String statement, List<String> answerValues, List<String> choices) {
-        this.statement = statement;
+        this.statement = StringEscapeUtils.escapeHtml4(statement);
         this.answerValues = answerValues;
-        this.choices = choices;
+        this.choices = choices.stream().map(StringEscapeUtils::escapeHtml4).collect(Collectors.toList());
     }
 
     @Override

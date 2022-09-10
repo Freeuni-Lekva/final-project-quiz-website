@@ -1,5 +1,7 @@
 package com.project.website.Objects.questions;
 
+import org.apache.commons.text.StringEscapeUtils;
+
 import java.sql.Timestamp;
 
 public class QuestionEntry {
@@ -24,7 +26,7 @@ public class QuestionEntry {
         this.category_id = category_id;
         this.creation_time = creation_time;
         this.question = question;
-        this.title = title;
+        this.title = StringEscapeUtils.escapeHtml4(title);
     }
 
     public String getTitle() {
