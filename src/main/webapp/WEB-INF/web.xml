@@ -85,4 +85,12 @@
         <servlet-name>AdminServlet</servlet-name>
         <url-pattern>/admin</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>createServlet</servlet-name>
+        <jsp-file>/WEB-INF/creation-portal.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>createServlet</servlet-name>
+        <url-pattern>/create</url-pattern>
+    </servlet-mapping>
 </web-app>
