@@ -5,7 +5,7 @@ import com.project.website.Objects.Notification;
 import java.util.List;
 
 public interface NotificationDAO {
-    String ATTR_NAME = "AchievementDAO";
+    String ATTR_NAME = "NotificationsDAO";
 
     long INSERT_FAILED = -1;
 
