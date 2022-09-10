@@ -30,11 +30,13 @@ public class EditProfileServlet extends HttpServlet {
         String newFirstName = req.getParameter("f_name");
         String newLastName = req.getParameter("l_name");
         String newProfilePicURL = req.getParameter("imgURL");
+        String bio = req.getParameter("bio");
 
         UserDAO userDAO = (UserDAO)req.getServletContext().getAttribute(UserDAO.ATTR_NAME);
         long userID = (long)req.getSession().getAttribute("userID");
         userDAO.changeName(userID, newFirstName, newLastName);
         userDAO.changeProfilePicture(userID, newProfilePicURL);
+        userDAO.changeBio(userID, bio);
         resp.sendRedirect("profile");
     }
 }

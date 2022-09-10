@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
     first_name VARCHAR(128),
     last_name VARCHAR(128),
     profile_pic_url VARCHAR(256) DEFAULT 'images/default_profile_pic.jpg',
+    bio TEXT,
     CONSTRAINT uq_users_username UNIQUE (username),
     CONSTRAINT uq_users_email UNIQUE (email)
 );

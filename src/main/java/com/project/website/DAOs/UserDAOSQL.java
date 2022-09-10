@@ -51,7 +51,7 @@ public class UserDAOSQL implements UserDAO {
         try (ResultSet rs = preparedStatement.executeQuery()){
             while(rs.next()) {
                 retval.add(new User(rs.getLong(1), rs.getString(2), rs.getString(3), rs.getString(4),
-                        rs.getBoolean(5), rs.getString(6), rs.getString(7), rs.getString(8)));
+                        rs.getBoolean(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9)));
             }
         } catch (SQLException e) {return null;}
         return retval;
@@ -289,6 +289,27 @@ public class UserDAOSQL implements UserDAO {
                 preparedStatement.setNull(1, VARCHAR);
             else
                 preparedStatement.setString(1, picURL);
+
+            preparedStatement.setLong(2, userID);
+            return updateUserData(preparedStatement);
+        } catch(SQLException e) {
+            return ERROR;
+        }
+    }
+
+    @Override
+    public int changeBio(long userID, String bio) {
+        User user = getUserByID(userID);
+        if(user == null) {
+            return USER_DOES_NOT_EXIST;
+        }
+
+        try(Connection conn = src.getConnection();
+            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE users SET bio = ? WHERE id = ?")) {
+            if(bio == null)
+                preparedStatement.setNull(1, VARCHAR);
+            else
+                preparedStatement.setString(1, bio);
 
             preparedStatement.setLong(2, userID);
             return updateUserData(preparedStatement);

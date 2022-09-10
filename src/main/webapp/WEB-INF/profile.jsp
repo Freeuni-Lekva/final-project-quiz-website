@@ -20,15 +20,30 @@
 </head>
 <body>
     <jsp:include page="modules/navbar.jsp"/>
-    <div class="profile-pic">
-        <img src="<%=userInfo.getProfilePicURL()%>" alt="profile picture" width="128" height="128"/>
+    <div style="margin:20px">
+        <div class="profile-pic" style="display:inline-block">
+            <img src="<%=userInfo.getProfilePicURL()%>" alt="profile picture" width="256px" style="vertical-align: top">
+            <div style="display: inline-block; top:0; margin-left: 10px">
+                <h3>Bio</h3>
+                <p>
+                    <c:choose>
+                        <c:when test="<%=userInfo.getBio() == null%>">
+                            This user has nothing in their bio...
+                        </c:when>
+                        <c:otherwise>
+                            <%=userInfo.getBio()%>
+                        </c:otherwise>
+                    </c:choose>
+                </p>
+            </div>
+        </div>
+        <h2><%=userInfo.getUsername()%></h2>
+        <c:if test="${!ownProfile}">
+            <jsp:include page="modules/friend-btn.jsp">
+                <jsp:param name="receiver_id" value="<%=userInfo.getId()%>"/>
+            </jsp:include>
+        </c:if>
     </div>
-    <h2><%=userInfo.getUsername()%></h2>
-    <c:if test="${!ownProfile}">
-        <jsp:include page="modules/friend-btn.jsp">
-            <jsp:param name="receiver_id" value="<%=userInfo.getId()%>"/>
-        </jsp:include>
-    </c:if>
     <div class="tab">
         <button id="user-info-tab" class="tab-button" onclick='openProfileTab(this.id,"user-info")'>User Info</button>
         <button id="friends-tab" class="tab-button" onclick='openProfileTab(this.id,"friends")'>Friends</button>

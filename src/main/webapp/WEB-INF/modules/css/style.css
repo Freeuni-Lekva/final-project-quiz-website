@@ -530,3 +530,44 @@ body {
     padding: 8px 16px;
     text-decoration: none;
 }
+
+.edit-profile-outer {
+    display: flex;
+    flex-direction: row;
+}
+
+.edit-profile-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.edit-profile-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    margin: 20px;
+}
+
+.edit-profile-right > * {
+    margin: 5px;
+}
+
+.edit-profile-bio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-profile-buttons {
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.edit-profile-buttons > * {
+    margin: 5px;
+}

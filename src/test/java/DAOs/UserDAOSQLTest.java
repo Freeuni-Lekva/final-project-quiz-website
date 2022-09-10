@@ -25,7 +25,7 @@ public class UserDAOSQLTest {
 
     /*some private methods to make testing easier. they make changes in the local list as well as in the DAO.*/
     private void register(String username, String passwordHash, String email) {
-        testUsers.add(new User(testUsers.size(), username, passwordHash, email, false, null, null, null));
+        testUsers.add(new User(testUsers.size(), username, passwordHash, email, false, null, null, null, null));
         dao.register(username, passwordHash, email);
     }
 

@@ -8,10 +8,10 @@ public class User {
     private boolean admin;
     private String firstName;
     private String lastName;
-
     private String profilePicURL;
+    private String bio;
 
-    public User(long id, String username, String passwordHash, String email, boolean isAdmin, String firstName, String lastName, String profilePicURL) {
+    public User(long id, String username, String passwordHash, String email, boolean isAdmin, String firstName, String lastName, String profilePicURL, String bio) {
         this.id = id;
         this.username = username;
         this.passwordHash = passwordHash;
@@ -20,6 +20,7 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.profilePicURL = profilePicURL;
+        this.bio = bio;
     }
 
     public long getId() {
@@ -52,6 +53,8 @@ public class User {
 
     public String getProfilePicURL() {return profilePicURL;}
 
+    public String getBio() {return bio;}
+
     public void setId(long id) {
         this.id = id;
     }
@@ -81,4 +84,6 @@ public class User {
     }
 
     public void setProfilePicURL(String profilePicURL) {this.profilePicURL = profilePicURL;}
+
+    public void setBio(String bio) {this.bio = bio;}
 }

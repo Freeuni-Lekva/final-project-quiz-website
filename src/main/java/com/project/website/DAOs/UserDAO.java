@@ -104,6 +104,12 @@ public interface UserDAO {
     int changeProfilePicture(long userID, String picURL);
 
     /**
+     * Tries to change the bio of the given user.
+     * @return one of the values among: SUCCESS, ERROR, USER_DOES_NOT_EXIST
+     * */
+    int changeBio(long userID, String bio);
+
+    /**
      * Deletes user by the given ID
      * @return one of the values among: SUCCESS, ERROR, USER_DOES_NOT_EXIST
      */
