@@ -1,6 +1,7 @@
 package com.project.website.Objects.questions;
 
 import com.project.website.utils.JSPAttributePair;
+import org.apache.commons.text.StringEscapeUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,7 +14,7 @@ public class ImageQuestion implements AnswerableHTML {
     private final List<String> possibleAnswers;
 
     public ImageQuestion(String statement, String imageURL, List<String> possibleAnswers) {
-        this.statement = statement;
+        this.statement = StringEscapeUtils.escapeHtml4(statement);
         this.imageURL = imageURL;
         this.possibleAnswers = possibleAnswers;
     }
