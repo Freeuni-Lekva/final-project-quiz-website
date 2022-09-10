@@ -37,7 +37,9 @@ public class TextQuestionCreateServlet extends HttpServlet {
         List<String> questionAnswers = Arrays.asList(request.getParameterValues("answer"));
 
         QuestionDAO questionDAO = (QuestionDAO) request.getServletContext().getAttribute(QuestionDAO.ATTR_NAME);
-        QuestionEntry newEntry = new QuestionEntry(Math.toIntExact(creator), categoryID, new TextQuestion(questionStatement, questionAnswers));
+        QuestionEntry newEntry = new QuestionEntry(Math.toIntExact(creator), categoryID, new TextQuestion(questionStatement, questionAnswers), questionTitle);
         questionDAO.insertQuestion(newEntry);
+
+        response.sendRedirect("/final_project_quiz_website_war_exploded/create");
     }
 }
