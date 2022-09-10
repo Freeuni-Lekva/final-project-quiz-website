@@ -16,6 +16,6 @@ public interface QuizDAO {
     List<Quiz> getQuizByCreator(int creatorID, int offset, int limit);
     List<Quiz> getQuizByCategory(int categoryID, int offset, int limit);
     List<Quiz> searchQuizzes(SQLFilter filter, SQLOrder order, int offset, int limit);
-
+    List<Quiz> getAllQuizzes();
     boolean deleteQuiz(int id);
 }

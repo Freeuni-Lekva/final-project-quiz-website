@@ -95,8 +95,8 @@
 <body>
 <jsp:include page="modules/navbar.jsp"/>
 <script src="scripts/quizViewPaging.js"></script>
-<div class="u-quiz-search">
-    <form action="" method="post" class="u-quiz-search-form" onsubmit="sendQuery()">
+<div class="u-quiz-search" style="width: 75%; margin: auto; margin-top: 50px;">
+    <form action="" method="post" class="u-quiz-search-form" onsubmit="sendQuery()" style="background-color: azure;">
         <input type="search" id="view-search" placeholder="Search..." onsubmit="resetPage()">
         <button type="submit" class="u-quiz-search-button" onclick="resetPage()">Search</button>
 
@@ -116,7 +116,7 @@
     </form>
     <div class="u-quiz-search-results">
         <c:forEach items="${searchResults}" var="quiz">
-            <div class="u-quiz-search-result" onclick="location.href = 'quiz?quizID=${quiz.ID}';">
+            <div class="u-quiz-search-result" onclick="location.href = 'quiz?quizID=${quiz.ID}';" style="background: #d1d8ff; padding: 30px; border-radius: 10px;">
                 <div class="u-quiz-info">
                     <h3>${quiz.title}</h3>
                     <p>${quiz.description}</p>
