@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class QuizDAOSQL implements QuizDAO {
@@ -128,5 +129,15 @@ public class QuizDAOSQL implements QuizDAO {
         }catch(SQLException e) {
             return false;
         }
+    }
+
+    @Override
+    public List<Quiz> getAllQuizzes() {
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM quizzes")) {
+            List<Quiz> list = aggregateQuery(preparedStatement);
+            return list;
+        } catch (SQLException ignored) {}
+        return Collections.emptyList();
     }
 }
