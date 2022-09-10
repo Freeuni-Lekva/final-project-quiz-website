@@ -19,7 +19,7 @@ import java.util.List;
 @WebServlet(name = "ViewQuizzesServlet", value = "/quizzes")
 public class ViewQuizzesServlet extends HttpServlet {
 
-    private static final int QUIZ_PER_PAGE = 1;
+    private static final int QUIZ_PER_PAGE = 10;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         QuizDAO quizDAO = (QuizDAO) request.getServletContext().getAttribute(QuizDAO.ATTR_NAME);

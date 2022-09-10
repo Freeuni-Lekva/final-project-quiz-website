@@ -1,4 +1,4 @@
-const maxQuizPerPage = 1;
+const maxQuizPerPage = 10;
 
 initPage = (() => {
     let categoryDropDown = document.getElementById("search-category");
