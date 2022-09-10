@@ -1,5 +1,6 @@
 package com.project.website.DAOs;
 
+import com.project.website.DAOs.Filters.SQLFilter;
 import com.project.website.Objects.questions.AnswerableHTML;
 import com.project.website.Objects.questions.QuestionEntry;
 
@@ -123,6 +124,18 @@ public class QuestionDAOSQL implements QuestionDAO {
             preparedStatement.setInt(1, categoryId);
             preparedStatement.setInt(2, offset);
             preparedStatement.setInt(3, limit);
+            return getQuestionEntries(preparedStatement);
+        } catch(SQLException e) {
+            return null;
+        }
+    }
+
+    public List<QuestionEntry> searchQuestions(SQLFilter filter, int offset, int limit) {
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM questions WHERE " + filter.getWhereClause() + " LIMIT ?, ?")) {
+            int lastIndex = filter.insertValuesIntoPreparedStatement(preparedStatement, 1);
+            preparedStatement.setInt(lastIndex, offset);
+            preparedStatement.setInt(lastIndex+1, limit);
             return getQuestionEntries(preparedStatement);
         } catch(SQLException e) {
             return null;

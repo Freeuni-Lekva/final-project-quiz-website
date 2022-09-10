@@ -1,7 +1,11 @@
 package DAOs;
 
 import com.project.website.DAOs.*;
+import com.project.website.DAOs.Filters.AndFilter;
+import com.project.website.DAOs.Filters.CategoryFilter;
+import com.project.website.DAOs.Filters.CreatorFilter;
 import com.project.website.Objects.Category;
+import com.project.website.Objects.Quiz;
 import com.project.website.Objects.questions.AnswerableHTML;
 import com.project.website.Objects.questions.QuestionEntry;
 import com.project.website.Objects.questions.TextQuestion;
@@ -235,5 +239,29 @@ public class QuestionDaoSQLTest {
 
         questions = questionDAO.getQuestionsByCategory(444, 1, 1);
         Assertions.assertEquals(0, questions.size());
+    }
+
+    @Test
+    public void testSearch() {
+        List<Integer> insertQuestionIDs = new ArrayList<>();
+        insertQuestionIDs.add(questionDAO.insertQuestion(new QuestionEntry(1, categoryIds.get(2), question)));
+        insertQuestionIDs.add(questionDAO.insertQuestion(new QuestionEntry(1, categoryIds.get(1), question)));
+        insertQuestionIDs.add(questionDAO.insertQuestion(new QuestionEntry(2, categoryIds.get(2), question)));
+
+        List<Integer> questions = questionDAO.searchQuestions(new CreatorFilter(1), 0, 100).stream().map(QuestionEntry::getId).collect(Collectors.toList());
+        Assertions.assertEquals(2, questions.size());
+        Assertions.assertTrue(questions.contains(insertQuestionIDs.get(0)));
+        Assertions.assertTrue(questions.contains(insertQuestionIDs.get(1)));
+        Assertions.assertFalse(questions.contains(insertQuestionIDs.get(2)));
+
+        questions = questionDAO.searchQuestions(new CategoryFilter(categoryIds.get(2)), 0, 100).stream().map(QuestionEntry::getId).collect(Collectors.toList());
+        Assertions.assertEquals(2, questions.size());
+        Assertions.assertTrue(questions.contains(insertQuestionIDs.get(0)));
+        Assertions.assertTrue(questions.contains(insertQuestionIDs.get(2)));
+        Assertions.assertFalse(questions.contains(insertQuestionIDs.get(1)));
+
+        questions = questionDAO.searchQuestions(new AndFilter(Arrays.asList(new CreatorFilter(1), new CategoryFilter(3))), 0, 100).stream().map(QuestionEntry::getId).collect(Collectors.toList());
+        Assertions.assertEquals(1, questions.size());
+        Assertions.assertEquals(insertQuestionIDs.get(0), questions.get(0));
     }
 }
