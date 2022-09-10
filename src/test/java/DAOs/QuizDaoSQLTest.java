@@ -1,12 +1,11 @@
 package DAOs;
 
 import com.project.website.DAOs.*;
-import com.project.website.DAOs.Filters.CategoryFilter;
-import com.project.website.DAOs.Filters.CreatorFilter;
-import com.project.website.DAOs.Filters.ColumnLikeFilter;
+import com.project.website.DAOs.Filters.*;
 import com.project.website.DAOs.Order.NoOrder;
 import com.project.website.Objects.Category;
 import com.project.website.Objects.Quiz;
+import com.project.website.Objects.QuizFinalScore;
 import com.project.website.utils.MySQLTestingTool;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,6 +27,10 @@ public class QuizDaoSQLTest {
     private QuizDAO quizDAO;
     private UserDAO userDAO;
     private CategoryDAO categoryDAO;
+
+    private FriendshipDAO friendshipDAO;
+
+    private QuizFinalScoresDAO quizFinalScoresDAO;
     private List<Integer> categoryIDs;
 
     @Before
@@ -42,11 +45,16 @@ public class QuizDaoSQLTest {
         quizDAO = new QuizDAOSQL(src);
         userDAO = new UserDAOSQL(src);
         categoryDAO = new CategoryDAOSQL(src);
+        friendshipDAO = new FriendshipDAOSQL(src);
+        quizFinalScoresDAO = new QuizFinalScoresDAOSQL(src);
 
         userDAO.register("user1", "examplePassword", "user1@gmail.com");
         userDAO.register("user2", "examplePassword", "user2@gmail.com");
         userDAO.register("user3", "examplePassword", "user3@gmail.com");
         userDAO.register("user4", "examplePassword", "user4@gmail.com");
+
+        friendshipDAO.addFriendship(1, 2);
+        friendshipDAO.addFriendship(1, 3);
 
         categoryIDs = new ArrayList<>();
         categoryIDs.add(categoryDAO.insertCategory(new Category("cat1")));
@@ -198,5 +206,22 @@ public class QuizDaoSQLTest {
         assertTrue(quizzes.contains(quizIDs.get(0)));
         assertTrue(quizzes.contains(quizIDs.get(1)));
         assertFalse(quizzes.contains(quizIDs.get(2)));
+
+        quizFinalScoresDAO.insertQuizFinalScore(new QuizFinalScore(2, 1, 0, 0, null));
+        quizFinalScoresDAO.insertQuizFinalScore(new QuizFinalScore(2, 2, 0, 0, null));
+
+        quizzes = quizDAO.searchQuizzes(new FriendsFilter(1, "q"), new NoOrder(), 0, 100).stream().map(Quiz::getID).collect(Collectors.toList());
+        assertEquals(2, quizzes.size());
+        assertTrue(quizzes.contains(1));
+        assertTrue(quizzes.contains(2));
+
+
+        quizFinalScoresDAO.insertQuizFinalScore(new QuizFinalScore(2, 3, 0, 0, null));
+
+        quizzes = quizDAO.searchQuizzes(new TakenFilter(2, "q"), new NoOrder(), 0, 100).stream().map(Quiz::getID).collect(Collectors.toList());
+        assertEquals(3, quizzes.size());
+        assertTrue(quizzes.contains(1));
+        assertTrue(quizzes.contains(2));
+        assertTrue(quizzes.contains(3));
     }
 }
