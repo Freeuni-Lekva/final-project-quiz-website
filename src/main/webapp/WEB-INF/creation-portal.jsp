@@ -39,10 +39,6 @@
                 <img class="u-item-image" src="images/normal-quiz.png"/>
                 <a href="create/quiz" class="u-item-button">Standard Quiz</a>
             </li>
-            <li class="u-choice-item">
-                <img class="u-item-image" src="images/timed-quiz.png"/>
-                <a hrefg="#" class="u-item-button">Timed Quiz</a>
-            </li>
         </ul>
     </div>
 </div>

@@ -16,10 +16,10 @@
 <style><%@include file="css/style.css"%></style>
 <div class="navbar">
     <ul>
-        <li><a href="http://localhost:8080/final_project_quiz_website_war_exploded/home">Home</a></li>
-        <li><a href="http://localhost:8080/final_project_quiz_website_war_exploded/quizzes">Quizzes</a></li>
-        <li><a href="http://localhost:8080/final_project_quiz_website_war_exploded/questions">Questions</a></li>
-        <li><a href="http://localhost:8080/final_project_quiz_website_war_exploded/create">Create</a></li>
+        <li><a href="/final_project_quiz_website_war_exploded/home">Home</a></li>
+        <li><a href="/final_project_quiz_website_war_exploded/quizzes">Quizzes</a></li>
+        <li><a href="/final_project_quiz_website_war_exploded/create">Create</a></li>
+        <li><a href="/final_project_quiz_website_war_exploded/profile">My Profile</a></li>
         <c:choose>
             <c:when test="${sessionScope.userID == null}">
                 <li style="float:right"><a href="${pageContext.request.contextPath}/login">Login</a></li>

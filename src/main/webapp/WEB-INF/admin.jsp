@@ -165,7 +165,9 @@
                 <br>
             </form>
             <div style="margin: auto; display: flex; justify-content: center;">
-            <a id="button-new-announcement" onclick="clickedNewAnnouncement()">Post New Announcement</a>
+                <button onclick="clickedNewAnnouncement()">
+                     <a id="button-new-announcement">Post New Announcement</a>
+                </button>
             </div>
             <table style="margin: auto;">
                 <tr>
@@ -185,9 +187,6 @@
                     </tr>
                 </c:forEach>
             </table>
-        </div>
-        <div class="column">
-            <h2>Placeholder 3</h2>
         </div>
     </div>
 </div>
