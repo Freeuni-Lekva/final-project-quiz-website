@@ -27,7 +27,8 @@ public class RatingServlet extends HttpServlet {
         Integer rating = Integer.valueOf(request.getParameter("starCount"));
         QuizRating quizRating = quizRatingsDAO.getRatingByUser(quizID, userID);
         if(quizRating == null) {
-            quizRatingsDAO.insertRating(new QuizRating(quizID, userID, rating));
+            quizRating = new QuizRating(quizID, userID, rating);
+            quizRatingsDAO.insertRating(quizRating);
         } else {
             quizRatingsDAO.setRating(quizRating.getId(), rating);
         }

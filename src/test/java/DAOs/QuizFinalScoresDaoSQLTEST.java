@@ -199,4 +199,34 @@ public class QuizFinalScoresDaoSQLTEST {
         Assertions.assertEquals(0, answers.size());
     }
 
+    @Test
+    public void testGetUserMax() {
+        QuizFinalScore score1 = new QuizFinalScore(1, 1, 5.4, 30, new Timestamp(Calendar.getInstance().getTime().toInstant().truncatedTo(ChronoUnit.SECONDS).toEpochMilli()));
+        QuizFinalScore score2 = new QuizFinalScore(1, 1, 25.4, 30,  new Timestamp(Calendar.getInstance().getTime().toInstant().truncatedTo(ChronoUnit.SECONDS).toEpochMilli()));
+        QuizFinalScore score3 = new QuizFinalScore(1, 1, 25.3, 30,  new Timestamp(Calendar.getInstance().getTime().toInstant().truncatedTo(ChronoUnit.SECONDS).toEpochMilli()));
+
+        quizFinalScoresDAO.insertQuizFinalScore(score1);
+
+        QuizFinalScore answer = quizFinalScoresDAO.getQuizMaxFinalScore(1, 1);
+
+        Assertions.assertNotNull(answer);
+        Assertions.assertTrue(sameScore(score1, answer));
+
+        quizFinalScoresDAO.insertQuizFinalScore(score2);
+
+        answer = quizFinalScoresDAO.getQuizMaxFinalScore(1, 1);
+
+        Assertions.assertNotNull(answer);
+        Assertions.assertTrue(sameScore(score2, answer));
+
+        quizFinalScoresDAO.insertQuizFinalScore(score3);
+
+        Assertions.assertNotNull(answer);
+        Assertions.assertTrue(sameScore(score2, answer));
+
+        Assertions.assertNull(quizFinalScoresDAO.getQuizMaxFinalScore(1, 2));
+        Assertions.assertNull(quizFinalScoresDAO.getQuizMaxFinalScore(2, 1));
+        Assertions.assertNull(quizFinalScoresDAO.getQuizMaxFinalScore(123, 12));
+    }
+
 }

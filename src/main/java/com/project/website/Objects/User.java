@@ -22,7 +22,7 @@ public class User {
         this.firstName = StringEscapeUtils.escapeHtml4(firstName);
         this.lastName = StringEscapeUtils.escapeHtml4(lastName);
         this.profilePicURL = profilePicURL;
-        this.bio = bio;
+        this.bio = StringEscapeUtils.escapeHtml4(bio);
     }
 
     public long getId() {

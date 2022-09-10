@@ -1,15 +1,22 @@
 <%@ page import="com.project.website.Objects.Quiz" %>
 <%@ page import="com.project.website.DAOs.QuizRatingsDAO" %>
 <%@ page import="com.project.website.DAOs.CategoryDAO" %>
+<%@ page import="com.project.website.DAOs.QuizFinalScoresDAO" %>
+<%@ page import="com.project.website.servlets.QuizWebsiteController" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
     QuizRatingsDAO quizRatingsDAO = (QuizRatingsDAO) request.getServletContext().getAttribute(QuizRatingsDAO.ATTR_NAME);
-    request.setAttribute("ratingsDAO", quizRatingsDAO);
     CategoryDAO categoryDAO = (CategoryDAO) request.getServletContext().getAttribute(CategoryDAO.ATTR_NAME);
+    QuizFinalScoresDAO quizFinalScoresDAO = (QuizFinalScoresDAO) request.getServletContext().getAttribute(QuizFinalScoresDAO.ATTR_NAME);
+    QuizWebsiteController controller = new QuizWebsiteController(request, response);
+    request.setAttribute("ratingsDAO", quizRatingsDAO);
     request.setAttribute("categoryDAO", categoryDAO);
+    request.setAttribute("quizScoresDAO", quizFinalScoresDAO);
     request.setAttribute("categories", categoryDAO.getAllCategories());
+    request.setAttribute("controller", controller);
+
 %>
 
 <html>
@@ -134,6 +141,12 @@
                             <span class="fa fa-star"></span>
                         </c:forEach>
                     </div>
+                    <c:if test="${controller.loggedIn}">
+                        <c:set var="quizScore" value="${quizScoresDAO.getQuizMaxFinalScore(quiz.ID, controller.userID)}" scope="page"/>
+                        <c:if test="${quizScore != null}">
+                            <h3>Current High Score: ${quizScore.score} / ${quizScore.maxScore}</h3>
+                        </c:if>
+                    </c:if>
                 </div>
             </div>
         </c:forEach>
