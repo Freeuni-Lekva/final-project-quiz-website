@@ -1,5 +1,7 @@
 package com.project.website.Objects;
 
+import org.apache.commons.text.StringEscapeUtils;
+
 import java.sql.Timestamp;
 
 public class Announcement {
@@ -13,8 +15,8 @@ public class Announcement {
         this.id = -1;
         creationTime = null;
         this.creatorId = creatorId;
-        this.title = title;
-        this.text = text;
+        this.title = StringEscapeUtils.escapeHtml4(title);
+        this.text = StringEscapeUtils.escapeHtml4(text);
     }
 
     public Announcement(int id, int creatorId, Timestamp creationTime, String title, String text) {

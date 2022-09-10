@@ -1,5 +1,7 @@
 package com.project.website.Objects;
 
+import org.apache.commons.text.StringEscapeUtils;
+
 import java.sql.Date;
 
 public class Quiz {
@@ -29,8 +31,8 @@ public class Quiz {
         this.categoryID = categoryID;
         this.lastQuestionID = lastQuestionID;
         this.creationTime = creationTime;
-        this.title = title;
-        this.description = description;
+        this.title = StringEscapeUtils.escapeHtml4(title);
+        this.description = StringEscapeUtils.escapeHtml4(description);
         this.timer = timer;
     }
 

@@ -1,5 +1,7 @@
 package com.project.website.Objects;
 
+import org.apache.commons.text.StringEscapeUtils;
+
 import java.sql.Timestamp;
 
 public class QuizComment {
@@ -11,7 +13,7 @@ public class QuizComment {
         this.commentID = commentID;
         this.userID = userID;
         this.quizID = quizID;
-        this.content = content;
+        this.content = StringEscapeUtils.escapeHtml4(content);
         this.creationTime = creationTime;
     }
 
