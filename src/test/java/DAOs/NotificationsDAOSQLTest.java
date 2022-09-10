@@ -92,9 +92,9 @@ public class NotificationsDAOSQLTest {
             notificationIDs.add(notificationDAO.insertNotification(notification));
         }
 
-        List<Long> getResult = notificationDAO.getUserNotifications(1).stream().map(Notification::getId).collect(Collectors.toList());
-        assertTrue(getResult.contains(notificationIDs.get(0)));
-        assertFalse(getResult.contains(notificationIDs.get(1)));
+        List<Long> getResult = notificationDAO.getUserNotifications(1, 2).stream().map(Notification::getId).collect(Collectors.toList());
+        assertEquals(2, getResult.size());
         assertTrue(getResult.contains(notificationIDs.get(2)));
+        assertFalse(getResult.contains(notificationIDs.get(1)));
     }
 }

@@ -169,7 +169,6 @@ CREATE TABLE IF NOT EXISTS notifications (
     href VARCHAR(128),
     notification_title VARCHAR(64),
     notification_description VARCHAR(128),
-    notification_seen BOOL DEFAULT FALSE,
     date_received DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES  users(id) ON DELETE CASCADE
 );

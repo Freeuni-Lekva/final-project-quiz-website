@@ -48,6 +48,7 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
         QuizFinalScoresDAO quizFinalScoresDAO = new QuizFinalScoresDAOSQL(src);
         ChallengeDAO challengeDAO = new ChallengeDAOSQL(src);
         AchievementDAO achievementDAO = new AchievementDAOSQL(src);
+        NotificationDAO notificationDAO = new NotificationDAOSQL(src);
 
         List<QuizWebsiteListener> listeners = new ArrayList<>();
         listeners.add(new AchievementListener(achievementDAO, quizDAO, quizFinalScoresDAO));
@@ -75,6 +76,7 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
         sce.getServletContext().setAttribute(QuizAnswersDAO.ATTR_NAME, quizAnswersDAO);
         sce.getServletContext().setAttribute(QuizFinalScoresDAO.ATTR_NAME, quizFinalScoresDAO);
         sce.getServletContext().setAttribute(AchievementDAO.ATTR_NAME, achievementDAO);
+        sce.getServletContext().setAttribute(NotificationDAO.ATTR_NAME, notificationDAO);
     }
 
     @Override

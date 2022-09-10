@@ -5,6 +5,8 @@ import com.project.website.Objects.Notification;
 import java.util.List;
 
 public interface NotificationDAO {
+    String ATTR_NAME = "AchievementDAO";
+
     long INSERT_FAILED = -1;
 
     Notification getNotification(long notificationID);
@@ -13,5 +15,5 @@ public interface NotificationDAO {
 
     boolean deleteNotification(long notificationID);
 
-    List<Notification> getUserNotifications(long userID);
+    List<Notification> getUserNotifications(long userID, int limit);
 }

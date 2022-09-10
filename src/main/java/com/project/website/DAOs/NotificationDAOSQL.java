@@ -23,7 +23,7 @@ public class NotificationDAOSQL implements NotificationDAO {
         List<Notification> retVal = new ArrayList<>();
         try(ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
-                retVal.add(new Notification(rs.getLong(1),rs.getLong(2), rs.getString(3), rs.getString(4),rs.getString(5), rs.getBoolean(6), rs.getTimestamp(7)));
+                retVal.add(new Notification(rs.getLong(1),rs.getLong(2), rs.getString(3), rs.getString(4),rs.getString(5), rs.getTimestamp(6)));
             }
         } catch (SQLException ignored) {}
         return retVal;
@@ -80,10 +80,11 @@ public class NotificationDAOSQL implements NotificationDAO {
     }
 
     @Override
-    public List<Notification> getUserNotifications(long userID) {
+    public List<Notification> getUserNotifications(long userID, int limit) {
         try(Connection conn = dataSource.getConnection();
-            PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM notifications WHERE user_id = ?")) {
+            PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM notifications WHERE user_id = ? ORDER BY date_received DESC LIMIT ?")) {
             preparedStatement.setLong(1, userID);
+            preparedStatement.setInt(2, limit);
             return aggregateQuery(preparedStatement);
         } catch(SQLException ignored) {}
         return Collections.emptyList();
