@@ -102,4 +102,10 @@ public interface UserDAO {
      * @return one of the values among: SUCCESS, ERROR, USER_DOES_NOT_EXIST
      */
     int changeProfilePicture(long userID, String picURL);
+
+    /**
+     * Deletes user by the given ID
+     * @return one of the values among: SUCCESS, ERROR, USER_DOES_NOT_EXIST
+     */
+    int deleteUserById(long userID);
 }

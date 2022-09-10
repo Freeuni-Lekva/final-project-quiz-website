@@ -1,3 +1,4 @@
+<%@ page import="com.project.website.DAOs.UserDAO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style><%@include file="modules/css/style.css"%></style>
 <html>
@@ -19,6 +20,18 @@
     </form>
     <p>You can <a href="login?using=${alternateLoginMethod}">Log in with ${alternateLoginLabel}</a> instead.</p>
     <p>Don't have an account? You can <a href="register">Register</a> now.</p>
+    <%
+      int error = UserDAO.ERROR;
+      if (request.getAttribute("error") != null)
+        error = Integer.parseInt(request.getAttribute("error").toString());
+    %>
+    <% if (error == UserDAO.USERNAME_DOES_NOT_EXIST) { %>
+      <p style="color: red">User with that name doesn't exist on our site</p>
+    <% } if (error == UserDAO.EMAIL_DOES_NOT_EXIST) { %>
+      <p style="color: red">User with that email doesn't exist on our site</p>
+    <% } if (error == UserDAO.WRONG_PASSWORD) { %>
+      <p style="color: red">Password is incorrect</p>
+    <% } %>
   </div>
 </body>
 </html>
