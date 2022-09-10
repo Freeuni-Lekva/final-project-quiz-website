@@ -86,4 +86,14 @@ public class QuizFinalScoresDAOSQL implements QuizFinalScoresDAO {
         } catch (SQLException ignored) {}
         return null;
     }
+
+    @Override
+    public List<QuizFinalScore> getUserFinalScores(int userID) {
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM quiz_final_scores WHERE user_id = ? ORDER BY end_time")) {
+            preparedStatement.setInt(1, userID);
+            return aggregateQuery(preparedStatement);
+        } catch (SQLException ignored) {}
+        return null;
+    }
 }

@@ -23,7 +23,11 @@
     <div class="profile-pic">
         <img src="<%=userInfo.getProfilePicURL()%>" alt="profile picture" width="128" height="128"/>
     </div>
-    <h2><%=userInfo.getUsername()%></h2>
+    <h2><%=userInfo.getUsername()%>
+        <c:forEach items="${achievements}" var="achievement">
+            <i class="${achievement.iconClass}" title="${achievement.text}" aria-hidden="true" style="color: #b6ac06"></i>
+        </c:forEach>
+    </h2>
     <c:if test="${!ownProfile}">
         <jsp:include page="modules/friend-btn.jsp">
             <jsp:param name="receiver_id" value="<%=userInfo.getId()%>"/>
