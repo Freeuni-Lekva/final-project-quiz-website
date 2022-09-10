@@ -4,6 +4,7 @@ import com.project.website.DAOs.*;
 import com.project.website.DAOs.Filters.CategoryFilter;
 import com.project.website.DAOs.Filters.CreatorFilter;
 import com.project.website.DAOs.Filters.ColumnLikeFilter;
+import com.project.website.DAOs.Order.NoOrder;
 import com.project.website.Objects.Category;
 import com.project.website.Objects.Quiz;
 import com.project.website.utils.MySQLTestingTool;
@@ -180,19 +181,19 @@ public class QuizDaoSQLTest {
         quizIDs.add(quizDAO.insertQuiz(new Quiz(2, categoryIDs.get(3), "TLETI", "DESC", 0)));
         quizIDs.add(quizDAO.insertQuiz(new Quiz(1, categoryIDs.get(2), "NOT", "DESC", 0)));
 
-        List<Integer> quizzes = quizDAO.searchQuizzes(new CreatorFilter(1), 0, 100).stream().map(Quiz::getID).collect(Collectors.toList());
+        List<Integer> quizzes = quizDAO.searchQuizzes(new CreatorFilter(1), new NoOrder(), 0, 100).stream().map(Quiz::getID).collect(Collectors.toList());
         assertEquals(2, quizzes.size());
         assertTrue(quizzes.contains(quizIDs.get(0)));
         assertFalse(quizzes.contains(quizIDs.get(1)));
         assertTrue(quizzes.contains(quizIDs.get(2)));
 
-        quizzes = quizDAO.searchQuizzes(new CategoryFilter(categoryIDs.get(2)), 0, 100).stream().map(Quiz::getID).collect(Collectors.toList());
+        quizzes = quizDAO.searchQuizzes(new CategoryFilter(categoryIDs.get(2)), new NoOrder(), 0, 100).stream().map(Quiz::getID).collect(Collectors.toList());
         assertEquals(1, quizzes.size());
         assertNotEquals(quizIDs.get(0), quizzes.get(0));
         assertNotEquals(quizIDs.get(1), quizzes.get(0));
         assertEquals(quizIDs.get(2), quizzes.get(0));
 
-        quizzes = quizDAO.searchQuizzes(new ColumnLikeFilter("quiz_title","%TLE%"), 0, 100).stream().map(Quiz::getID).collect(Collectors.toList());
+        quizzes = quizDAO.searchQuizzes(new ColumnLikeFilter("quiz_title","%TLE%"), new NoOrder(), 0, 100).stream().map(Quiz::getID).collect(Collectors.toList());
         assertEquals(2, quizzes.size());
         assertTrue(quizzes.contains(quizIDs.get(0)));
         assertTrue(quizzes.contains(quizIDs.get(1)));

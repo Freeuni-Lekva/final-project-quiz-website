@@ -10,7 +10,6 @@ public class Quiz {
 
     private final int lastQuestionID;
     private final Date creationTime;
-
     private final String title;
     private final String description;
 

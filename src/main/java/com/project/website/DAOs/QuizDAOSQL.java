@@ -1,6 +1,7 @@
 package com.project.website.DAOs;
 
 import com.project.website.DAOs.Filters.SQLFilter;
+import com.project.website.DAOs.Order.SQLOrder;
 import com.project.website.Objects.Quiz;
 
 import javax.sql.DataSource;
@@ -105,10 +106,10 @@ public class QuizDAOSQL implements QuizDAO {
     }
 
     @Override
-    public List<Quiz> searchQuizzes(SQLFilter filter, int offset, int limit) {
+    public List<Quiz> searchQuizzes(SQLFilter filter, SQLOrder order, int offset, int limit) {
         try(Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    "SELECT * FROM quizzes WHERE " + filter.getWhereClause() + " LIMIT ?, ?")) {
+                    "SELECT * FROM quizzes as q WHERE " + filter.getWhereClause() + " ORDER BY " + order.getOrderByClause("q") + " LIMIT ?, ?")) {
             int lastIndex = filter.insertValuesIntoPreparedStatement(preparedStatement, 1);
             preparedStatement.setInt(lastIndex, offset);
             preparedStatement.setInt(lastIndex+1, limit);

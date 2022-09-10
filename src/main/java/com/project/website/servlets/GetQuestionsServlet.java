@@ -43,7 +43,7 @@ public class GetQuestionsServlet extends HttpServlet {
         Long userID = (Long) req.getSession().getAttribute("userID");
         if(userID != null && query.isShowMine())
             filters.add(new CreatorFilter(Math.toIntExact(userID)));
-        filters.add(new ColumnLikeFilter("questionTitle","%" + query.getQuery() + "%"));
+        filters.add(new ColumnLikeFilter("question_title","%" + query.getQuery() + "%"));
         questions = questionDAO.searchQuestions(new AndFilter(filters), query.getPage() * MAX_QUESTIONS, MAX_QUESTIONS);
         if (questions == null) {
             return;
