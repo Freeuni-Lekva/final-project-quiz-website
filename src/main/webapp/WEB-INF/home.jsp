@@ -83,9 +83,6 @@
                     <% } %>
 
             </div>
-            <div class="inside-content">
-                <h2><a href="quizzes?sortby=popular">Popular Quizzes</a></h2>
-            </div>
         </div>
         <div class="main-content">
             <div class="inside-content" style="min-height: 0px; padding: 5px;">
@@ -96,7 +93,7 @@
                 <h2 style="margin-top: 10px;"><a href="quiz?quizID=<% out.write(String.valueOf(quiz.getID())); %>">Random Quiz!</a></h2>
             </div>
             <div class="inside-content">
-                <h2><a href="quizzes?sortby=friends">Quizzes Your Friends Took Recently</a></h2>
+                <h2><a href="quizzes?sortby=popular">Popular Quizzes</a></h2>
             </div>
         </div>
         <div class="sidebar">
@@ -111,12 +108,12 @@
             %>
             <div class="inside-content">
                 <h2>Your Challenges</h2>
-                <div id="challenges" class="tab-content">
+                <div id="challenges">
                     <ul>
                         <c:forEach items="${challenges}" var="challenge" varStatus="loop">
                             <li>
                                 <img src="${challengeSenders[loop.index].profilePicURL}" alt="profile_pic" height="32" width="32">
-                                <a href="profile?id=${challengeSenders[loop.index]}"><c:out value="${challengeSenders[loop.index].username}"/></a>
+                                <a href="profile?id=${challengeSenders[loop.index].id}"><c:out value="${challengeSenders[loop.index].username}"/></a>
                                 Challenged you to do <a href="quiz?challengeID=${challenge.id}">${challengeQuizzes[loop.index].title}</a> in ${challenge.time} seconds!
                             </li>
                         </c:forEach>
@@ -133,6 +130,9 @@
                 <c:forEach items="${achievements}" var="achievement">
                     <i class="${achievement.iconClass}" title="${achievement.text}" aria-hidden="true" style="color: #877f00; font-size: 2rem;"></i>
                 </c:forEach>
+            </div>
+            <div class="inside-content">
+                <h2><a href="quizzes?sortby=friends">Quizzes Your Friends Took Recently</a></h2>
             </div>
             <div class="inside-content">
                 <h2><a href="quizzes?sortby=taken">Quizzes You Have Taken</a></h2>

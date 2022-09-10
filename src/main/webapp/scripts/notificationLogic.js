@@ -39,7 +39,6 @@ getNotifications = (async () => {
         }
     });
     const content = await rawResponse.json();
-    console.log(content);
     const notificationNumSub = document.getElementById("notification-number");
     notificationNumSub.innerHTML = content.totalCount;
     if(content.totalCount > 0 && document.getElementById("notifications-container").style.display === "none") {
