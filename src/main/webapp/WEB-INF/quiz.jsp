@@ -18,15 +18,35 @@
 <body style="margin: 0;">
 <style><%@include file="modules/css/style.css"%></style>
 <jsp:include page="modules/navbar.jsp"/>
-    <form method="post" class="u-quiz-form">
-        <a href="profile?id=${quiz.creatorID}" class="u-quiz-link">Quiz by <%= dao.getUserByID(((Quiz) request.getAttribute("quiz")).getCreatorID()).getUsername()%></a>
-        <h1 class="u-quiz-text">${quiz.title}</h1>
-        <h2 class="u-quiz-text">${quiz.description}</h2>
-        <c:if test="${timeLimit != null}">
-            <h2 class="u-quiz-text">You will have ${timeLimit} to do this quiz!</h2>
-        </c:if>
-        <button class="u-submit-answer-button">Start</button>
-    </form>
+    <div style="display:flex">
+        <div class="u-challenge-box">
+                <script src="scripts/challenge.js"></script>
+                <h2>Challenge a user!</h2>
+                <label style="margin: 10px">
+                    <input type="text" id="challenge-username" placeholder="username">
+                </label>
+                <br/>
+                <label style="margin: 10px">
+                    <input type="number" pattern= "[0-9]+" id="challenge-time" placeholder="time in seconds">
+                </label>
+                <br/>
+                <button style="margin: 10px" onclick="onChallengeClick()">
+                    challenge
+                </button>
+            <p id="challenge-error" class="u-error-default" style="margin: 10px">WRONG USERNAME</p>
+        </div>
+        <div style="width:60%">
+            <form method="post" class="u-quiz-form">
+                <a style="color:#ccc" href="profile?id=${quiz.creatorID}" class="u-quiz-link">Quiz by <%= dao.getUserByID(((Quiz) request.getAttribute("quiz")).getCreatorID()).getUsername()%></a>
+                <h1 class="u-quiz-text">${quiz.title}</h1>
+                <h2 class="u-quiz-text">${quiz.description}</h2>
+                <c:if test="${timeLimit != null}">
+                    <h2 class="u-quiz-text">You will have ${timeLimit} to do this quiz!</h2>
+                </c:if>
+                <button class="u-submit-answer-button">Start</button>
+            </form>
+        </div>
+    </div>
     <div>
         <script>
             loadedRating = <%=request.getAttribute("myQuizRating")%>

@@ -123,6 +123,17 @@ CREATE TABLE IF NOT EXISTS quiz_final_scores (
   FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS quiz_challenges (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  to_user_id BIGINT,
+  from_user_id BIGINT,
+  quiz_id BIGINT,
+  time_limit BIGINT,
+  date_sent DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (from_user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (to_user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE
+);
 CREATE TABLE IF NOT EXISTS announcements (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     creator_id BIGINT,

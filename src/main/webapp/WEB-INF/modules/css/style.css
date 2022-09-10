@@ -1,5 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
 body {
     margin: 0;
+    font-family: 'Roboto', sans-serif;
 }
 
 .navbar ul {
@@ -217,6 +220,7 @@ body {
 }
 
 .u-quiz-form {
+    color: #ccc;
     position: relative;
     display: inline-block;
     justify-items: center;
@@ -231,6 +235,30 @@ body {
     transform: translate(-50%, 0);
     border: 3px solid #F1A208;
     box-shadow: 0 0 3px #052F5F;
+}
+
+.u-challenge-box {
+    width: 20%;
+    background: #04AA6D;
+    margin-top: 20px;
+    padding:10px;
+    border-radius: 10px;
+    border: 3px solid #F1A208;
+}
+
+.u-error-default {
+    display: none;
+}
+
+.u-error-fail {
+    color: #9a0023;
+    text-decoration: underline;
+    display: block;
+}
+
+.u-error-success {
+    color: black;
+    display: block;
 }
 
 .u-quiz-text {

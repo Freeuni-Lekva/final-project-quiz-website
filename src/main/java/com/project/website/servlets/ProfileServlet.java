@@ -30,7 +30,8 @@ public class ProfileServlet extends HttpServlet {
         else {
             User user = userDAO.getUserByID(Long.parseLong(id));
             if(user == null) {
-                resp.sendRedirect("login"); // Placeholder, maybe should send to a not found page?
+                req.setAttribute("errorMessage", "Profile not found");
+                req.getRequestDispatcher("WEB-INF/error-message.jsp").forward(req, resp);
             }
             else {
                 req.setAttribute("user", user);
