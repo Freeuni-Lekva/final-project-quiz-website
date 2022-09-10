@@ -11,12 +11,15 @@ public class AchievementListener implements QuizWebsiteListener {
 
     private final NotificationDAO notificationDAO;
 
+    private final UserDAO userDAO;
 
-    public AchievementListener(AchievementDAO achievementDAO, QuizDAO quizDAO, QuizFinalScoresDAO quizFinalScoresDAO, NotificationDAO notificationDAO) {
+
+    public AchievementListener(AchievementDAO achievementDAO, QuizDAO quizDAO, QuizFinalScoresDAO quizFinalScoresDAO, NotificationDAO notificationDAO, UserDAO userDAO) {
         this.achievementDAO = achievementDAO;
         this.quizDAO = quizDAO;
         this.quizFinalScoresDAO = quizFinalScoresDAO;
         this.notificationDAO = notificationDAO;
+        this.userDAO = userDAO;
     }
 
 
@@ -74,5 +77,6 @@ public class AchievementListener implements QuizWebsiteListener {
     public void onChallengeSent(int fromUserID, int toUserID) {
         Achievement achievement = new Achievement(fromUserID, "fa fa-shield", "CHALLENGE!");
         insertAchievement(achievement);
+        notificationDAO.insertNotification(NotificationFactory.buildChallengeNotification(fromUserID, toUserID, userDAO.getUserByID(fromUserID).getUsername()));
     }
 }

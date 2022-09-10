@@ -51,7 +51,7 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
         NotificationDAO notificationDAO = new NotificationDAOSQL(src);
 
         List<QuizWebsiteListener> listeners = new ArrayList<>();
-        listeners.add(new AchievementListener(achievementDAO, quizDAO, quizFinalScoresDAO, notificationDAO));
+        listeners.add(new AchievementListener(achievementDAO, quizDAO, quizFinalScoresDAO, notificationDAO, userDAO));
         QuizWebsiteListener mainListener = new MainListener(listeners);
 
         /* Test
