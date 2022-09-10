@@ -7,8 +7,8 @@ toggleNotifications = (() => {
     }
     else {
         document.getElementById("notifications-container").style.display = "none";
-        setNotificationsSeen();
         bell.className = bell.className.replace("fa-bell", "fa-bell-o");
+        setNotificationsSeen();
     }
 })
 
@@ -16,6 +16,7 @@ makeNotificationInfoDiv = ((notification) => {
     const notificationDiv = document.createElement("div");
     notificationDiv.className = "notification-info";
     notificationDiv.addEventListener("click", () => {
+        setNotificationsSeen();
         location.href = notification.href;
     })
     const title = document.createElement("h3");
@@ -67,7 +68,7 @@ setNotificationsSeen = ( async () => {
 })
 
 
-const poolTimeMilli = 5000;
+const poolTimeMilli = 2000;
 window.onload = async function () {
     setInterval(getNotifications, poolTimeMilli);
 };

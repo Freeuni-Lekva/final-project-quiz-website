@@ -26,7 +26,7 @@ public class QuizFinalScore {
             NO_ID,
             session.getUserID(),
             session.getQuizID(),
-            scores.stream().reduce(new BinaryOperator<Double>() {
+            scores.size() == 1 && scores.get(0) == null ? 0.0 : scores.stream().reduce(new BinaryOperator<Double>() {
                 @Override
                 public Double apply(Double aDouble, Double aDouble2) {
                     double score = 0;
