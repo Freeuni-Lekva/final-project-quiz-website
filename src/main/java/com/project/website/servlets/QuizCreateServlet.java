@@ -4,6 +4,7 @@ import com.project.website.DAOs.QuestionDAO;
 import com.project.website.DAOs.QuestionToQuizDAO;
 import com.project.website.DAOs.QuizDAO;
 import com.project.website.Objects.Quiz;
+import com.project.website.Objects.listeners.QuizWebsiteListener;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -49,6 +50,8 @@ public class QuizCreateServlet extends HttpServlet {
             }
         }
         quizDAO.updateQuizLocalId(newQuizID, success + 1);
+        QuizWebsiteListener listener = (QuizWebsiteListener) request.getServletContext().getAttribute("listener");
+        listener.onQuizCreated(Math.toIntExact(userID));
 
         response.sendRedirect("../create");
     }

@@ -3,6 +3,7 @@ package com.project.website.servlets;
 import com.project.website.DAOs.*;
 import com.project.website.Objects.QuizFinalScore;
 import com.project.website.Objects.UserSession;
+import com.project.website.Objects.listeners.QuizWebsiteListener;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -46,6 +47,10 @@ public class FinishQuizServlet extends HttpServlet {
         req.setAttribute("maxScore", finalScore.getMaxScore());
         req.setAttribute("questionScores", scores);
         req.setAttribute("quizID", session.getQuizID());
+
+
+        QuizWebsiteListener listener = (QuizWebsiteListener) req.getServletContext().getAttribute("listener");
+        listener.onQuizFinished(userID, session.getQuizID(), finalScore.getScore(), finalScore.getMaxScore());
 
         req.getRequestDispatcher("WEB-INF/quiz-results.jsp").forward(req, resp);
     }

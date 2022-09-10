@@ -3,6 +3,9 @@ package com.project.website;
 import com.project.website.DAOs.*;
 import com.project.website.Objects.Category;
 import com.project.website.Objects.Quiz;
+import com.project.website.Objects.listeners.AchievementListener;
+import com.project.website.Objects.listeners.MainListener;
+import com.project.website.Objects.listeners.QuizWebsiteListener;
 import com.project.website.Objects.questions.QuestionEntry;
 import com.project.website.Objects.questions.TextQuestion;
 
@@ -13,7 +16,9 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 @WebListener
 public class Listener implements ServletContextListener, HttpSessionListener, HttpSessionAttributeListener {
@@ -42,6 +47,11 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
         QuizAnswersDAO quizAnswersDAO = new QuizAnswersDAOSQL(src);
         QuizFinalScoresDAO quizFinalScoresDAO = new QuizFinalScoresDAOSQL(src);
         ChallengeDAO challengeDAO = new ChallengeDAOSQL(src);
+        AchievementDAO achievementDAO = new AchievementDAOSQL(src);
+
+        List<QuizWebsiteListener> listeners = new ArrayList<>();
+        listeners.add(new AchievementListener(achievementDAO, quizDAO, quizFinalScoresDAO));
+        QuizWebsiteListener mainListener = new MainListener(listeners);
 
         /* Test
         int success = categoryDAO.insertCategory(new Category("AAA"));
@@ -49,6 +59,7 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
         success = questionDAO.insertQuestion(new QuestionEntry(1, 1, new TextQuestion("FUCK ME?", Collections.singletonList("YES"))));
         */
         // set the DAO as a context attribute
+        sce.getServletContext().setAttribute("listener", mainListener);
         sce.getServletContext().setAttribute(ChallengeDAO.ATTR_NAME, challengeDAO);
         sce.getServletContext().setAttribute(UserDAO.ATTR_NAME, userDAO);
         sce.getServletContext().setAttribute(FriendshipDAO.ATTR_NAME, friendshipDAO);
@@ -63,6 +74,7 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
         sce.getServletContext().setAttribute(QuestionToQuizDAO.ATTR_NAME, questionToQuizDAO);
         sce.getServletContext().setAttribute(QuizAnswersDAO.ATTR_NAME, quizAnswersDAO);
         sce.getServletContext().setAttribute(QuizFinalScoresDAO.ATTR_NAME, quizFinalScoresDAO);
+        sce.getServletContext().setAttribute(AchievementDAO.ATTR_NAME, achievementDAO);
     }
 
     @Override
