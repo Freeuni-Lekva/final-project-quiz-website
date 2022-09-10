@@ -14,6 +14,24 @@
 %>
 
 <style><%@include file="css/style.css"%></style>
+<style>
+    .notifications-container {
+        display: block;
+        z-index: 1;
+        position: absolute;
+        right: 0;
+        background: #04AA6D;
+    }
+
+    .bell-container {
+        -webkit-filter: brightness(100%);
+    }
+
+    .bell-container:hover {
+        cursor: pointer;
+        -webkit-filter: brightness(70%);
+    }
+</style>
 <div class="navbar">
     <ul>
         <li><a href="http://localhost:8080/final_project_quiz_website_war_exploded/home">Home</a></li>
@@ -25,6 +43,9 @@
                 <li style="float:right"><a href="${pageContext.request.contextPath}/login">Login</a></li>
             </c:when>
             <c:otherwise>
+                <li style="float: right" class="bell-container">
+                    <span class="fa fa-bell-o" id="notification-bell" style="font-size: x-large;color: white; margin-top: 50%;"></span>
+                </li>
                 <li style="float:right"><a href="logout">Logout</a></li>
                 <li style="float:right"><a href="profile"><i>You are logged in as <b>${username}</b></i></a></li>
                 <c:if test="${sessionScope.admin == true}">
@@ -40,4 +61,12 @@
             </c:otherwise>
         </c:choose>
     </ul>
+</div>
+<div class="notifications-container" style="display: block; z-index: 1; background: #04AA6D">
+    <div class="notifications-box">
+        <div class="notification-info">
+            <h5>Placeholder</h5>
+            <p>Lorem Ipsum Dolores</p>
+        </div>
+    </div>
 </div>

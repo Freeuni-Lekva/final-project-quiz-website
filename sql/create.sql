@@ -150,6 +150,7 @@ CREATE TABLE IF NOT EXISTS quiz_ratings (
     rating INT,
     FOREIGN KEY (creator_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE,
+    UNIQUE(quiz_id, creator_id),
     CONSTRAINT rating_ck CHECK (rating BETWEEN 1 AND 5)
 );
 
@@ -160,4 +161,15 @@ CREATE TABLE IF NOT EXISTS achievements (
   achievement_text VARCHAR(64),
   UNIQUE(user_id, icon_class, achievement_text),
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS notifications (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT,
+    href VARCHAR(128),
+    notification_title VARCHAR(64),
+    notification_description VARCHAR(128),
+    notification_seen BOOL DEFAULT FALSE,
+    date_received DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES  users(id) ON DELETE CASCADE
 );
