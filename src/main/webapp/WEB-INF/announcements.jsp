@@ -31,9 +31,8 @@
             </c:forEach>
         </ul>
         <div>
-            <c:set var="pageNumber" value="${Integer.parseInt(param.page)}"></c:set>
             <c:forEach var="i" begin="1" end="${pageCount}">
-                <span class="paging <c:if test="${param.page!=null&&pageNumber == i}"> active</c:if>">  <%--test if the current page is active--%>
+                <span class="paging <c:if test="${pageNumber == i}"> active</c:if>">  <%--test if the current page is active--%>
                     <a href="announcements?page=${i}<c:if test="${param.q!=null}">&q=${param.q}</c:if>">${i}</a> <%--test if there was a search query--%>
                 </span>
             </c:forEach>
