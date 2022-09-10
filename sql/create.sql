@@ -105,3 +105,13 @@ CREATE TABLE IF NOT EXISTS announcements (
     text_html TEXT,
     FOREIGN KEY (creator_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS quiz_ratings (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    quiz_id BIGINT,
+    creator_id BIGINT,
+    rating INT,
+    FOREIGN KEY (creator_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE,
+    CONSTRAINT rating_ck CHECK (rating BETWEEN 1 AND 5)
+);
