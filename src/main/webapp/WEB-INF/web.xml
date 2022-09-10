@@ -93,4 +93,12 @@
         <servlet-name>createServlet</servlet-name>
         <url-pattern>/create</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>AnnouncementServlet</servlet-name>
+        <servlet-class>com.project.website.servlets.AnnouncementServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AnnouncementServlet</servlet-name>
+        <url-pattern>/announcement</url-pattern>
+    </servlet-mapping>
 </web-app>

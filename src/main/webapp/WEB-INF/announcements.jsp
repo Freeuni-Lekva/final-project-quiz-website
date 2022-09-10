@@ -20,7 +20,7 @@
                     <i style="text-align : left">
                         ${anc.getCreationTime().toString().split("\\.")[0]}
                     </i>
-                    <h3>${anc.getTitle()}</h3>
+                    <h3><a href="announcement?id=${anc.id}">${anc.getTitle()}</a></h3>
                     <p>
                         ${anc.getText()}
                     </p>
