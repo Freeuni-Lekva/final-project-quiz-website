@@ -5,7 +5,9 @@ import com.project.website.DAOs.ChallengeDAO;
 import com.project.website.DAOs.ChallengeDAOSQL;
 import com.project.website.DAOs.UserDAO;
 import com.project.website.Objects.Challenge;
+import com.project.website.Objects.Quiz;
 import com.project.website.Objects.User;
+import com.project.website.Objects.listeners.QuizWebsiteListener;
 import com.project.website.utils.ChallengeQuery;
 import com.project.website.utils.ChallengeResponse;
 import com.project.website.utils.QuestionsQuery;
@@ -46,6 +48,8 @@ public class ChallengeServlet extends HttpServlet {
                 response.setSuccess(false);
                 response.setMessage("No such user exists!");
             } else {
+                QuizWebsiteListener listener = (QuizWebsiteListener) req.getServletContext().getAttribute("listener");
+                listener.onChallengeSent(controller.getUserID(), Math.toIntExact(user.getId()));
                 challengeDAO.insertChallenge(new Challenge(Math.toIntExact(user.getId()), controller.getUserID(), quizID, time));
                 response.setSuccess(true);
                 response.setMessage("Challenge sent to " + query.getUsername() + "!");

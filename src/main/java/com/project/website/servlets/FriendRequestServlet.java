@@ -2,6 +2,7 @@ package com.project.website.servlets;
 
 import com.project.website.DAOs.FriendRequestDAO;
 import com.project.website.DAOs.FriendshipDAO;
+import com.project.website.Objects.listeners.QuizWebsiteListener;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,6 +33,9 @@ public class FriendRequestServlet extends HttpServlet {
             if(friendRequestDAO.checkIfFriendRequestSent(receiverID, userID)) {
                 friendRequestDAO.removeFriendRequest(receiverID, userID);
                 friendshipDAO.addFriendship(userID, receiverID);
+
+                QuizWebsiteListener listener = (QuizWebsiteListener) req.getServletContext().getAttribute("listener");
+                listener.onFriendAdded(Math.toIntExact(userID), Math.toIntExact(receiverID));
             }
             else {
                 friendRequestDAO.addFriendRequest(userID, receiverID);

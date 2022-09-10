@@ -163,4 +163,40 @@ public class QuizFinalScoresDaoSQLTEST {
         Assertions.assertEquals(0, answers.size());
     }
 
+    @Test
+    public void testGetUser() {
+        QuizFinalScore score1 = new QuizFinalScore(1, 1, 25.4, 30, new Timestamp(Calendar.getInstance().getTime().toInstant().truncatedTo(ChronoUnit.SECONDS).toEpochMilli()));
+        QuizFinalScore score2 = new QuizFinalScore(1, 2, 27.4, 30, new Timestamp(Calendar.getInstance().getTime().toInstant().truncatedTo(ChronoUnit.SECONDS).toEpochMilli()));
+        QuizFinalScore score3 = new QuizFinalScore(2, 1, 5.4, 30,  new Timestamp(Calendar.getInstance().getTime().toInstant().truncatedTo(ChronoUnit.SECONDS).toEpochMilli()));
+
+        quizFinalScoresDAO.insertQuizFinalScore(score1);
+        quizFinalScoresDAO.insertQuizFinalScore(score2);
+        quizFinalScoresDAO.insertQuizFinalScore(score3);
+
+        List<QuizFinalScore> answers = quizFinalScoresDAO.getUserFinalScores(1);
+
+        Assertions.assertNotNull(answers);
+        Assertions.assertEquals(2, answers.size());
+
+        Assertions.assertTrue(sameScore(score1, answers.get(0)));
+        Assertions.assertTrue(sameScore(score2, answers.get(1)));
+
+        answers = quizFinalScoresDAO.getUserFinalScores(2);
+
+        Assertions.assertNotNull(answers);
+        Assertions.assertEquals(1, answers.size());
+
+        Assertions.assertTrue(sameScore(score3, answers.get(0)));
+
+        answers = quizFinalScoresDAO.getUserFinalScores(123);
+
+        Assertions.assertNotNull(answers);
+        Assertions.assertEquals(0, answers.size());
+
+        answers = quizFinalScoresDAO.getUserFinalScores(3);
+
+        Assertions.assertNotNull(answers);
+        Assertions.assertEquals(0, answers.size());
+    }
+
 }

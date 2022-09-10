@@ -152,3 +152,12 @@ CREATE TABLE IF NOT EXISTS quiz_ratings (
     FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE,
     CONSTRAINT rating_ck CHECK (rating BETWEEN 1 AND 5)
 );
+
+CREATE TABLE IF NOT EXISTS achievements (
+  id BIGINT PRIMARY KEY  AUTO_INCREMENT,
+  user_id BIGINT,
+  icon_class VARCHAR(64),
+  achievement_text VARCHAR(64),
+  UNIQUE(user_id, icon_class, achievement_text),
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
