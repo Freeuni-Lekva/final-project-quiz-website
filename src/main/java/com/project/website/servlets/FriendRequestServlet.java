@@ -2,6 +2,9 @@ package com.project.website.servlets;
 
 import com.project.website.DAOs.FriendRequestDAO;
 import com.project.website.DAOs.FriendshipDAO;
+import com.project.website.DAOs.NotificationDAO;
+import com.project.website.DAOs.UserDAO;
+import com.project.website.Objects.NotificationFactory;
 import com.project.website.Objects.listeners.QuizWebsiteListener;
 
 import javax.servlet.ServletException;
@@ -23,6 +26,8 @@ public class FriendRequestServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         FriendRequestDAO friendRequestDAO = (FriendRequestDAO) req.getServletContext().getAttribute(FriendRequestDAO.ATTR_NAME);
         FriendshipDAO friendshipDAO = (FriendshipDAO) req.getServletContext().getAttribute(FriendshipDAO.ATTR_NAME);
+        UserDAO userDAO = (UserDAO) req.getServletContext().getAttribute(UserDAO.ATTR_NAME);
+        NotificationDAO notificationDAO = (NotificationDAO) req.getServletContext().getAttribute(NotificationDAO.ATTR_NAME);
         Long userID = (Long) req.getSession().getAttribute("userID");
         Long receiverID = Long.parseLong(req.getParameter("receiver_id"));
         String action = req.getParameter("action");
@@ -39,6 +44,7 @@ public class FriendRequestServlet extends HttpServlet {
             }
             else {
                 friendRequestDAO.addFriendRequest(userID, receiverID);
+                notificationDAO.insertNotification(NotificationFactory.buildFriendRequestNotification(userID, receiverID, userDAO.getUserByID(userID).getUsername()));
             }
             resp.sendRedirect("profile?id=" + receiverID); //maybe do something else?
         }

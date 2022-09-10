@@ -1,54 +1,62 @@
 package com.project.website.Objects.listeners;
 
-import com.project.website.DAOs.AchievementDAO;
-import com.project.website.DAOs.FriendshipDAO;
-import com.project.website.DAOs.QuizDAO;
-import com.project.website.DAOs.QuizFinalScoresDAO;
+import com.project.website.DAOs.*;
 import com.project.website.Objects.Achievement;
+import com.project.website.Objects.NotificationFactory;
 
 public class AchievementListener implements QuizWebsiteListener {
     private final AchievementDAO achievementDAO;
-
     private final QuizFinalScoresDAO quizFinalScoresDAO;
     private final QuizDAO quizDAO;
 
+    private final NotificationDAO notificationDAO;
 
-    public AchievementListener(AchievementDAO achievementDAO, QuizDAO quizDAO, QuizFinalScoresDAO quizFinalScoresDAO) {
+
+    public AchievementListener(AchievementDAO achievementDAO, QuizDAO quizDAO, QuizFinalScoresDAO quizFinalScoresDAO, NotificationDAO notificationDAO) {
         this.achievementDAO = achievementDAO;
         this.quizDAO = quizDAO;
         this.quizFinalScoresDAO = quizFinalScoresDAO;
+        this.notificationDAO = notificationDAO;
     }
 
 
+    private void insertAchievement(Achievement achievement) {
+        if(achievementDAO.insertAchievement(achievement))
+            notificationDAO.insertNotification(NotificationFactory.buildAchievementNotification(achievement.getUserID(), achievement.getText()));
+    }
     @Override
     public void onQuizCreated(int userID) {
+        Achievement achievement = null;
         switch (quizDAO.getQuizByCreator(userID, 0, 10).size()) {
             case 1: {
-                achievementDAO.insertAchievement(new Achievement(userID, "fa fa-pencil", "Created a quiz!"));
+                achievement = new Achievement(userID, "fa fa-pencil", "Created a quiz!");
             } break;
 
             case 5: {
-                achievementDAO.insertAchievement(new Achievement(userID, "fa fa-magic", "Created 5 quizzes!"));
+                achievement = new Achievement(userID, "fa fa-magic", "Created 5 quizzes!");
             } break;
-
             case 10: {
-                achievementDAO.insertAchievement(new Achievement(userID, "fa fa-book", "Created 10 quizzes!"));
+                achievement = new Achievement(userID, "fa fa-book", "Created 10 quizzes!");
             } break;
 
             default: break;
         }
+        if(achievement != null)
+            insertAchievement(achievement);
     }
 
     @Override
     public void onQuizFinished(int userID, int quizID, double score, double maxScore) {
         if (quizFinalScoresDAO.getUserFinalScores(userID).size() == 10) {
-            achievementDAO.insertAchievement(new Achievement(userID, "fa fa-battery-three-quarters", "Finished 10 quizzes!"));
+            Achievement achievement = new Achievement(userID, "fa fa-battery-three-quarters", "Finished 10 quizzes!");
+            insertAchievement(achievement);
         }
     }
 
 
     private void friendsAchievement(int userID) {
-        achievementDAO.insertAchievement(new Achievement(userID, "fa fa-heart", "YOU'VE GOT A FRIEND IN ME"));
+        Achievement achievement = new Achievement(userID, "fa fa-heart", "YOU'VE GOT A FRIEND IN ME");
+        insertAchievement(achievement);
     }
     @Override
     public void onFriendAdded(int friend1, int friend2) {
@@ -58,11 +66,13 @@ public class AchievementListener implements QuizWebsiteListener {
 
     @Override
     public void onQuizRated(int userID, int quizID, int rating) {
-        achievementDAO.insertAchievement(new Achievement(userID, "fa fa-gavel", "Rate a quiz!"));
+        Achievement achievement = new Achievement(userID, "fa fa-gavel", "Rate a quiz!");
+        insertAchievement(achievement);
     }
 
     @Override
     public void onChallengeSent(int fromUserID, int toUserID) {
-        achievementDAO.insertAchievement(new Achievement(fromUserID, "fa fa-shield", "CHALLENGE!"));
+        Achievement achievement = new Achievement(fromUserID, "fa fa-shield", "CHALLENGE!");
+        insertAchievement(achievement);
     }
 }

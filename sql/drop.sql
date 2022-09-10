@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS notifications;
 DROP TABLE IF EXISTS achievements;
 DROP TABLE IF EXISTS quiz_challenges;
 DROP TABLE IF EXISTS quiz_final_scores;
