@@ -3,16 +3,19 @@ package com.project.website.DAOs.Filters;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class TitleLikeFilter implements SQLFilter {
+public class ColumnLikeFilter implements SQLFilter {
+
+    String columnName;
     String titleLike;
 
-    public TitleLikeFilter(String titleLike) {
+    public ColumnLikeFilter(String columnName, String titleLike) {
+        this.columnName = columnName;
         this.titleLike = titleLike;
     }
 
     @Override
     public String getWhereClause() {
-        return "question_title LIKE ?";
+        return columnName + " LIKE ?";
     }
 
     @Override

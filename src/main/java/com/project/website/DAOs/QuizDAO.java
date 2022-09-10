@@ -1,5 +1,7 @@
 package com.project.website.DAOs;
 
+import com.project.website.DAOs.Filters.SQLFilter;
+import com.project.website.DAOs.Order.SQLOrder;
 import com.project.website.Objects.Quiz;
 
 import java.util.List;
@@ -13,5 +15,7 @@ public interface QuizDAO {
     Quiz getQuizById(int id);
     List<Quiz> getQuizByCreator(int creatorID, int offset, int limit);
     List<Quiz> getQuizByCategory(int categoryID, int offset, int limit);
+    List<Quiz> searchQuizzes(SQLFilter filter, SQLOrder order, int offset, int limit);
+
     boolean deleteQuiz(int id);
 }
