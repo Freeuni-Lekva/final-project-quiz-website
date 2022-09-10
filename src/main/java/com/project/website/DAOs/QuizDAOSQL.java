@@ -1,11 +1,9 @@
 package com.project.website.DAOs;
 
+import com.project.website.DAOs.Filters.SQLFilter;
 import com.project.website.Objects.Quiz;
 
 import javax.sql.DataSource;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -104,6 +102,20 @@ public class QuizDAOSQL implements QuizDAO {
             return aggregateQuery(preparedStatement);
         } catch (SQLException ignored) {}
         return null;
+    }
+
+    @Override
+    public List<Quiz> searchQuizzes(SQLFilter filter, int offset, int limit) {
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "SELECT * FROM quizzes WHERE " + filter.getWhereClause() + " LIMIT ?, ?")) {
+            int lastIndex = filter.insertValuesIntoPreparedStatement(preparedStatement, 1);
+            preparedStatement.setInt(lastIndex, offset);
+            preparedStatement.setInt(lastIndex+1, limit);
+            return aggregateQuery(preparedStatement);
+        } catch(SQLException exception) {
+            return null;
+        }
     }
 
     @Override

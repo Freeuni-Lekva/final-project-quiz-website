@@ -55,7 +55,6 @@
     <orderEntry type="library" name="mysql-connector-java-8.0.29" level="project" />
     <orderEntry type="library" name="mysql-connector-java-8.0.291" level="project" />
     <orderEntry type="library" name="mysql-connector-java-8.0.291" level="project" />
-    <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.9.1" level="project" />
     <orderEntry type="library" name="font-awesome" level="application" />
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.9.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:javax.servlet-api:4.0.1" level="project" />

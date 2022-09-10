@@ -14,11 +14,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,7 +43,7 @@ public class GetQuestionsServlet extends HttpServlet {
         Long userID = (Long) req.getSession().getAttribute("userID");
         if(userID != null && query.isShowMine())
             filters.add(new CreatorFilter(Math.toIntExact(userID)));
-        filters.add(new TitleLikeFilter("%" + query.getQuery() + "%"));
+        filters.add(new ColumnLikeFilter("questionTitle","%" + query.getQuery() + "%"));
         questions = questionDAO.searchQuestions(new AndFilter(filters), query.getPage() * MAX_QUESTIONS, MAX_QUESTIONS);
         if (questions == null) {
             return;
