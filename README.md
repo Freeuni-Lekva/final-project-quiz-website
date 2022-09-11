@@ -62,7 +62,7 @@
 
 -- ქვიზების შექმნა
 
-![slide](https://i.imgur.com/hdIF6T5.png)
+![slide](https://i.imgur.com/3G284SJ.png)
 
 -- შეკითხვების შექმნა
 
