@@ -85,13 +85,15 @@
             </div>
         </div>
         <div class="main-content">
-            <div class="inside-content" style="min-height: 0px; padding: 5px;">
-                <%
-                    List<Quiz> quizzes = quizDAO.getAllQuizzes();
+            <%
+                List<Quiz> quizzes = quizDAO.getAllQuizzes();
+                if (quizzes.size() > 0) {
                     Quiz quiz = quizzes.get(new Random().nextInt(quizzes.size()));
-                %>
+            %>
+            <div class="inside-content" style="min-height: 0px; padding: 5px;">
                 <h2 style="margin-top: 10px;"><a href="quiz?quizID=<% out.write(String.valueOf(quiz.getID())); %>">Random Quiz!</a></h2>
             </div>
+            <% } %>
             <div class="inside-content">
                 <h2><a href="quizzes?sortby=popular">Popular Quizzes</a></h2>
             </div>

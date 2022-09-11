@@ -126,7 +126,7 @@
                         <sub id="notification-number" class="notification-number">0</sub>
                     </span>
                 </li>
-                <li style="float:right"><a href="logout">Logout</a></li>
+                <li style="float:right"><a href="/final_project_quiz_website_war_exploded/logout">Logout</a></li>
                 <li style="float:right"><a href="profile"><i>You are logged in as <b>${username}</b></i></a></li>
                 <c:if test="${sessionScope.admin == true}">
                 <li style="float:right"><a href="admin">AdminMenu</a></li>
